@@ -9,12 +9,13 @@ import {RouterModule, Routes} from "@angular/router";
 import { BuyPageComponent } from './buy-page/buy-page.component';
 import { FooterComponent } from './shared/component/footer/footer.component';
 import { TopComponent } from './shared/component/top/top.component';
+import {ProductService} from "./shared/service/product.service";
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'product/:id', component: ProductPageComponent },
+  { path: 'product/:slug', component: ProductPageComponent },
   { path: 'product', redirectTo: '/', },
-  { path: 'buy/:id', component: BuyPageComponent },
+  { path: 'buy/:slug', component: BuyPageComponent },
   { path: 'buy', redirectTo: '/' }
 ];
 
@@ -32,7 +33,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     BrowserModule
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

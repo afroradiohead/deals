@@ -1,5 +1,6 @@
 <!-- *** TOPBAR ***
 _________________________________________________________ -->
+<script src="../../../../clarkefamily.network/src/app/people/individual/individual.component.ts"></script>
 <app-top></app-top>
 
 
@@ -196,26 +197,26 @@ _________________________________________________________ -->
               <div class="flip-container">
                 <div class="flipper">
                   <div class="front">
-                    <a href="detail.html">
+                    <a [routerLink]="['/product', product.slug]">
                       <img [src]="product.image" alt="" class="img-responsive">
                     </a>
                   </div>
                   <div class="back">
-                    <a href="detail.html">
+                    <a [routerLink]="['/product', product.slug]">
                       <img [src]="product.image" alt="" class="img-responsive">
                     </a>
                   </div>
                 </div>
               </div>
-              <a href="detail.html" class="invisible">
+              <a [routerLink]="['/product', product.slug]" class="invisible">
                 <img [src]="product.image" alt="" class="img-responsive">
               </a>
               <div class="text">
-                <h3><a href="detail.html">{{product.name}}</a></h3>
+                <h3><a [routerLink]="['/product', product.slug]">{{product.name}}</a></h3>
                 <p class="price"><del>${{product.price.original}}</del> ${{product.price.discount}}</p>
                 <p class="buttons">
-                  <a href="detail.html" class="btn btn-default">View detail</a>
-                  <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                  <a [routerLink]="['/product', product.slug]" class="btn btn-default">View detail</a>
+                  <a [routerLink]="['/buy', product.slug]" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                 </p>
               </div>
 
