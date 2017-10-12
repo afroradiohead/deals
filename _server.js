@@ -9,8 +9,8 @@ app.use(express.static(__dirname + '/dist'));
 // Heroku port
 
 
-app.get('/api', function (req, res) {
-  res.send('GET request to the homepage')
+app.get('/socket', function (req, res) {
+  res.send('super test')
 });
 
 app.get('*', function (req, res) {
@@ -18,5 +18,3 @@ app.get('*', function (req, res) {
 });
 
 app.listen(process.env.PORT || 8080);
-
-

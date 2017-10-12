@@ -3,19 +3,20 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "serve-1": "ng serve",
+    "serve-2": "./node_modules/.bin/tsc-watch -p ./server/tsconfig.server.json",
+    "serve-3": "./node_modules/.bin/pm2 start ecosystem.config.js",
     "ng": "ng",
-    "serve": "ng serve",
     "start": "node _server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --aot -prod"
+    "postinstall": "ng build --aot -prod && tsc -p ./server/tsconfig.server.json"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.2.4",
-    "@angular/language-service": "^4.2.4",
     "@angular/cli": "1.4.3",
     "@angular/common": "^4.2.4",
     "@angular/compiler": "^4.2.4",
@@ -23,12 +24,16 @@
     "@angular/core": "^4.2.4",
     "@angular/forms": "^4.2.4",
     "@angular/http": "^4.2.4",
+    "@angular/language-service": "^4.2.4",
     "@angular/platform-browser": "^4.2.4",
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
     "bootstrap": "^4.0.0-alpha.6",
+    "concurrently": "^3.5.0",
     "core-js": "^2.4.1",
     "express": "^4.15.5",
+    "forever": "^0.15.3",
+    "pm2": "^2.7.1",
     "rxjs": "^5.4.2",
     "typescript": "~2.3.3",
     "victor": "^1.1.0",
@@ -49,6 +54,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
+    "tsc-watch": "^1.0.8",
     "tslint": "~5.3.2"
   }
 }
