@@ -1,5 +1,6 @@
 import * as socket from "socket.io";
 import {HomePageEndpoint} from "./home-page";
+import {ProductPageEndpoint} from "./product-page";
 
 export class SocketEndpoint {
   constructor(app) {
@@ -8,7 +9,8 @@ export class SocketEndpoint {
     io.on("connection", (socket) => {
       const homePageEndpoint = new HomePageEndpoint(socket);
 
-      socket.on("home/init", homePageEndpoint.init.bind(homePageEndpoint));
+      const productPageEndpoint = new ProductPageEndpoint(socket);
+      socket.on("product-page/init", productPageEndpoint.init.bind(productPageEndpoint));
     });
 
   }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {IProduct, ProductService} from '../shared/service/product.service';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
+import { Socket } from 'ngx-socket-io';
+import {IProduct} from "../../../shared/interface/product";
+
 
 @Component({
   selector: 'app-product-page',
@@ -11,12 +13,28 @@ import {ActivatedRoute} from '@angular/router';
 export class ProductPageComponent implements OnInit {
   product$: Observable<IProduct>;
 
-  constructor(private route: ActivatedRoute, private productService: ProductService) { }
+  constructor(private route: ActivatedRoute, private socket: Socket) {
+    // this.socketInit = new SocketInit(socket);
+    // this.socketeer = new FromClientSocketeer(this.socket);
+    // this.socketeer = new Socketeer(this.socket);
+    //
+  }
 
   ngOnInit() {
-    this.product$ = this.route.params
+    // this.socket.fromEvent<T>()
+    // socketeer.run<
+//initSocket.fromResponse()
+    this.product$ = Observable.from(this.socket.fromEvent("product-page/init.response"))
+      .do(a => console.log(a))
+      .map(response => response['product']);
+
+
+    //initSocket.sendRequest();
+
+    this.route.params
+      .do(a => console.log(a))
       .map(params => params['slug'])
-      .flatMap(slug => this.productService.getBySlug$(slug))
-      .do(a => console.log(a));
+      .do(slug => this.socket.emit("product-page/init", {slug: slug}))
+      .subscribe();
   }
 }

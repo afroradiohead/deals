@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule } from '@angular/core';
 import * as _ from "lodash";
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/component/navbar/navbar.component';
@@ -9,9 +9,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { BuyPageComponent } from './buy-page/buy-page.component';
 import { FooterComponent } from './shared/component/footer/footer.component';
 import { TopComponent } from './shared/component/top/top.component';
-import { ProductService } from './shared/service/product.service';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import {environment} from "../environments/environment";
+import { environment } from "../environments/environment";
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -45,7 +44,7 @@ const socketIoConfig: SocketIoConfig = {
     BrowserModule,
     SocketIoModule.forRoot(socketIoConfig)
   ],
-  providers: [ProductService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

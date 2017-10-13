@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
-import {IProduct, ProductService} from '../shared/service/product.service';
 import { Socket } from 'ngx-socket-io';
+import {IProduct} from "../../../shared/interface/product";
+import {InitSocketeer} from "../../../shared/socketer/home-page";
 
 @Component({
   selector: 'app-home-page',
@@ -10,13 +11,16 @@ import { Socket } from 'ngx-socket-io';
 })
 export class HomePageComponent implements OnInit {
   productList$: Observable<IProduct[]>;
+  private initSocketeer: InitSocketeer;
 
-  constructor(private socket: Socket) { }
+  constructor(socket: Socket) {
+    this.initSocketeer = new InitSocketeer(socket);
+  }
 
   ngOnInit() {
-    this.productList$ = this.socket.fromEvent('home/init.response')
+    this.productList$ = this.initSocketeer.fromResponse()
       .map(response => response['productList']);
 
-    this.socket.emit('home/init', {});
+    this.initSocketeer.sendRequest({});
   }
 }
