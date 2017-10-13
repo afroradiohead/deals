@@ -14,6 +14,7 @@ export class HomePageComponent implements OnInit {
   constructor(private socket: Socket) { }
 
   ngOnInit() {
+    console.log(window.location.hostname, window.location);
     this.productList$ = this.socket.fromEvent('home/init.response')
       .map(response => response['productList']);
 
