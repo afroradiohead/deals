@@ -10,6 +10,7 @@ import { BuyPageComponent } from './buy-page/buy-page.component';
 import { FooterComponent } from './shared/component/footer/footer.component';
 import { TopComponent } from './shared/component/top/top.component';
 import {ProductService} from "./shared/service/product.service";
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -18,6 +19,8 @@ const routes: Routes = [
   { path: 'buy/:slug', component: BuyPageComponent },
   { path: 'buy', redirectTo: '/' }
 ];
+
+const socketIoConfig: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ const routes: Routes = [
   ],
   imports: [
     RouterModule.forRoot(routes),
-    BrowserModule
+    BrowserModule,
+    SocketIoModule.forRoot(socketIoConfig)
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
