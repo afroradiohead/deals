@@ -11,6 +11,7 @@ import { FooterComponent } from './shared/component/footer/footer.component';
 import { TopComponent } from './shared/component/top/top.component';
 import { ProductService } from './shared/service/product.service';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import {environment} from "../environments/environment";
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -19,9 +20,7 @@ const routes: Routes = [
   { path: 'buy/:slug', component: BuyPageComponent },
   { path: 'buy', redirectTo: '/' }
 ];
-
-const socketUrl = isDevMode() ? 'http://localhost:8080' : window.location.origin;
-
+const socketUrl = environment.production ? window.location.origin : 'http://localhost:8080';
 const socketIoConfig: SocketIoConfig = {
   url: socketUrl,
   options: {
