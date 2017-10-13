@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { NgModule, isDevMode } from '@angular/core';
+import * as _ from "lodash";
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/component/navbar/navbar.component';
 import { ProductPageComponent } from './product-page/product-page.component';
@@ -20,7 +20,16 @@ const routes: Routes = [
   { path: 'buy', redirectTo: '/' }
 ];
 
-const socketIoConfig: SocketIoConfig = { url: 'https://localhost:8080', options: {} };
+const socketUrl = isDevMode() ? 'http://localhost:8080' : window.location.origin;
+
+const socketIoConfig: SocketIoConfig = {
+  url: socketUrl,
+  options: {
+    query: {
+      location: window.location
+    }
+  }
+};
 
 @NgModule({
   declarations: [
