@@ -1,13 +1,15 @@
 import {productList} from "../model/product";
+import {InitSocketeer} from "../../../shared/socketer/product-page";
 
 export class ProductPageEndpoint {
-  constructor(private socket) {}
+  constructor(socket) {
+    const initSocketeer = new InitSocketeer(socket);
 
-  init(message) {
-    const slug = message.slug;
-
-    this.socket.emit('product-page/init.response', {
-      product: productList.find(product => product.slug === slug.toLowerCase().trim())
-    });
+    initSocketeer.fromRequest()
+      .subscribe(request => {
+        initSocketeer.sendResponse({
+          product: productList.find(product => product.slug === request.slug.toLowerCase().trim())
+        });
+      });
   }
 }

@@ -24,13 +24,13 @@ export class InitSocketeer {
     this.socket.emit(this.response_event, v);
   }
 
-  fromRequest(v: IRequest): Observable<IRequest> {
+  fromRequest(): Observable<IRequest> {
     return Observable.create(observer => {
       this.socket.on(this.request_event, (v) => observer.next(v));
     });
   }
 
-  fromResponse(v: IResponse): Observable<IResponse> {
+  fromResponse(): Observable<IResponse> {
     return Observable.create(observer => {
       this.socket.on(this.response_event, (v) => observer.next(v));
     });
