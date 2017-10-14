@@ -9,7 +9,7 @@
 
       <div class="col-md-12">
         <ul class="breadcrumb">
-          <!--<li><a routerLink="/">Home</a></li>-->
+          <li><a routerLink="/">Home</a></li>
           <li>{{(product$ | async)?.name}}</li>
         </ul>
       </div>
@@ -40,7 +40,7 @@
               <p class="price">$124.00</p>
 
               <p class="text-center buttons">
-                <!--<a [routerLink]="['/buy', (product$ | async)?.slug]"class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Buy Now</a>-->
+                <a [routerLink]="['/buy', (product$ | async)?.slug || '#']"class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Buy Now</a>
               </p>
 
 
