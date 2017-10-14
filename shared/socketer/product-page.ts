@@ -1,5 +1,5 @@
 import {IProduct} from '../interface/product';
-import {Socketeer} from "./index";
+import {ASocketEvent, Socketeer} from "./index";
 
 
 interface IInitRequest {
@@ -11,4 +11,15 @@ interface IInitResponse {
 export class InitSocketeer extends Socketeer<IInitRequest, IInitResponse> {
   request_event = 'product-page/init';
   response_event = 'product-page/init.response';
+}
+
+export class SocketEvent_Init_FromClient extends ASocketEvent<{
+  slug: string;
+}> {
+  event = 'product-page/init';
+}
+export class SocketEvent_Init_FromServer extends ASocketEvent<{
+  product: IProduct;
+}> {
+  event = 'product-page/init.response';
 }

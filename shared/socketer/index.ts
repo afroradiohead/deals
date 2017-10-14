@@ -1,28 +1,20 @@
 import {Observable} from "rxjs";
 
-export abstract class Socketeer<TIRequest = any, TIReponse = any> {
-  protected abstract readonly request_event: string;
-  protected abstract readonly response_event: string;
+export abstract class ASocketEvent<TPayload> {
+  public abstract readonly event: string;
+  public readonly payload: TPayload;
+}
 
+export class Socketeer {
   constructor(private socket) {}
 
-  sendRequest(v: TIRequest) {
-    this.socket.emit(this.request_event, v);
+  send<T extends ASocketEvent<any>>(type: {new(): T; }, payload: T['payload']) {
+    this.socket.emit(new type().event, payload);
   }
 
-  sendResponse(v: TIReponse) {
-    this.socket.emit(this.response_event, v);
-  }
-
-  fromRequest(): Observable<TIRequest> {
+  from<T extends ASocketEvent<any>>(type: {new(): T; }): Observable<T['payload']> {
     return Observable.create(observer => {
-      this.socket.on(this.request_event, (v) => observer.next(v));
-    });
-  }
-
-  fromResponse(): Observable<TIReponse> {
-    return Observable.create(observer => {
-      this.socket.on(this.response_event, (v) => observer.next(v));
+      this.socket.on(new type().event, (v) => observer.next(v));
     });
   }
 }

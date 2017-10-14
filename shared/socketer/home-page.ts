@@ -1,13 +1,13 @@
-import {IProduct} from "../interface/product";
-import {Socketeer} from "./index";
+import {IProduct} from '../interface/product';
+import {ASocketEvent} from './index';
 
-interface IInitRequest {
+export class SocketEvent_Init_FromClient extends ASocketEvent<{
   time?: boolean;
+}> {
+  event = 'home-page/init';
 }
-interface IInitResponse {
+export class SocketEvent_Init_FromServer extends ASocketEvent<{
   productList: IProduct[];
-}
-export class InitSocketeer extends Socketeer<IInitRequest, IInitResponse> {
-  request_event = 'home-page/init';
-  response_event = 'home-page/init.response';
+}> {
+  event = 'home-page/init.server';
 }
