@@ -5,7 +5,6 @@ export class HomePageEndpoint {
   constructor(socket) {
     const initSocketeer = new InitSocketeer(socket);
 
-
     initSocketeer.fromRequest()
       .subscribe(request => {
         initSocketeer.sendResponse({

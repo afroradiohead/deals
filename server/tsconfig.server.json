@@ -3,5 +3,8 @@
   "compileOnSave": true,
   "compilerOptions": {
     "outDir": "dist"
-  }
+  },
+  "include": [
+    "../shared", "./src"
+  ]
 }
