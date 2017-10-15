@@ -1,20 +1,23 @@
 import {Observable} from "rxjs";
 
-export abstract class ASocketEvent<TPayload> {
-  public abstract readonly event: string;
-  public readonly payload: TPayload;
+export abstract class ASocketCommand {
+  public abstract readonly namespace: string;
+  public abstract readonly events: {[event_name: string]: {[key: string]: any}};
 }
 
-export class Socketeer {
-  constructor(private socket) {}
+export class Socketeer<T extends ASocketCommand> {
+  constructor(private componentConstructor: new () => T, private socket) {}
 
-  send<T extends ASocketEvent<any>>(type: {new(): T; }, payload: T['payload']) {
-    this.socket.emit(new type().event, payload);
+  public send<K extends keyof T['events']>(key: K, value: T['events'][K]) {
+    const socketCommand = new this.componentConstructor();
+    this.socket.emit(`${socketCommand.namespace}/${key}`, value);
   }
 
-  from<T extends ASocketEvent<any>>(type: {new(): T; }): Observable<T['payload']> {
+  public from<K extends keyof T['events']>(key: K): Observable<T['events'][K]> {
+    const socketCommand = new this.componentConstructor();
+
     return Observable.create(observer => {
-      this.socket.on(new type().event, (v) => observer.next(v));
+      this.socket.on(`${socketCommand.namespace}/${key}`, (v) => observer.next(v));
     });
   }
 }

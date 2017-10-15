@@ -1,13 +1,14 @@
 import {IProduct} from '../interface/product';
-import {ASocketEvent} from './index';
+import {ASocketCommand} from './index';
 
-export class SocketEvent_Init_FromClient extends ASocketEvent<{
-  time?: boolean;
-}> {
-  event = 'home-page/init';
-}
-export class SocketEvent_Init_FromServer extends ASocketEvent<{
-  productList: IProduct[];
-}> {
-  event = 'home-page/init.server';
+export class SocketCommand extends ASocketCommand {
+  namespace = 'home-page';
+  events: {
+    INIT_FROMCLIENT: {
+      time?: boolean;
+    },
+    INIT_FROMSERVER: {
+      productList: IProduct[]
+    };
+  };
 }
