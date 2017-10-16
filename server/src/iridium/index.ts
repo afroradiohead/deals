@@ -6,27 +6,9 @@ export class MyDatabase extends Core {
   Products = new Model<IProduct, Product>(this, Product);
 
   static Create() {
-    return new MyDatabase({
-      host: 'ds121345.mlab.com',
-      port: 21345,
-      database: 'heroku_pz5fcm3x',
-      user: 'heroku_pz5fcm3x',
-      password: '5g{W)4cQQ[./Csx}'
-    });
+    const database = 'heroku_pz5fcm3x';
+    const user = 'deals';
+    const password = '5g{W)4cQQ[./Csx}';
+    return new MyDatabase(`mongodb://${user}:${password}@ds121345.mlab.com:21345/${database}`);
   }
 }
-
-// myDb.connect().then(() => myDb.Houses.insert({
-//   name: 'My House',
-//   cars: [{
-//     make: 'Audi',
-//     model: 'A4',
-//     colour: { r: 0, g: 0, b: 0 }
-//   }]
-// }))
-//   .then(() => myDb.Houses.get())
-//   .then((house) => {
-//     house.addCar('Audi', 'S4', { r: 255, g: 255, b: 255 });
-//     return house.save();
-//   })
-//   .then(() => myDb.close());

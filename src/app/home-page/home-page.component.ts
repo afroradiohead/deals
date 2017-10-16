@@ -20,7 +20,6 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.productList$ = this.socketeer.from('INIT_FROMSERVER')
-      .do(console.log)
       .map(response => response.productList);
 
     this.socketeer.send('INIT_FROMCLIENT', {});
