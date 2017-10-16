@@ -1,8 +1,9 @@
 import {IProduct} from '../interface/product';
-import {ASocketCommand} from './index';
+import {ISocketCommand} from './index';
 
-export class SocketCommand extends ASocketCommand {
+export class SocketCommand implements ISocketCommand {
   namespace = 'product-page';
+
   events: {
     INIT_FROMCLIENT: {
       slug: string

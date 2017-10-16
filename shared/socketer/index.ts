@@ -1,11 +1,11 @@
 import {Observable} from "rxjs";
 
-export abstract class ASocketCommand {
-  public abstract readonly namespace: string;
-  public abstract readonly events: {[event_name: string]: {[key: string]: any}};
+export abstract class ISocketCommand {
+  readonly namespace: string;
+  readonly events: {[event_name: string]: {[key: string]: any}};
 }
 
-export class Socketeer<T extends ASocketCommand> {
+export class Socketeer<T extends ISocketCommand> {
   constructor(private componentConstructor: new () => T, private socket) {}
 
   public send<K extends keyof T['events']>(key: K, value: T['events'][K]) {

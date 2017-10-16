@@ -12,21 +12,21 @@ import {SocketCommand} from '../../../shared/socketer/product-page';
   styleUrls: ['./product-page.component.scss']
 })
 export class ProductPageComponent implements OnInit {
-  socketeer4: Socketeer<SocketCommand>;
+  socketeer: Socketeer<SocketCommand>;
   product$: Observable<IProduct>;
 
   constructor(private route: ActivatedRoute, private socket: Socket) {
-    this.socketeer4 = new Socketeer(SocketCommand, this.socket);
+    this.socketeer = new Socketeer(SocketCommand, this.socket);
   }
 
   ngOnInit() {
-    this.product$ = this.socketeer4.from('INIT_FROMSERVER')
+    this.product$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.product);
 
     this.route.params
       .do(a => console.log(a))
       .map(params => params['slug'])
-      .do(slug => this.socketeer4.send('INIT_FROMCLIENT', {slug: slug}))
+      .do(slug => this.socketeer.send('INIT_FROMCLIENT', {slug: slug}))
       .subscribe();
   }
 }
