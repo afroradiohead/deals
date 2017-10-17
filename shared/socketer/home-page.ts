@@ -8,7 +8,6 @@ export class SocketCommand extends ISocketCommand {
       time?: boolean;
     },
     INIT_FROMSERVER: {
-      productList2?: IProduct[],
       productList: IProduct[]
     };
   };

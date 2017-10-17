@@ -1,27 +1,37 @@
 import {Instance, Collection, Index, Property, ObjectID} from 'iridium';
-import {IProduct} from '../../../shared/interface/product';
+import {IProduct, IProductPrice, IProductTotal} from '../../../shared/interface/product';
 
 
-@Index({ name: 1 })
+@Index({ asin: 1 }, { unique: true })
 @Collection('products')
 export class Product extends Instance<IProduct, Product> implements IProduct {
   @ObjectID _id: string;
-  @Property(/^.+$/)
-  name: string;
-  @Property(/^.+$/)
+  @Property(String)
+  asin: string;
+  @Property(String)
   image: string;
-  @Property(/^.+$/)
+  @Property(String)
+  title: string;
+  @Property(String)
   link: string;
-  @Property(/^.+$/)
+  @Property(String)
   slug: string;
+  @Property(String)
+  description: string;
+  @Property(String)
+  manufacturer: string;
 
   @Property({
     original: Number,
-    discount: Number
+    discount: Number,
+    saved: Number,
+    percentage: Number
   })
-  price: {
-    original: number;
-    discount?: number;
-  };
+  price: IProductPrice;
 
+  @Property({
+    new: Number,
+    used: Number
+  })
+  total: IProductTotal;
 }

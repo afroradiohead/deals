@@ -11,4 +11,9 @@ export class MyDatabase extends Core {
     const password = '5g{W)4cQQ[./Csx}';
     return new MyDatabase(`mongodb://${user}:${password}@ds121345.mlab.com:21345/${database}`);
   }
+
+  onConnected() {
+    this.Products.ensureIndexes();
+    return super.onConnected();
+  }
 }
