@@ -1,3 +1,17 @@
-<p>
-  buy-page works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="profile-header-container">
+      <div class="profile-header-img" >
+        <img class="img-circle" [src]="(product$ | async)?.image" [hidden]="(product$ | async) === null"/>
+        <!-- badge -->
+        <div class="rank-label-container">
+          <span class="label label-default rank-label">Redirecting...</span>
+        </div>
+
+        <p>Redirecting to Amazon to buy:</p>
+        <p>{{(product$ | async)?.title}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
