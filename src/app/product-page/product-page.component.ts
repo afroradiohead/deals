@@ -21,10 +21,10 @@ export class ProductPageComponent implements OnInit {
 
   ngOnInit() {
     this.product$ = this.socketeer.from('INIT_FROMSERVER')
+      .do(console.log)
       .map(response => response.product);
 
     this.route.params
-      .do(a => console.log(a))
       .map(params => params['slug'])
       .do(slug => this.socketeer.send('INIT_FROMCLIENT', {slug: slug}))
       .subscribe();

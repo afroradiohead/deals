@@ -45,9 +45,9 @@ export class AmazonCron {
             description: _.get(item, 'ItemAttributes.Feature.0', null),
             manufacturer: _.get(item, 'ItemAttributes.Manufacturer', null),
             price: {
-              original: +_.get(item, 'ItemAttributes.ListPrice.Amount', null),
-              discount: +_.get(item, 'Offers.Offer.OfferListing.Price.Amount', null),
-              saved: +_.get(item, 'Offers.Offer.OfferListing.AmountSaved.Amount', null),
+              original: +_.get(item, 'ItemAttributes.ListPrice.Amount', 0) / 100,
+              discount: +_.get(item, 'Offers.Offer.OfferListing.Price.Amount', 0) / 100,
+              saved: +_.get(item, 'Offers.Offer.OfferListing.AmountSaved.Amount', 0) / 100,
               percentage: +_.get(item, 'Offers.Offer.OfferListing.PercentageSaved', null),
             },
             total: {

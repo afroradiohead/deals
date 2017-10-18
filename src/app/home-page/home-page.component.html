@@ -1,6 +1,5 @@
 <!-- *** TOPBAR ***
 _________________________________________________________ -->
-<script src="../../../../clarkefamily.network/src/app/people/individual/individual.component.ts"></script>
 <app-top></app-top>
 
 
@@ -212,19 +211,18 @@ _________________________________________________________ -->
                 <img [src]="product.image" alt="" class="img-responsive">
               </a>
               <div class="text">
-                <h3><a [routerLink]="['/product', product.slug]">{{product.name}}</a></h3>
-                <p class="price"><del>${{product.price.original}}</del> ${{product.price.discount}}</p>
+                <h3><a [routerLink]="['/product', product.slug]">{{product.title}}</a></h3>
+                <p class="price">
+                  <del *ngIf="product.price.percentage > 0">
+                    ${{product.price.original}}
+                  </del>
+                  ${{product.price.discount}}
+                </p>
                 <p class="buttons">
                   <a [routerLink]="['/product', product.slug]" class="btn btn-default">View detail</a>
                   <a [routerLink]="['/buy', product.slug]" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                 </p>
               </div>
-
-              <div class="ribbon sale">
-                <div class="theribbon">SALE</div>
-                <div class="ribbon-background"></div>
-              </div>
-              <!-- /.ribbon -->
 
               <div class="ribbon new">
                 <div class="theribbon">NEW</div>
@@ -232,11 +230,11 @@ _________________________________________________________ -->
               </div>
               <!-- /.ribbon -->
 
-              <div class="ribbon gift">
-                <div class="theribbon">GIFT</div>
+              <div class="ribbon sale" *ngIf="product.price.percentage > 0">
+                <div class="theribbon">{{product.price.percentage}}% off</div>
                 <div class="ribbon-background"></div>
               </div>
-              <!-- /.text -->
+              <!-- /.ribbon -->
             </div>
             <!-- /.product -->
           </div>
