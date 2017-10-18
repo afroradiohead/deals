@@ -1,6 +1,7 @@
-import {MyDatabase} from "../iridium/index";
+import {MyDatabase} from '../iridium/index';
 import * as _ from 'lodash';
-import {IProduct} from "../../../shared/interface/product";
+import {IProduct} from '../../../shared/interface/product';
+import * as Bluebird from 'bluebird';
 
 const {OperationHelper} = require('apac');
 
@@ -11,7 +12,7 @@ const slugify = function(text){
     .replace(/\-\-+/g, '-')         // Replace multiple - with single -
     .replace(/^-+/, '')             // Trim - from start of text
     .replace(/-+$/, '');            // Trim - from end of text
-}
+};
 export class AmazonCron {
   constructor(app) {
     const logger = app.get('logger');
@@ -55,29 +56,15 @@ export class AmazonCron {
               used: +_.get(item, 'OfferSummary.TotalUsed', null),
             }
           };
+
           return db.Products.update(
             { asin: product.asin },
             product,
             { upsert: true, multi: false }
           );
         });
-
-        // return Promise.all(promiseList);
+        return Bluebird.all(promiseList);
       })
       .then(() => db.close());
-    // opHelper.execute('ItemSearch', {
-    //   'SearchIndex': 'Books',
-    //   'Keywords': 'xbox games',
-    //   'ResponseGroup': 'ItemAttributes,Offers'
-    // }).then((response) => {
-    //   console.log("Results object: ", response.result.ItemSearchResponse.Items);
-    //   // console.log("Raw response body: ", response.responseBody);
-    //
-    //   db.connect().then(() => db.Products.findOne({
-    //     slug: request.slug.toLowerCase().trim()
-    //   }))
-    // }).catch((err) => {
-    //   console.error("Something went wrong! ", err);
-    // });
   }
 }
