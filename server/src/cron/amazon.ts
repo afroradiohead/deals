@@ -48,7 +48,7 @@ export class AmazonCron {
               original: +_.get(item, 'ItemAttributes.ListPrice.Amount', 0) / 100,
               discount: +_.get(item, 'Offers.Offer.OfferListing.Price.Amount', 0) / 100,
               saved: +_.get(item, 'Offers.Offer.OfferListing.AmountSaved.Amount', 0) / 100,
-              percentage: +_.get(item, 'Offers.Offer.OfferListing.PercentageSaved', null),
+              percentage: +_.get(item, 'Offers.Offer.OfferListing.PercentageSaved', 0),
             },
             total: {
               new: +_.get(item, 'OfferSummary.TotalNew', null),

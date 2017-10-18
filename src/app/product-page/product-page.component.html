@@ -40,7 +40,7 @@
                 <!--<del *ngIf="(product$ | async)?.price.percentage > 0">-->
                   <!--${{(product$ | async)?.price.discount}}-->
                 <!--</del>-->
-                <del [hidden]="(product$ | async)?.price.percentage === null">${{(product$ | async)?.price.original}}</del>
+                <del [hidden]="(product$ | async)?.price.percentage <= 0">${{(product$ | async)?.price.original}}</del>
                 ${{(product$ | async)?.price.discount}}
               </p>
 
