@@ -10,7 +10,6 @@ export interface IProductTotal {
   used: number;
 }
 
-
 export interface IProduct {
   _id?: string;
   asin: string;
