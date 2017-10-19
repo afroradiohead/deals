@@ -37,15 +37,12 @@
               <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details, material & care and sizing</a>
               </p>
               <p class="price">
-                <!--<del *ngIf="(product$ | async)?.price.percentage > 0">-->
-                  <!--${{(product$ | async)?.price.discount}}-->
-                <!--</del>-->
                 <del [hidden]="(product$ | async)?.price.percentage <= 0">${{(product$ | async)?.price.original}}</del>
                 ${{(product$ | async)?.price.discount}}
               </p>
 
               <p class="text-center buttons">
-                <a target="_blank" [routerLink]="['/buy', (product$ | async)?._id || '#']"class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Buy Now</a>
+                <a target="_blank" [routerLink]="['/buy', (product$ | async)?._id || '#']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Buy Now</a>
               </p>
             </div>
           </div>
@@ -60,97 +57,44 @@
           </blockquote>
         </div>
 
-        <!--<div class="row same-height-row">-->
-          <!--<div class="col-md-3 col-sm-6">-->
-            <!--<div class="box same-height">-->
-              <!--<h3>You may also like these products</h3>-->
-            <!--</div>-->
-          <!--</div>-->
+        <div class="row same-height-row">
+          <div class="col-md-3 col-sm-6">
+            <div class="box same-height">
+              <h3>You may also like these products</h3>
+            </div>
+          </div>
 
-          <!--<div class="col-md-3 col-sm-6">-->
-            <!--<div class="product same-height">-->
-              <!--<div class="flip-container">-->
-                <!--<div class="flipper">-->
-                  <!--<div class="front">-->
-                    <!--<a href="detail.html">-->
-                      <!--<img src="img/product2.jpg" alt="" class="img-responsive">-->
-                    <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="back">-->
-                    <!--<a href="detail.html">-->
-                      <!--<img src="img/product2_2.jpg" alt="" class="img-responsive">-->
-                    <!--</a>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<a href="detail.html" class="invisible">-->
-                <!--<img src="img/product2.jpg" alt="" class="img-responsive">-->
-              <!--</a>-->
-              <!--<div class="text">-->
-                <!--<h3>Fur coat</h3>-->
-                <!--<p class="price">$143</p>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash; /.product &ndash;&gt;-->
-          <!--</div>-->
+          <div class="col-md-3 col-sm-6" *ngFor="let product of randomProductList$ | async">
+            <div class="product same-height">
+              <div class="flip-container">
+                <div class="flipper">
+                  <div class="front">
+                    <a [routerLink]="['/product', product.slug]">
+                      <img [src]="product.image" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                  <div class="back">
+                    <a [routerLink]="['/product', product.slug]">
+                      <img [src]="product.image" alt="" class="img-responsive">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <a [routerLink]="['/product', product.slug]" class="invisible">
+                <img [src]="product.image" alt="" class="img-responsive">
+              </a>
+              <div class="text">
+                <h3>{{product.title}}</h3>
+                <p class="price">
+                  <del [hidden]="product.price.percentage <= 0">${{product.price.original}}</del>
+                  ${{product.price.discount}}
+                </p>
+              </div>
+            </div>
+            <!-- /.product -->
+          </div>
 
-          <!--<div class="col-md-3 col-sm-6">-->
-            <!--<div class="product same-height">-->
-              <!--<div class="flip-container">-->
-                <!--<div class="flipper">-->
-                  <!--<div class="front">-->
-                    <!--<a href="detail.html">-->
-                      <!--<img src="img/product1.jpg" alt="" class="img-responsive">-->
-                    <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="back">-->
-                    <!--<a href="detail.html">-->
-                      <!--<img src="img/product1_2.jpg" alt="" class="img-responsive">-->
-                    <!--</a>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<a href="detail.html" class="invisible">-->
-                <!--<img src="img/product1.jpg" alt="" class="img-responsive">-->
-              <!--</a>-->
-              <!--<div class="text">-->
-                <!--<h3>Fur coat</h3>-->
-                <!--<p class="price">$143</p>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash; /.product &ndash;&gt;-->
-          <!--</div>-->
-
-
-          <!--<div class="col-md-3 col-sm-6">-->
-            <!--<div class="product same-height">-->
-              <!--<div class="flip-container">-->
-                <!--<div class="flipper">-->
-                  <!--<div class="front">-->
-                    <!--<a href="detail.html">-->
-                      <!--<img src="img/product3.jpg" alt="" class="img-responsive">-->
-                    <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="back">-->
-                    <!--<a href="detail.html">-->
-                      <!--<img src="img/product3_2.jpg" alt="" class="img-responsive">-->
-                    <!--</a>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<a href="detail.html" class="invisible">-->
-                <!--<img src="img/product3.jpg" alt="" class="img-responsive">-->
-              <!--</a>-->
-              <!--<div class="text">-->
-                <!--<h3>Fur coat</h3>-->
-                <!--<p class="price">$143</p>-->
-
-              <!--</div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash; /.product &ndash;&gt;-->
-          <!--</div>-->
-
-        <!--</div>-->
+        </div>
 
 
       </div>

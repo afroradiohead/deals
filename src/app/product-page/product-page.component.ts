@@ -5,8 +5,8 @@ import {Socket} from 'ngx-socket-io';
 import {IProduct} from '../../../shared/interface/product';
 import {Socketeer} from '../../../shared/socketer/index';
 import {SocketCommand} from '../../../shared/socketer/product-page';
-import {Subject} from "rxjs/Subject";
-import {Meta, Title} from "@angular/platform-browser";
+import {Subject} from 'rxjs/Subject';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-page',
@@ -15,6 +15,7 @@ import {Meta, Title} from "@angular/platform-browser";
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
   socketeer: Socketeer<SocketCommand>;
+  randomProductList$: Observable<IProduct[]>;
   product$: Observable<IProduct>;
   destroyable$: Subject<boolean> = new Subject<boolean>();
 
@@ -25,6 +26,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.product$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.product);
+    this.randomProductList$ = this.socketeer.from('INIT_FROMSERVER')
+      .map(response => response.randomProductList);
 
     this.route.params
       .map(params => params['slug'])
@@ -36,10 +39,9 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       .takeUntil(this.destroyable$)
       .subscribe(product => {
         this.title.setTitle(product.title);
-        this.meta.addTag({
-          name: 'description',
-          content: product.title
-        });
+        this.meta.addTags([
+          {name: 'description', content: product.title}
+        ]);
       });
   }
 

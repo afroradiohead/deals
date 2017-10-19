@@ -9,7 +9,8 @@ export class SocketCommand implements ISocketCommand {
       slug: string
     },
     INIT_FROMSERVER: {
-      product: IProduct
+      product: IProduct,
+      randomProductList: IProduct[],
     };
   };
 }
