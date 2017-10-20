@@ -10,7 +10,8 @@ export class HomePageEndpoint {
       const db = HostDatabase.Create();
 
 
-      db.connect().then(() => db.Products.find({domain: socket.handshake.query.domain}))
+      // db.connect().then(() => db.Products.find({domain: socket.handshake.query.domain}))
+      db.connect().then(() => db.Products.find({domain: 'www.cheap-nintendo-ds-games.com'}))
         .then(products => products.toArray())
         .then(productList => {
           socketeer.send('INIT_FROMSERVER', {
