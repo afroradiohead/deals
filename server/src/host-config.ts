@@ -10,7 +10,7 @@ interface IConfig {
 }
 
 export const HOST_CONFIG: {[host: string]: IConfig} = {
-  'localhost:4200' : {
+  'localhost:8080' : {
     amazon: {
       itemSearch: {
         SearchIndex: 'VideoGames',

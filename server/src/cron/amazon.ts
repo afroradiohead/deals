@@ -16,7 +16,7 @@ const slugify = function(text){
 };
 export class AmazonCron {
   constructor(app) {
-    const host = 'localhost:4200';
+    const host = 'localhost:8080';
     const config = HOST_CONFIG[host];
     const opHelper = new OperationHelper({
       awsId:     'AKIAION2WEXXVJ6UPPNA',
