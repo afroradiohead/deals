@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/component/navbar/navbar.component';
 import { ProductPageComponent } from './product-page/product-page.component';
@@ -10,7 +10,7 @@ import { BuyPageComponent } from './buy-page/buy-page.component';
 import { FooterComponent } from './shared/component/footer/footer.component';
 import { TopComponent } from './shared/component/top/top.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { environment } from "../environments/environment";
+import { environment } from '../environments/environment';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'buy', redirectTo: '/' }
 ];
 const socketUrl = environment.production ? window.location.origin : 'http://localhost:8080';
+console.log(window.location.host);
 const socketIoConfig: SocketIoConfig = {
   url: socketUrl,
   options: {
