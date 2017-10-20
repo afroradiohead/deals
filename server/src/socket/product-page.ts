@@ -12,6 +12,8 @@ export class ProductPageEndpoint {
       const db = HostDatabase.Create();
       const slug = request.slug.toLowerCase().trim();
 
+      console.log(socket.handshake.query);
+
       Observable.fromPromise(db.connect())
         .mergeMap(() => {
           const product$ = Observable.fromPromise(db.Products.findOne({
@@ -26,8 +28,6 @@ export class ProductPageEndpoint {
         .subscribe(data => {
           const product = data[0];
           const randomProductList = data[1] as IProduct[];
-
-          console.log(product);
 
           socketeer.send('INIT_FROMSERVER', {
             product: product,

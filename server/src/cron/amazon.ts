@@ -2,6 +2,7 @@ import {HostDatabase} from '../iridium/index';
 import * as _ from 'lodash';
 import {IProduct} from '../../../shared/interface/product';
 import * as Bluebird from 'bluebird';
+import {DOMAIN_CONFIG} from "../domain-config";
 
 const {OperationHelper} = require('apac');
 
@@ -15,7 +16,8 @@ const slugify = function(text){
 };
 export class AmazonCron {
   constructor(app) {
-    const logger = app.get('logger');
+    const domain = 'localhost:4200';
+    const config = DOMAIN_CONFIG[domain];
     const opHelper = new OperationHelper({
       awsId:     'AKIAION2WEXXVJ6UPPNA',
       awsSecret: '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',
@@ -25,12 +27,7 @@ export class AmazonCron {
 
     db.connect()
       .then(() => {
-        return opHelper.execute('ItemSearch', {
-          'SearchIndex': 'VideoGames',
-          'Keywords': 'nintendo ds games',
-          'ResponseGroup': 'ItemAttributes,Offers,Images',
-          'MinPercentageOff': '30'
-        });
+        return opHelper.execute('ItemSearch', config.amazon.itemSearch);
       })
       .then(response => {
         const items = _.get(response, 'result.ItemSearchResponse.Items.Item', []);
@@ -55,7 +52,7 @@ export class AmazonCron {
               new: +_.get(item, 'OfferSummary.TotalNew', null),
               used: +_.get(item, 'OfferSummary.TotalUsed', null),
             },
-            domain: 'www.cheap-nintendo-ds-games.com'
+            domain: domain
           };
 
           return db.Products.update(

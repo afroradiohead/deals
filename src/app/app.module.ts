@@ -27,8 +27,7 @@ const socketIoConfig: SocketIoConfig = {
   options: {
     query: {
       location: window.location,
-      // domain: window.location.host,
-      domain: 'www.cheap-nintendo-ds-games.com',
+      domain: window.location.host
     }
   }
 };
