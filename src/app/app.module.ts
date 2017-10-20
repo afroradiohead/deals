@@ -20,12 +20,13 @@ const routes: Routes = [
   { path: 'buy', redirectTo: '/' }
 ];
 const socketUrl = environment.production ? window.location.origin : 'http://localhost:8080';
-console.log(window.location.host);
+
 const socketIoConfig: SocketIoConfig = {
   url: socketUrl,
   options: {
     query: {
-      location: window.location
+      location: window.location,
+      domain: window.location.host,
     }
   }
 };

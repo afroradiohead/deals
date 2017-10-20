@@ -1,6 +1,6 @@
 import {SocketCommand} from '../../../shared/socketer/product-page';
 import {Socketeer} from '../../../shared/socketer/index';
-import {MyDatabase} from '../iridium/index';
+import {HostDatabase} from '../iridium/index';
 import {Observable} from 'rxjs/Observable';
 import {IProduct} from '../../../shared/interface/product';
 
@@ -9,15 +9,16 @@ export class ProductPageEndpoint {
     const socketeer = new Socketeer(SocketCommand, socket);
 
     socketeer.from('INIT_FROMCLIENT').subscribe(request => {
-      const db = MyDatabase.Create();
+      const db = HostDatabase.Create();
 
       Observable.fromPromise(db.connect())
         .mergeMap(() => {
           return Observable.fromPromise(db.Products.findOne({
-            slug: request.slug.toLowerCase().trim()
+            slug: request.slug.toLowerCase().trim(),
+            domain: socket.handshake.query.domain
           })).combineLatest(
             Observable.fromPromise(db.Products.aggregate([
-              {$match: {slug: {$ne: request.slug}}},
+              {$match: {domain: socket.handshake.query.domain, slug: {$ne: request.slug}}},
               {$sample: { size: 3 }}
             ]))
           );

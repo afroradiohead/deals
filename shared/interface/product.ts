@@ -12,6 +12,7 @@ export interface IProductTotal {
 
 export interface IProduct {
   _id?: string;
+  domain: string;
   asin: string;
   image: string;
   title: string;

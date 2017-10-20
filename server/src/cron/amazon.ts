@@ -1,4 +1,4 @@
-import {MyDatabase} from '../iridium/index';
+import {HostDatabase} from '../iridium/index';
 import * as _ from 'lodash';
 import {IProduct} from '../../../shared/interface/product';
 import * as Bluebird from 'bluebird';
@@ -21,7 +21,7 @@ export class AmazonCron {
       awsSecret: 'oGCWiE3FSKijYknzfZOChUIdJmbZWQ3OU8D9o/7u',
       assocId:   'leagueofleg02-20'
     });
-    const db = MyDatabase.Create();
+    const db = HostDatabase.Create();
 
     db.connect()
       .then(() => {
@@ -54,7 +54,8 @@ export class AmazonCron {
             total: {
               new: +_.get(item, 'OfferSummary.TotalNew', null),
               used: +_.get(item, 'OfferSummary.TotalUsed', null),
-            }
+            },
+            domain: 'www.cheap-nintendo-ds-games.com'
           };
 
           return db.Products.update(
