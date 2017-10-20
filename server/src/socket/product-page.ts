@@ -2,7 +2,7 @@ import {SocketCommand} from '../../../shared/socketer/product-page';
 import {Socketeer} from '../../../shared/socketer/index';
 import {MyDatabase} from '../iridium/index';
 import {Observable} from 'rxjs/Observable';
-import {IProduct} from "../../../shared/interface/product";
+import {IProduct} from '../../../shared/interface/product';
 
 export class ProductPageEndpoint {
   constructor(socket) {
