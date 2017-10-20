@@ -7,7 +7,7 @@
     "serve-2": "./node_modules/.bin/tsc-watch -p ./server/tsconfig.json",
     "serve-3": "./node_modules/.bin/nodemon ./_server.js",
     "ng": "ng",
-    "start": "./node_modules/.bin/forever -m 5 ./_server.js",
+    "start": "./node_modules/.bin/forever ./_server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
