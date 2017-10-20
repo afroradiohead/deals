@@ -27,7 +27,8 @@ const socketIoConfig: SocketIoConfig = {
   options: {
     query: {
       location: window.location,
-      domain: window.location.host
+      domain: window.location.host,
+      cheese: 'adsf'
     }
   }
 };
