@@ -8,11 +8,13 @@ export class ProductPageEndpoint {
   constructor(socket) {
     const socketeer = new Socketeer(SocketCommand, socket);
 
+
+
     socketeer.from('INIT_FROMCLIENT').subscribe(request => {
       const db = HostDatabase.Create();
       const slug = request.slug.toLowerCase().trim();
 
-      console.log(socket.handshake.query);
+      console.log(socket.handshake.headers.host);
 
       Observable.fromPromise(db.connect())
         .mergeMap(() => {

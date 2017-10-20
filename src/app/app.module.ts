@@ -19,15 +19,15 @@ const routes: Routes = [
   { path: 'buy/:id', component: BuyPageComponent },
   { path: 'buy', redirectTo: '/' }
 ];
-const socketUrl = environment.production ? window.location.origin : 'http://localhost:8080';
+const socketUrl = environment.production ? location.origin : 'http://localhost:8080';
 
 console.log(window.location.host);
 const socketIoConfig: SocketIoConfig = {
   url: socketUrl,
   options: {
     query: {
-      location: window.location,
-      domain: window.location.host,
+      // location: location,
+      // domain: location.host,
       cheese: 'adsf'
     }
   }
