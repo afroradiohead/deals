@@ -2,6 +2,7 @@ import {SocketCommand} from '../../../shared/socketer/product-page';
 import {Socketeer} from '../../../shared/socketer/index';
 import {MyDatabase} from '../iridium/index';
 import {Observable} from 'rxjs/Observable';
+import {IProduct} from "../../../shared/interface/product";
 
 export class ProductPageEndpoint {
   constructor(socket) {
@@ -14,11 +15,16 @@ export class ProductPageEndpoint {
         .mergeMap(() => {
           return Observable.fromPromise(db.Products.findOne({
             slug: request.slug.toLowerCase().trim()
-          })).combineLatest(Observable.fromPromise(db.Products.find().limit(3).toArray()));
+          })).combineLatest(
+            Observable.fromPromise(db.Products.aggregate([
+              {$match: {slug: {$ne: request.slug}}},
+              {$sample: { size: 3 }}
+            ]))
+          );
         })
         .subscribe(data => {
           const product = data[0];
-          const randomProductList = data[1];
+          const randomProductList = data[1] as IProduct[];
 
           socketeer.send('INIT_FROMSERVER', {
             product: product.toJSON(),

@@ -89,6 +89,9 @@
                   <del [hidden]="product.price.percentage <= 0">${{product.price.original}}</del>
                   ${{product.price.discount}}
                 </p>
+                <p class="buttons">
+                  <a target="_blank" [routerLink]="['/buy', product._id]" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                </p>
               </div>
             </div>
             <!-- /.product -->
