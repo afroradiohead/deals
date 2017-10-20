@@ -14,7 +14,6 @@ export class ProductPageEndpoint {
       const db = HostDatabase.Create();
       const slug = request.slug.toLowerCase().trim();
 
-      console.log(socket.handshake.headers.host);
 
       Observable.fromPromise(db.connect())
         .mergeMap(() => {
@@ -22,7 +21,7 @@ export class ProductPageEndpoint {
             slug: slug
           }));
           const randomProductList$ = Observable.fromPromise(db.Products.aggregate([
-            {$match: {domain: socket.handshake.query.domain, slug: {$ne: slug}}},
+            {$match: {host: socket.handshake.headers.host, slug: {$ne: slug}}},
             {$sample: { size: 3 }}
           ]));
           return product$.combineLatest(randomProductList$);

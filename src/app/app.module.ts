@@ -26,9 +26,7 @@ const socketIoConfig: SocketIoConfig = {
   url: socketUrl,
   options: {
     query: {
-      // location: location,
-      // domain: location.host,
-      cheese: 'adsf'
+      // cheese: 'adsf' //@todo careful, on production it doesn't send through
     }
   }
 };

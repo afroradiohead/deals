@@ -16,8 +16,8 @@ const slugify = function(text){
 };
 export class AmazonCron {
   constructor(app) {
-    const domain = 'localhost:4200';
-    const config = DOMAIN_CONFIG[domain];
+    const host = 'localhost:4200';
+    const config = DOMAIN_CONFIG[host];
     const opHelper = new OperationHelper({
       awsId:     'AKIAION2WEXXVJ6UPPNA',
       awsSecret: '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',
@@ -52,7 +52,7 @@ export class AmazonCron {
               new: +_.get(item, 'OfferSummary.TotalNew', null),
               used: +_.get(item, 'OfferSummary.TotalUsed', null),
             },
-            domain: domain
+            host: host
           };
 
           return db.Products.update(
