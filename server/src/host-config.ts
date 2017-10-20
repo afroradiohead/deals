@@ -9,7 +9,7 @@ interface IConfig {
   };
 }
 
-export const DOMAIN_CONFIG: {[domain: string]: IConfig} = {
+export const HOST_CONFIG: {[host: string]: IConfig} = {
   'localhost:4200' : {
     amazon: {
       itemSearch: {

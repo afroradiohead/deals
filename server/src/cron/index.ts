@@ -1,7 +1,7 @@
 import {AmazonCron} from "./amazon";
 
 const KlassList = [
-  // AmazonCron
+  AmazonCron
 ];
 
 export class Cron {

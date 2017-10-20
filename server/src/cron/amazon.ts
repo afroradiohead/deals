@@ -2,7 +2,7 @@ import {HostDatabase} from '../iridium/index';
 import * as _ from 'lodash';
 import {IProduct} from '../../../shared/interface/product';
 import * as Bluebird from 'bluebird';
-import {DOMAIN_CONFIG} from "../domain-config";
+import {HOST_CONFIG} from '../host-config';
 
 const {OperationHelper} = require('apac');
 
@@ -17,13 +17,14 @@ const slugify = function(text){
 export class AmazonCron {
   constructor(app) {
     const host = 'localhost:4200';
-    const config = DOMAIN_CONFIG[host];
+    const config = HOST_CONFIG[host];
     const opHelper = new OperationHelper({
       awsId:     'AKIAION2WEXXVJ6UPPNA',
       awsSecret: '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',
       assocId:   'leagueofleg02-20'
     });
     const db = HostDatabase.Create();
+
 
     db.connect()
       .then(() => {
@@ -56,7 +57,7 @@ export class AmazonCron {
           };
 
           return db.Products.update(
-            { asin: product.asin },
+            { asin: product.asin, host: host },
             product,
             { upsert: true, multi: false }
           );
