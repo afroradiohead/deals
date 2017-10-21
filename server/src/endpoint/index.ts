@@ -1,8 +1,8 @@
 import * as express from 'express';
-import {SitemapEndpoint} from './sitemap';
+import {RssEndpoint} from './rss';
 
 const endpointClassList = [
-  SitemapEndpoint
+  RssEndpoint
 ];
 
 export class Endpoint {

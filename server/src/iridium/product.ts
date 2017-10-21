@@ -37,4 +37,7 @@ export class Product extends Instance<IProduct, Product> implements IProduct {
     used: Number
   })
   total: IProductTotal;
+
+  @Property(Date)
+  displayDate: Date;
 }

@@ -1,4 +1,6 @@
 interface IConfig {
+  title: string;
+  description: string;
   amazon: {
     itemSearch: {
       SearchIndex: string;
@@ -15,6 +17,8 @@ export interface IHostConfig {
 
 export const HOST_CONFIG: IHostConfig = {
   'localhost:8080' : {
+    title: 'Cheap Nintendo Ds Games',
+    description: 'Buy nintendo ds games at a cheaper price',
     amazon: {
       itemSearch: {
         SearchIndex: 'VideoGames',
@@ -25,6 +29,8 @@ export const HOST_CONFIG: IHostConfig = {
     }
   },
   'www.cheap-nintendo-ds-games.com' : {
+    title: 'Cheap Nintendo Ds Games',
+    description: 'Buy nintendo ds games at a cheaper price',
     amazon: {
       itemSearch: {
         SearchIndex: 'VideoGames',
