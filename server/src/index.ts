@@ -1,7 +1,7 @@
 import * as express from "express";
 import {SocketEndpoint} from "./socket/index";
 import * as winston from "winston";
-import {Cron} from "./cron/index";
+import {Cron} from "./scheduler/index";
 
 
 

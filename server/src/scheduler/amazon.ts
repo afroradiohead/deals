@@ -1,8 +1,9 @@
 import {HostDatabase} from '../iridium/index';
 import * as _ from 'lodash';
+import * as schedule from 'node-schedule';
 import {IProduct} from '../../../shared/interface/product';
 import * as Bluebird from 'bluebird';
-import {HOST_CONFIG} from '../host-config';
+import {HOST_CONFIG, IHostConfig} from '../host-config';
 
 const {OperationHelper} = require('apac');
 
@@ -14,9 +15,24 @@ const slugify = function(text){
     .replace(/^-+/, '')             // Trim - from start of text
     .replace(/-+$/, '');            // Trim - from end of text
 };
-export class AmazonCron {
+export class AmazonScheduler {
+  mutablableHostConfig: IHostConfig;
+  hostConfig: IHostConfig;
+  productHydrationIteration = 4;
+
   constructor(app) {
-    const host = 'localhost:8080';
+    this.mutablableHostConfig = _.cloneDeep(HOST_CONFIG);
+    this.hostConfig = HOST_CONFIG;
+    const hostCount = _.keys(HOST_CONFIG).length;
+    const totalHours = 24;
+    const hostPerHour = Math.floor(totalHours / hostCount);
+
+    schedule.scheduleJob(`0 0 */${hostPerHour} * * *`, this._productHydrationJob.bind(this)); // @todo just use observables
+  }
+
+  private _productHydrationJob() {
+    const hostCount = _.keys(HOST_CONFIG).length;
+    const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % hostCount];
     const config = HOST_CONFIG[host];
     const opHelper = new OperationHelper({
       awsId:     'AKIAION2WEXXVJ6UPPNA',
@@ -62,6 +78,9 @@ export class AmazonCron {
             { upsert: true, multi: false }
           );
         });
+
+        console.log(`Hydration Complete for host: ${host}. X new products`); // @todo replace x; create a true logger
+        this.productHydrationIteration++;
         return Bluebird.all(promiseList);
       })
       .then(() => db.close());

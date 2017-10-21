@@ -9,7 +9,11 @@ interface IConfig {
   };
 }
 
-export const HOST_CONFIG: {[host: string]: IConfig} = {
+export interface IHostConfig {
+  [host: string]: IConfig;
+}
+
+export const HOST_CONFIG: IHostConfig = {
   'localhost:8080' : {
     amazon: {
       itemSearch: {

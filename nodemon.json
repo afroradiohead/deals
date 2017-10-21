@@ -6,7 +6,7 @@
   ],
   "verbose": true,
   "execMap": {
-    "js": "node"
+    "js": "node --harmony"
   },
   "watch": [
     "_.script.js",
