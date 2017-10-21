@@ -24,7 +24,7 @@ export class RssEndpoint {
     db.connect()
       .then(() => db.Products.find().toArray())
       .then((productList) => {
-        productList.forEach(product => { //@todo find where displayDate != null
+        productList.forEach(product => { // @todo find where displayDate != null
           rss.item({
             title:  product.title,
             description: product.description,
