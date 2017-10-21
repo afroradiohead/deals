@@ -22,4 +22,5 @@ export interface IProduct {
   manufacturer: string;
   price: IProductPrice;
   total: IProductTotal;
+  displayDate?: Date;
 }

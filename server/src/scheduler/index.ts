@@ -4,7 +4,7 @@ const KlassList = [
   AmazonScheduler
 ];
 
-export class Cron {
+export class Scheduler {
   constructor(app) {
     KlassList.forEach(klass => new klass(app));
   }

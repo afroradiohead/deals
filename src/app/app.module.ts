@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'product/:slug', component: ProductPageComponent },
   { path: 'product', redirectTo: '/', },
   { path: 'buy/:id', component: BuyPageComponent },
-  { path: 'buy', redirectTo: '/' }
+  { path: 'buy', redirectTo: '/' },
+  { path: '**', redirectTo: '/'}
 ];
 const socketUrl = environment.production ? location.origin : 'http://localhost:8080';
 

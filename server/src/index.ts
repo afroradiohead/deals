@@ -1,7 +1,8 @@
-import * as express from "express";
-import {SocketEndpoint} from "./socket/index";
-import * as winston from "winston";
-import {Cron} from "./scheduler/index";
+import * as express from 'express';
+import {SocketEndpoint} from './socket/index';
+import * as winston from 'winston';
+import {Scheduler} from './scheduler/index';
+import {Endpoint} from './endpoint/index';
 
 
 
@@ -30,8 +31,9 @@ export class AppServer {
 
     app.set('logger', logger);
 
+    const endpoint = new Endpoint(app);
     const socketEndpoint = new SocketEndpoint(app);
-    const cron = new Cron(app);
+    const cron = new Scheduler(app);
   }
 }
 
