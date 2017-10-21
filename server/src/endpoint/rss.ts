@@ -10,7 +10,7 @@ export class RssEndpoint {
   }
 
   private _index(request: express.Request, response: express.Response) {
-    const config = HOST_CONFIG['request.headers.host'];
+    const config = HOST_CONFIG[request.headers.host];
     const db = HostDatabase.Create();
     const rss = new RSS({
       title: config.title,
