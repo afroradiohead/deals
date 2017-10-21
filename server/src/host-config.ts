@@ -23,5 +23,15 @@ export const HOST_CONFIG: IHostConfig = {
         MinPercentageOff: '30'
       }
     }
+  },
+  'www.cheap-nintendo-ds-games.com' : {
+    amazon: {
+      itemSearch: {
+        SearchIndex: 'VideoGames',
+        Keywords: 'nintendo ds games',
+        ResponseGroup: 'ItemAttributes,Offers,Images',
+        MinPercentageOff: '30'
+      }
+    }
   }
 };
