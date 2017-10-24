@@ -10,19 +10,8 @@ const snapsearch = require('snapsearch-client-nodejs');
 app.use(express.static(__dirname + '/dist'))
   .set("httpServer", httpServer);
 
-app.use(snapsearch.connect(
-  new snapsearch.Interceptor(
-    new snapsearch.Client('afroradiohead@gmail.com', 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV', {}, function (error, debugging) {
-      //mandatory custom exception handler for Client errors such as HTTP errors or validation errors from the API
-      console.log(error);
-      // error is a SnapSearchException containing a message and errorDetails which can acquired from `getMessage()` `getErrors()`
-      console.log(debugging);
-      // debugging is an object containing these: {apiUrl, apiKey, apiEmail, requestParameters}
-      // if an exception happens, the middleware is a no-op and passes through to the next stage of your application
-    }),
-    new snapsearch.Detector()
-  )
-));
+app.use(require('prerender-node'));
+
 new server.AppServer(app);
 
 app.get('*', function (req, res) {

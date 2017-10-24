@@ -47,6 +47,7 @@
     "node-schedule": "^1.2.5",
     "nodemon": "^1.12.1",
     "pm2": "^2.7.1",
+    "prerender-node": "^2.7.4",
     "rss": "^1.2.2",
     "rxjs": "^5.4.2",
     "snapsearch-client-nodejs": "^1.1.6",
