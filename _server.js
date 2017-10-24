@@ -1,5 +1,7 @@
 // server.js
 const snapsearch = require('snapsearch-client-nodejs');
+const request = require( 'request' );
+const _ = require( 'lodash' );
 const axios = require('axios');
 const express = require('express');
 const path = require('path');
@@ -29,10 +31,34 @@ new server.AppServer(app);
 
 const initialRequest = function(req, res) {
   try {
-    const snapSearchClient = new snapsearch.Client('afroradiohead@gmail.com', 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV', {});
+    const snapSearchClient = new snapsearch.Client('afroradiohead@gmail.com', 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV', {}, function (error, debugging) {
+      console.log(error);
+      console.log(debugging);
+    });
+
+    request({
+      method: 'POST',
+      url: 'https://snapsearch.io/api/v1/robot',
+      auth: {
+        user: 'afroradiohead@gmail.com',
+        pass: 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV'
+      },
+      timeout: 2000,
+      json: {
+        url: `${req.protocol}://${req.headers.host}${req.originalUrl}`
+      },
+      strictSSL: true,
+      gzip: true
+    }, function ( error, response, body ) {
+      const html = _.get(body, 'content.html', null);
+      if(html){
+        res.send(html);
+      }else{
+        res.sendFile(path.join(__dirname, 'dist/index.html'));
+      }
+    });
 
   } catch(ex) {
-    console.log('snapsearch threw an error');
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   }
 };
