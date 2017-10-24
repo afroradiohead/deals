@@ -10,7 +10,7 @@ const snapsearch = require('snapsearch-client-nodejs');
 app.use(express.static(__dirname + '/dist'))
   .set("httpServer", httpServer);
 
-app.use(require('prerender-node'));
+app.use(require('prerender-node').set('prerenderToken', 'nfzgLQblqGsuWNQ9k0vY'));
 
 new server.AppServer(app);
 
