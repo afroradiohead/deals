@@ -7,7 +7,7 @@ import {Socketeer} from '../../../shared/socketer/index';
 import {SocketCommand} from '../../../shared/socketer/product-page';
 import {Subject} from 'rxjs/Subject';
 import {Meta, Title} from '@angular/platform-browser';
-import {GoogleAnalyticsService} from "../shared/service/google-analytics.service";
+import {GoogleAnalyticsService} from '../shared/service/google-analytics.service';
 
 @Component({
   selector: 'app-product-page',
@@ -28,8 +28,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     private gaService: GoogleAnalyticsService
   ) {
     this.socketeer = new Socketeer(SocketCommand, socket);
-
-
   }
 
   ngOnInit() {
@@ -38,20 +36,37 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     this.randomProductList$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.randomProductList);
 
-    this.route.params
-      .map(params => params['slug'])
-      .do(slug => this.socketeer.send('INIT_FROMCLIENT', {slug: slug}))
-      .takeUntil(this.destroyable$)
-      .subscribe();
-
     this.product$
       .takeUntil(this.destroyable$)
       .subscribe(product => {
         this.title.setTitle(product.title);
         this.meta.addTags([
-          {name: 'description', content: product.title}
+          {name: 'description', content: product.description}
         ]);
+
+        this.gaService.triggerProductDetail({
+          id: product._id,
+          name: product.title,
+          price: product.price.discount
+        });
       });
+    this.randomProductList$
+      .takeUntil(this.destroyable$)
+      .subscribe(productList => {
+        productList.forEach(product => {
+          this.gaService.triggerProductImpression({
+            id: product._id,
+            name: product.title,
+            price: product.price.discount
+          });
+        });
+      });
+    this.route.params
+      .takeUntil(this.destroyable$)
+      .map(params => params['slug'])
+      .subscribe(slug => this.socketeer.send('INIT_FROMCLIENT', {slug: slug}));
+
+    this.gaService.triggerPageView();
   }
 
   ngOnDestroy() {
@@ -59,3 +74,4 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     this.destroyable$.complete();
   }
 }
+
