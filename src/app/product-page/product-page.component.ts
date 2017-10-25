@@ -7,6 +7,7 @@ import {Socketeer} from '../../../shared/socketer/index';
 import {SocketCommand} from '../../../shared/socketer/product-page';
 import {Subject} from 'rxjs/Subject';
 import {Meta, Title} from '@angular/platform-browser';
+import {GoogleAnalyticsService} from "../shared/service/google-analytics.service";
 
 @Component({
   selector: 'app-product-page',
@@ -19,8 +20,16 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   product$: Observable<IProduct>;
   destroyable$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private route: ActivatedRoute, private socket: Socket, private meta: Meta, private title: Title) {
-    this.socketeer = new Socketeer(SocketCommand, this.socket);
+  constructor(
+    private route: ActivatedRoute,
+    socket: Socket,
+    private meta: Meta,
+    private title: Title,
+    private gaService: GoogleAnalyticsService
+  ) {
+    this.socketeer = new Socketeer(SocketCommand, socket);
+
+
   }
 
   ngOnInit() {
