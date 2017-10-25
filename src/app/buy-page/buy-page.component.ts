@@ -42,7 +42,7 @@ export class BuyPageComponent implements OnInit, OnDestroy {
         }, 500);
       });
 
-    this.route.params
+    Observable.from(this.route.params)
       .takeUntil(this.destroyable$)
       .map(params => params['id'])
       .subscribe(id => this.socketeer.send('INIT_FROMCLIENT', {id: id}));

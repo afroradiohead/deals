@@ -61,7 +61,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
           });
         });
       });
-    this.route.params
+
+    Observable.from(this.route.params)
       .takeUntil(this.destroyable$)
       .map(params => params['slug'])
       .subscribe(slug => this.socketeer.send('INIT_FROMCLIENT', {slug: slug}));
