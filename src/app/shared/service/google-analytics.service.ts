@@ -81,14 +81,14 @@ export class GoogleAnalyticsService {
 
   triggerProductDetail(data: IECProductData) {
     this.requireEc();
-    ga('ec:ec:addProduct', data);
+    ga('ec:addProduct', data);
     ga('ec:setAction', 'detail');
     ga('send', 'event', 'ec', 'detail');
   }
 
   triggerProductPurchase(data: IECProductData, action: IECAction) {
     this.requireEc();
-    ga('ec:ec:addProduct', data);
+    ga('ec:addProduct', data);
     ga('ec:setAction', 'purchase', action);
     ga('send', 'event', 'ec', 'purchase');
   }
