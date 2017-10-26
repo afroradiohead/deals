@@ -22,7 +22,7 @@
             </div>
 
             <div class="ribbon sale">
-              <div class="theribbon">SALE</div>
+              <div class="theribbon">ON SALE</div>
               <div class="ribbon-background"></div>
             </div>
 
@@ -38,11 +38,13 @@
               </p>
               <p class="price">
                 <del [hidden]="(product$ | async)?.price.percentage <= 0">${{(product$ | async)?.price.original}}</del>
-                ${{(product$ | async)?.price.discount}}
               </p>
 
               <p class="text-center buttons">
-                <a target="_blank" [routerLink]="['/buy', (product$ | async)?._id || '#']" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Buy Now</a>
+                <a target="_blank" [routerLink]="['/buy', (product$ | async)?._id || '#']" class="btn btn-cta">
+                  <i class="fa fa-shopping-cart "></i>
+                  Buy Now At <span class="price">${{(product$ | async)?.price.discount}}</span>
+                </a>
               </p>
             </div>
           </div>
@@ -87,10 +89,12 @@
                 <h3>{{product.title}}</h3>
                 <p class="price">
                   <del [hidden]="product.price.percentage <= 0">${{product.price.original}}</del>
-                  ${{product.price.discount}}
                 </p>
                 <p class="buttons">
-                  <a target="_blank" [routerLink]="['/buy', product._id]" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                  <a target="_blank" [routerLink]="['/buy', product._id]" class="btn btn-cta">
+                    <i class="fa fa-shopping-cart"></i>
+                    Buy Now At <span class="price">${{product.price.discount}}</span>
+                  </a>
                 </p>
               </div>
             </div>

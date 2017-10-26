@@ -187,11 +187,11 @@ _________________________________________________________ -->
                   <del *ngIf="product.price.percentage > 0">
                     ${{product.price.original}}
                   </del>
-                  ${{product.price.discount}}
                 </p>
                 <p class="buttons">
-                  <a [routerLink]="['/product', product.slug]" class="btn btn-default">View detail</a>
-                  <a target="_blank" [routerLink]="['/buy', product._id]" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                  <a target="_blank" [routerLink]="['/buy', product._id]" class="btn btn-cta">
+                    <i class="fa fa-shopping-cart"></i> Buy Now at <span class="price">${{product.price.discount}}</span>
+                  </a>
                 </p>
               </div>
 
@@ -202,7 +202,7 @@ _________________________________________________________ -->
               <!-- /.ribbon -->
 
               <div class="ribbon sale" *ngIf="product.price.percentage > 0">
-                <div class="theribbon">{{product.price.percentage}}% off</div>
+                <div class="theribbon">ON SALE</div>
                 <div class="ribbon-background"></div>
               </div>
               <!-- /.ribbon -->

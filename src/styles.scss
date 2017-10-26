@@ -1,6 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
 
-.ribbon .theribbon{
-  width: 90px;
-  text-align:center;
+.ribbon {
+  padding-left: 0;
+
+  .theribbon{
+    width: 90px;
+    text-align:center;
+    padding: 6px 0 6px 0;
+    margin: 30px 10px 10px 0;
+
+    &:after {
+      left: 0;
+      top:0;
+      border: none;
+    }
+  }
+
+  &.sale{
+    .theribbon{
+      background-color: #FF00FF;
+    }
+  }
 }
+
+
+.btn-cta {
+  background-color: #FF00FF;
+  color: white;
+
+  &:hover {
+    color: #731073;
+    box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
+  }
+
+  .price {
+    font-size: 18px;
+  }
+}
+
+

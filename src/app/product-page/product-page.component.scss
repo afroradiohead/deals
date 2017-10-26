@@ -1,4 +1,13 @@
 .product {
   min-height: 460px;
   overflow:hidden;
+  position:relative;
+
+  .buttons {
+    position:absolute;
+    bottom:0;
+    text-align:center;
+    width: 100%;
+  }
 }
+
