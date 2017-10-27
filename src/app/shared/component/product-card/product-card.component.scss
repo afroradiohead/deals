@@ -1,0 +1,80 @@
+@import "../../../variables";
+
+:host {
+  display:flex;
+  width: 100%;
+  height: 292px;
+  overflow:hidden;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+
+  .sale-tag {
+    background: $rgba-complement-0;
+    //background: #8434d9 linear-gradient(to top, #8434d9, #450c63);
+    color: $rgba-complement-0;
+    display: block;
+    font-size: 12px;
+    padding: 22px 50px 3px 50px;
+    position: absolute;
+    left: -47px;
+    text-align: center;
+    top: -10px;
+    transform: rotate(-45deg);
+    z-index: 9;
+  }
+
+  .product-image {
+    object-fit: scale-down;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    left:0;
+    top:0;
+  }
+
+  .left-info-panel {
+    position:absolute;
+    left:0;
+    bottom:0;
+    background-color:rgba(255, 255, 255, 0.6);
+    padding: 10px;
+  }
+
+  .right-info-panel {
+    position:absolute;
+    right:0;
+    bottom:0;
+
+    .price {
+      font-size: 28px;
+      text-align:center;
+      color:white;
+      text-shadow: 0px 0px 7px black;
+    }
+
+    .buy-now{
+      background: $rgba-primary-0 linear-gradient(to bottom, $rgba-primary-0, $rgba-primary-4);
+      border-radius: 10px 0 0 0;
+      color: #ffffff;
+      font-size: 20px;
+      padding: 10px 20px 10px 20px;
+      text-decoration: none;
+      display: block;
+      position:relative;
+
+      .original-price {
+        font-size: 18px;
+        text-align: center;
+        color: $rgba-complement-0;
+        transform: rotate(-45deg);
+        position: absolute;
+        left: -24px;
+        top: -9px;
+        text-decoration: line-through;
+        text-shadow: 0px 0px 7px black;
+      }
+    }
+  }
+
+}

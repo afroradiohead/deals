@@ -161,55 +161,11 @@ _________________________________________________________ -->
       <div class="col-md-12">
 
         <div class="row products ">
-
-          <div class="col-md-3 col-sm-6" *ngFor="let product of productList$ | async">
-            <div class="product">
-              <div class="flip-container">
-                <div class="flipper">
-                  <div class="front">
-                    <a [routerLink]="['/product', product.slug]">
-                      <img [src]="product.image" alt="" class="img-responsive">
-                    </a>
-                  </div>
-                  <div class="back">
-                    <a [routerLink]="['/product', product.slug]">
-                      <img [src]="product.image" alt="" class="img-responsive">
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <a [routerLink]="['/product', product.slug]" class="invisible">
-                <img [src]="product.image" alt="" class="img-responsive">
-              </a>
-              <div class="text">
-                <h3><a [routerLink]="['/product', product.slug]">{{product.title}}</a></h3>
-                <p class="price">
-                  <del *ngIf="product.price.percentage > 0">
-                    ${{product.price.original}}
-                  </del>
-                </p>
-                <p class="buttons">
-                  <a target="_blank" [routerLink]="['/buy', product._id]" class="btn btn-cta">
-                    <i class="fa fa-shopping-cart"></i> Buy Now at <span class="price">${{product.price.discount}}</span>
-                  </a>
-                </p>
-              </div>
-
-              <div class="ribbon new">
-                <div class="theribbon">NEW</div>
-                <div class="ribbon-background"></div>
-              </div>
-              <!-- /.ribbon -->
-
-              <div class="ribbon sale" *ngIf="product.price.percentage > 0">
-                <div class="theribbon">ON SALE</div>
-                <div class="ribbon-background"></div>
-              </div>
-              <!-- /.ribbon -->
-            </div>
-            <!-- /.product -->
+          <div class="col-md-4 col-sm-6" *ngFor="let product of productList$ | async">
+            <app-product-card [product]="product" style="margin-bottom: 30px;"></app-product-card>
           </div>
         </div>
+
         <!-- /.products -->
 
       </div>

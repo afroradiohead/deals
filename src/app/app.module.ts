@@ -12,6 +12,7 @@ import { TopComponent } from './shared/component/top/top.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 import {GoogleAnalyticsService} from "./shared/service/google-analytics.service";
+import { ProductCardComponent } from './shared/component/product-card/product-card.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -41,7 +42,8 @@ const socketIoConfig: SocketIoConfig = {
     HomePageComponent,
     BuyPageComponent,
     FooterComponent,
-    TopComponent
+    TopComponent,
+    ProductCardComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

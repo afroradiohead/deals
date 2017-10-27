@@ -40,6 +40,7 @@
     "concurrently": "^3.5.0",
     "core-js": "^2.4.1",
     "express": "^4.15.5",
+    "font-awesome": "^4.7.0",
     "forever": "^0.15.3",
     "iridium": "^8.0.0-alpha.5",
     "lodash": "^4.17.4",

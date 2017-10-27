@@ -1,0 +1,72 @@
+<!--<div class="sale-tag" *ngIf="product.price.percentage > 0">-->
+<!--$$$-->
+<!--</div>-->
+
+<img class="product-image" [src]="product.image" />
+
+<div class="left-info-panel">
+  <!--<div><i class="fa fa-eye"></i> 22</div>-->
+  <!--<div><i class="fa fa-hand-pointer-o"></i> 7</div>-->
+  <a class="more-info" [routerLink]="['/product', product.slug]">More Info</a>
+</div>
+
+
+<div class="right-info-panel">
+
+  <div class="price">
+    ${{product.price.discount}}
+  </div>
+  <a class="buy-now" target="_blank" [routerLink]="['/buy', product._id]">
+    <div class="original-price">
+      ${{product.price.original}}
+    </div>
+    <i class="fa fa-shopping-cart"></i>Order Now
+  </a>
+</div>
+
+
+<!--<div class="product">-->
+<!--<div class="flip-container">-->
+<!--<div class="flipper">-->
+<!--<div class="front">-->
+<!--<a [routerLink]="['/product', product.slug]">-->
+<!--<img [src]="product.image" alt="" class="img-responsive">-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="back">-->
+<!--<a [routerLink]="['/product', product.slug]">-->
+<!--<img [src]="product.image" alt="" class="img-responsive">-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<a [routerLink]="['/product', product.slug]" class="invisible">-->
+<!--<img [src]="product.image" alt="" class="img-responsive">-->
+<!--</a>-->
+<!--<div class="text">-->
+<!--<h3><a [routerLink]="['/product', product.slug]">{{product.title}}</a></h3>-->
+<!--<p class="price">-->
+<!--<del *ngIf="product.price.percentage > 0">-->
+<!--${{product.price.original}}-->
+<!--</del>-->
+<!--</p>-->
+<!--<p class="buttons">-->
+<!--<a target="_blank" [routerLink]="['/buy', product._id]" class="btn btn-cta">-->
+<!--<i class="fa fa-shopping-cart"></i> Buy Now at <span class="price">${{product.price.discount}}</span>-->
+<!--</a>-->
+<!--</p>-->
+<!--</div>-->
+
+<!--<div class="ribbon new">-->
+<!--<div class="theribbon">NEW</div>-->
+<!--<div class="ribbon-background"></div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.ribbon &ndash;&gt;-->
+
+<!--<div class="ribbon sale" *ngIf="product.price.percentage > 0">-->
+<!--<div class="theribbon">ON SALE</div>-->
+<!--<div class="ribbon-background"></div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /.ribbon &ndash;&gt;-->
+<!--</div>-->
+<!-- /.product -->

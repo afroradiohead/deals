@@ -66,39 +66,8 @@
             </div>
           </div>
 
-          <div class="col-md-3 col-sm-6" *ngFor="let product of randomProductList$ | async">
-            <div class="product same-height">
-              <div class="flip-container">
-                <div class="flipper">
-                  <div class="front">
-                    <a [routerLink]="['/product', product.slug]">
-                      <img [src]="product.image" alt="" class="img-responsive">
-                    </a>
-                  </div>
-                  <div class="back">
-                    <a [routerLink]="['/product', product.slug]">
-                      <img [src]="product.image" alt="" class="img-responsive">
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <a [routerLink]="['/product', product.slug]" class="invisible">
-                <img [src]="product.image" alt="" class="img-responsive">
-              </a>
-              <div class="text">
-                <h3>{{product.title}}</h3>
-                <p class="price">
-                  <del [hidden]="product.price.percentage <= 0">${{product.price.original}}</del>
-                </p>
-                <p class="buttons">
-                  <a target="_blank" [routerLink]="['/buy', product._id]" class="btn btn-cta">
-                    <i class="fa fa-shopping-cart"></i>
-                    Buy Now At <span class="price">${{product.price.discount}}</span>
-                  </a>
-                </p>
-              </div>
-            </div>
-            <!-- /.product -->
+          <div class="col-md-4 col-sm-6" *ngFor="let product of randomProductList$ | async">
+            <app-product-card [product]="product" style="margin-bottom: 20px"></app-product-card>
           </div>
 
         </div>
