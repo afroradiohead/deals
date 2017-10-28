@@ -5,6 +5,26 @@
   <title>Deals</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script>
+    function updateQueryStringParameter(uri, key, value) {
+      const re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+      const separator = uri.indexOf('?') !== -1 ? "&" : "?";
+      if (uri.match(re)) {
+        return uri.replace(re, '$1' + key + "=" + value + '$2');
+      }
+      else {
+        return uri + separator + key + "=" + value;
+      }
+    }
+
+    const newUrl = updateQueryStringParameter(window.location.href, 'rendered', '');
+    const m = document.createElement('link');
+    m.rel = 'canonical';
+    m.href = newUrl;
+    document.head.appendChild(m);
+  </script>
+
 </head>
 <body>
   <app-root></app-root>
