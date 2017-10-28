@@ -10,7 +10,7 @@ export class HomePageEndpoint {
       const db = HostDatabase.Create();
 
       db.connect().then(() => db.Products.find({host: socket.handshake.headers.host}))
-        .then(products => products.toArray())
+        .then(products => products.sort({ 'price.saved': -1 }).toArray())
         .then(productList => {
           socketeer.send('INIT_FROMSERVER', {
             productList: productList
