@@ -21,12 +21,17 @@ export class BuyPageComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, socket: Socket, private gaService: GoogleAnalyticsService) {
     this.socketeer = new Socketeer(SocketCommand, socket);
-  }
 
-  ngOnInit() {
     this.product$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.product);
 
+    Observable.from(this.route.params)
+      .takeUntil(this.destroyable$)
+      .map(params => params['id'])
+      .subscribe(id => this.socketeer.send('INIT_FROMCLIENT', {id: id}));
+  }
+
+  ngOnInit() {
     this.product$
       .takeUntil(this.destroyable$)
       .subscribe(product => {
@@ -42,10 +47,6 @@ export class BuyPageComponent implements OnInit, OnDestroy {
         }, 500);
       });
 
-    Observable.from(this.route.params)
-      .takeUntil(this.destroyable$)
-      .map(params => params['id'])
-      .subscribe(id => this.socketeer.send('INIT_FROMCLIENT', {id: id}));
     this.gaService.triggerPageView();
   }
 

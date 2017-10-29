@@ -19,11 +19,16 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(socket: Socket, private gaService: GoogleAnalyticsService) {
     this.socketeer = new Socketeer(SocketCommand, socket);
+
+    this.productList$ = this.socketeer.from('INIT_FROMSERVER')
+      .map(response => response.productList);
+
+    this.socketeer.send('INIT_FROMCLIENT', {});
   }
 
   ngOnInit() {
-    this.productList$ = this.socketeer.from('INIT_FROMSERVER')
-      .map(response => response.productList);
+    // this.productList$ = this.socketeer.from('INIT_FROMSERVER')
+    //   .map(response => response.productList);
 
     this.productList$
       .takeUntil(this.destroyable$)
@@ -37,7 +42,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         });
       });
 
-    this.socketeer.send('INIT_FROMCLIENT', {});
+    // this.socketeer.send('INIT_FROMCLIENT', {});
 
     this.gaService.triggerPageView();
   }

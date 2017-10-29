@@ -28,14 +28,18 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     private gaService: GoogleAnalyticsService
   ) {
     this.socketeer = new Socketeer(SocketCommand, socket);
-  }
-
-  ngOnInit() {
     this.product$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.product);
     this.randomProductList$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.randomProductList);
 
+    Observable.from(this.route.params)
+      .takeUntil(this.destroyable$)
+      .map(params => params['slug'])
+      .subscribe(slug => this.socketeer.send('INIT_FROMCLIENT', {slug: slug}));
+  }
+
+  ngOnInit() {
     this.product$
       .takeUntil(this.destroyable$)
       .subscribe(product => {
@@ -61,11 +65,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
           });
         });
       });
-
-    Observable.from(this.route.params)
-      .takeUntil(this.destroyable$)
-      .map(params => params['slug'])
-      .subscribe(slug => this.socketeer.send('INIT_FROMCLIENT', {slug: slug}));
 
     this.gaService.triggerPageView();
   }
