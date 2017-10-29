@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
-import {Socket} from 'ngx-socket-io';
 import {IProduct} from '../../../shared/interface/product';
 import {Socketeer} from '../../../shared/socketer/index';
 import {Subject} from 'rxjs/Subject';
 import {SocketCommand} from '../../../shared/socketer/buy-page';
 import {GoogleAnalyticsService} from '../shared/service/google-analytics.service';
 import * as _ from 'lodash';
+import {SocketService} from "../shared/service/socket.service";
 
 @Component({
   selector: 'app-buy-page',
@@ -19,8 +19,8 @@ export class BuyPageComponent implements OnInit, OnDestroy {
   socketeer: Socketeer<SocketCommand>;
   destroyable$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private route: ActivatedRoute, socket: Socket, private gaService: GoogleAnalyticsService) {
-    this.socketeer = new Socketeer(SocketCommand, socket);
+  constructor(private route: ActivatedRoute, socketService: SocketService, private gaService: GoogleAnalyticsService) {
+    this.socketeer = new Socketeer(SocketCommand, socketService.socket);
 
     this.product$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.product);

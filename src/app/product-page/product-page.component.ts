@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {Socket} from 'ngx-socket-io';
 import {IProduct} from '../../../shared/interface/product';
 import {Socketeer} from '../../../shared/socketer/index';
 import {SocketCommand} from '../../../shared/socketer/product-page';
 import {Subject} from 'rxjs/Subject';
 import {Meta, Title} from '@angular/platform-browser';
 import {GoogleAnalyticsService} from '../shared/service/google-analytics.service';
+import {SocketService} from '../shared/service/socket.service';
 
 @Component({
   selector: 'app-product-page',
@@ -22,12 +22,12 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    socket: Socket,
+    socketService: SocketService,
     private meta: Meta,
     private title: Title,
     private gaService: GoogleAnalyticsService
   ) {
-    this.socketeer = new Socketeer(SocketCommand, socket);
+    this.socketeer = new Socketeer(SocketCommand, socketService.socket);
     this.product$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.product);
     this.randomProductList$ = this.socketeer.from('INIT_FROMSERVER')

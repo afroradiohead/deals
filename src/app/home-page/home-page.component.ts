@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Socket} from 'ngx-socket-io';
 import {IProduct} from '../../../shared/interface/product';
 import {SocketCommand} from '../../../shared/socketer/home-page';
 import {Socketeer} from '../../../shared/socketer/index';
 import {GoogleAnalyticsService} from "../shared/service/google-analytics.service";
 import {Subject} from "rxjs/Subject";
+import {SocketService} from "../shared/service/socket.service";
 
 @Component({
   selector: 'app-home-page',
@@ -17,8 +17,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
   productList$: Observable<IProduct[]>;
   destroyable$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(socket: Socket, private gaService: GoogleAnalyticsService) {
-    this.socketeer = new Socketeer(SocketCommand, socket);
+  constructor(socketService: SocketService, private gaService: GoogleAnalyticsService) {
+    this.socketeer = new Socketeer(SocketCommand, socketService.socket);
 
     this.productList$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.productList);
