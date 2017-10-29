@@ -24,6 +24,9 @@ app.get('/', initialRequest)
       res.send(true);
       res.end();
     }, 3000);
+  })
+  .get('/robots.txt', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/assets/robots.txt'));
   });
 
 app
