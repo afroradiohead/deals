@@ -22,15 +22,7 @@
         "styles.scss"
       ],
       "scripts": [
-        "assets/js/jquery-1.11.0.min.js",
-        "assets/js/bootstrap.min.js",
-        "assets/js/jquery.cookie.js",
-        "assets/js/waypoints.min.js",
-        "assets/js/modernizr.js",
-        "assets/js/bootstrap-hover-dropdown.js",
-        "assets/js/owl.carousel.min.js",
-        "assets/js/front.js",
-        "assets/js/respond.min.js"
+
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
