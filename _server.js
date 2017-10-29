@@ -15,35 +15,35 @@ new server.AppServer(app);
 
 
 const initialRequest = function(req, res) {
-  if(seoBotDetect(req)){
-    try {
-      request({
-        method: 'POST',
-        url: 'https://snapsearch.io/api/v1/robot',
-        auth: {
-          user: 'afroradiohead@gmail.com',
-          pass: 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV'
-        },
-        timeout: 2000,
-        json: {
-          url: `${req.protocol}://${req.headers.host}${req.originalUrl}`
-        },
-        strictSSL: true,
-        gzip: true
-      }, ( error, response, body ) => {
-        const html = _.get(body, 'content.html', null);
-        if(html){
-          res.send(html);
-        }else{
-          res.sendFile(path.join(__dirname, 'dist/index.html'));
-        }
-      });
-    } catch(ex) {
-      res.sendFile(path.join(__dirname, 'dist/index.html'));
-    }
-  } else {
+  // if(seoBotDetect(req)){
+  //   try {
+  //     request({
+  //       method: 'POST',
+  //       url: 'https://snapsearch.io/api/v1/robot',
+  //       auth: {
+  //         user: 'afroradiohead@gmail.com',
+  //         pass: 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV'
+  //       },
+  //       timeout: 2000,
+  //       json: {
+  //         url: `${req.protocol}://${req.headers.host}${req.originalUrl}`
+  //       },
+  //       strictSSL: true,
+  //       gzip: true
+  //     }, ( error, response, body ) => {
+  //       const html = _.get(body, 'content.html', null);
+  //       if(html){
+  //         res.send(html);
+  //       }else{
+  //         res.sendFile(path.join(__dirname, 'dist/index.html'));
+  //       }
+  //     });
+  //   } catch(ex) {
+  //     res.sendFile(path.join(__dirname, 'dist/index.html'));
+  //   }
+  // } else {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
-  }
+  // }
 
 };
 

@@ -35,6 +35,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
             price: product.price.discount
           });
         });
+
+        document.documentElement.classList.add('ready');
       });
 
     this.socketeer.send('INIT_FROMCLIENT', {});

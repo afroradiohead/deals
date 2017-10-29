@@ -8,6 +8,15 @@ $fa-font-path: "../node_modules/font-awesome/fonts";
 
 /* You can add global styles to this file, and also import other style files */
 
+html {
+  display: none;
+
+
+  &.ready {
+    display: block;
+  }
+}
+
 .ribbon {
   padding-left: 0;
 
