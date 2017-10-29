@@ -15,41 +15,19 @@ new server.AppServer(app);
 
 
 const initialRequest = function(req, res) {
-  // if(seoBotDetect(req)){
-  //   try {
-  //     request({
-  //       method: 'POST',
-  //       url: 'https://snapsearch.io/api/v1/robot',
-  //       auth: {
-  //         user: 'afroradiohead@gmail.com',
-  //         pass: 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV'
-  //       },
-  //       timeout: 2000,
-  //       json: {
-  //         url: `${req.protocol}://${req.headers.host}${req.originalUrl}`
-  //       },
-  //       strictSSL: true,
-  //       gzip: true
-  //     }, ( error, response, body ) => {
-  //       const html = _.get(body, 'content.html', null);
-  //       if(html){
-  //         res.send(html);
-  //       }else{
-  //         res.sendFile(path.join(__dirname, 'dist/index.html'));
-  //       }
-  //     });
-  //   } catch(ex) {
-  //     res.sendFile(path.join(__dirname, 'dist/index.html'));
-  //   }
-  // } else {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
-  // }
-
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 };
 
-app.get('/', initialRequest);
-// @todo fix the way this look, cuz it's weird that i gotta duplicate code
+app.get('/', initialRequest)
+  .get('/delay', (req, res) => {
+    setTimeout(() => {
+      res.send(true);
+      res.end();
+    }, 3000);
+  });
+
 app
   .use(express.static(__dirname + '/dist'))
   .get('*', initialRequest);
+
 
