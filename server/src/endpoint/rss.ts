@@ -28,7 +28,7 @@ export class RssEndpoint {
           rss.item({
             title:  product.title,
             description: product.description,
-            url: `${request.protocol}://${request.headers.host}/product/${product.slug}?rendered`,
+            url: `${request.protocol}://${request.headers.host}/product/${product.slug}`,
             date: Moment(product.displayDate).format(),
           });
         });

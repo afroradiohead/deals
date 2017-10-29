@@ -53,6 +53,7 @@
     "request": "^2.83.0",
     "rss": "^1.2.2",
     "rxjs": "^5.4.2",
+    "seo-bot-detect": "^1.0.3",
     "snapsearch-client-nodejs": "^1.1.6",
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.0.3",

@@ -5,17 +5,6 @@
   <title>Deals</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('rendered', '');
-
-    const m = document.createElement('link');
-    m.rel = 'canonical';
-    m.href = `${location.pathname}?${urlParams}`;
-    document.head.appendChild(m);
-  </script>
-
 </head>
 <body>
   <app-root></app-root>

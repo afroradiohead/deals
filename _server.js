@@ -1,8 +1,7 @@
 // server.js
-const snapsearch = require('snapsearch-client-nodejs');
 const request = require( 'request' );
 const _ = require( 'lodash' );
-const axios = require('axios');
+const seoBotDetect = require('seo-bot-detect');
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -16,9 +15,7 @@ new server.AppServer(app);
 
 
 const initialRequest = function(req, res) {
-  const requestedRendered = _.has(req.query, 'rendered');
-
-  if(requestedRendered){
+  if(seoBotDetect(req)){
     try {
       request({
         method: 'POST',
