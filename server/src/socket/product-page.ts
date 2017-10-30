@@ -22,7 +22,7 @@ export class ProductPageEndpoint {
           }));
           const randomProductList$ = Observable.fromPromise(db.Products.aggregate([
             {$match: {host: socket.handshake.headers.host, slug: {$ne: slug}}},
-            {$sample: { size: 2 }}
+            {$sample: { size: 3 }}
           ]));
           return product$.combineLatest(randomProductList$);
         })

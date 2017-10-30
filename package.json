@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "serve-1": "ng serve --proxy-config proxy.config.json",
+    "serve-1": "ng serve",
     "serve-2": "./node_modules/.bin/tsc-watch -p ./server/tsconfig.json",
     "serve-3": "./node_modules/.bin/nodemon ./_server.js",
     "ng": "ng",
