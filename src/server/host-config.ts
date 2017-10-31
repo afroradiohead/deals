@@ -40,5 +40,17 @@ export const HOST_CONFIG: IHostConfig = {
         MinPercentageOff: '30'
       }
     }
+  },
+  'www.33-nintendo-ds-games.com' : {
+    title: 'Cheap Nintendo Ds Games',
+    description: 'Buy nintendo ds games at a cheaper price',
+    amazon: {
+      itemSearch: {
+        SearchIndex: 'VideoGames',
+        Keywords: 'nintendo ds games',
+        ResponseGroup: 'ItemAttributes,Offers,Images',
+        MinPercentageOff: '30'
+      }
+    }
   }
 };
