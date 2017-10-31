@@ -1,11 +1,12 @@
 import {HostDatabase} from '../iridium/index';
 import * as _ from 'lodash';
 import * as schedule from 'node-schedule';
-import {IProduct} from '../../../shared/interface/product';
+import {IProduct} from '../../shared/interface/product';
 import * as Bluebird from 'bluebird';
+import * as moment from 'moment';
 import {HOST_CONFIG, IHostConfig} from '../host-config';
-
 const {OperationHelper} = require('apac');
+
 
 const slugify = function(text){
   return text.toString().toLowerCase()
@@ -18,9 +19,15 @@ const slugify = function(text){
 export class AmazonScheduler {
   mutablableHostConfig: IHostConfig;
   hostConfig: IHostConfig;
-  productHydrationIteration = 4;
+  productHydrationIteration = 0;
 
-  constructor(app) {
+  static GetHydrationTimestamp(host: string): string {
+    // const index = _.keys(HOST_CONFIG).indexOf(host);
+
+    return moment().add(5, 'days').format();
+  }
+
+  constructor(app) { // schedulers should be a singleton
     this.mutablableHostConfig = _.cloneDeep(HOST_CONFIG);
     this.hostConfig = HOST_CONFIG;
     const hostCount = _.keys(HOST_CONFIG).length;

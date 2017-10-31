@@ -1,10 +1,10 @@
 import * as socket from 'socket.io';
-import {HomePageEndpoint} from './home-page';
-import {ProductPageEndpoint} from './product-page';
-import {BuyPageEndpoint} from "./buy-page";
+import {ProductPageServer} from '../../app/product-page/product-page.server';
+import {HomePageEndpoint} from '../../app/home-page/home-page.server';
+import {BuyPageEndpoint} from '../../app/buy-page/buy-page.server';
 
 const socketEndpointClassList = [
-  HomePageEndpoint, ProductPageEndpoint, BuyPageEndpoint
+  HomePageEndpoint, ProductPageServer, BuyPageEndpoint
 ];
 
 export class SocketEndpoint {

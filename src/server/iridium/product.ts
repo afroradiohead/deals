@@ -1,5 +1,5 @@
 import {Instance, Collection, Index, Property, ObjectID} from 'iridium';
-import {IProduct, IProductPrice, IProductTotal} from '../../../shared/interface/product';
+import {IProduct, IProductPrice, IProductTotal} from '../../shared/interface/product';
 
 
 @Index({ asin: 1, host: 1 }, { unique: true })

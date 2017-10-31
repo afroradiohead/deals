@@ -5,17 +5,18 @@ const seoBotDetect = require('seo-bot-detect');
 const express = require('express');
 const path = require('path');
 const app = express();
-const server = require('./server/dist/server/src');
+const server = require('./server');
 const httpServer = app.listen(process.env.PORT || 8080);
+const ___distdirname = `${__dirname}/../dist/`;
 
-app.set("httpServer", httpServer);
+app.set('httpServer', httpServer);
 
 
 new server.AppServer(app);
 
 
 const initialRequest = function(req, res) {
-  if(seoBotDetect(req)){
+  if(seoBotDetect(req)) {
     try {
       request({
         method: 'POST',
@@ -32,17 +33,17 @@ const initialRequest = function(req, res) {
         gzip: true
       }, ( error, response, body ) => {
         const html = _.get(body, 'content.html', null);
-        if(html){
+        if (html) {
           res.send(html);
-        }else{
-          res.sendFile(path.join(__dirname, 'dist/index.html'));
+        }else {
+          res.sendFile(path.join(___distdirname, 'index.html'));
         }
       });
-    } catch(ex) {
-      res.sendFile(path.join(__dirname, 'dist/index.html'));
+    } catch (ex) {
+      res.sendFile(path.join(___distdirname, 'index.html'));
     }
   } else {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+    res.sendFile(path.join(___distdirname, '/index.html'));
   }
 };
 
@@ -54,11 +55,13 @@ app.get('/', initialRequest)
     }, 3000);
   })
   .get('/robots.txt', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/assets/robots.txt'));
+    res.sendFile(path.join(___distdirname, 'assets/robots.txt'));
   });
 
 app
-  .use(express.static(__dirname + '/dist'))
+  .use(express.static(___distdirname))
   .get('*', initialRequest);
+
+
 
 

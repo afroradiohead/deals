@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
-import {IProduct} from '../../../shared/interface/product';
-import {Socketeer} from '../../../shared/socketer/index';
+import {IProduct} from '../../shared/interface/product';
+import {Socketeer} from '../../shared/class/socketeer';
 import {Subject} from 'rxjs/Subject';
-import {SocketCommand} from '../../../shared/socketer/buy-page';
+import {SocketCommand} from './buy-page.socket';
 import {GoogleAnalyticsService} from '../shared/service/google-analytics.service';
 import * as _ from 'lodash';
 import {SocketService} from "../shared/service/socket.service";

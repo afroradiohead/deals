@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {IProduct} from '../../../shared/interface/product';
-import {SocketCommand} from '../../../shared/socketer/home-page';
-import {Socketeer} from '../../../shared/socketer/index';
+import {IProduct} from '../../shared/interface/product';
+import {SocketCommand} from './home-page.socket';
+import {Socketeer} from '../../shared/class/socketeer';
 import {GoogleAnalyticsService} from "../shared/service/google-analytics.service";
 import {Subject} from "rxjs/Subject";
 import {SocketService} from "../shared/service/socket.service";

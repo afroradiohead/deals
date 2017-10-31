@@ -1,14 +1,13 @@
-import {SocketCommand} from '../../../shared/socketer/product-page';
-import {Socketeer} from '../../../shared/socketer/index';
-import {HostDatabase} from '../iridium/index';
+import {SocketCommand} from './product-page.socket';
+import {Socketeer} from '../../shared/class/socketeer';
 import {Observable} from 'rxjs/Observable';
-import {IProduct} from '../../../shared/interface/product';
+import {IProduct} from '../../shared/interface/product';
+import {HostDatabase} from '../../server/iridium/index';
+import {AmazonScheduler} from '../../server/scheduler/amazon';
 
-export class ProductPageEndpoint {
+export class ProductPageServer {
   constructor(socket) {
     const socketeer = new Socketeer(SocketCommand, socket);
-
-
 
     socketeer.from('INIT_FROMCLIENT').subscribe(request => {
       const db = HostDatabase.Create();
@@ -31,6 +30,7 @@ export class ProductPageEndpoint {
           const randomProductList = data[1] as IProduct[];
 
           socketeer.send('INIT_FROMSERVER', {
+            refreshTimestamp: AmazonScheduler.GetHydrationTimestamp(socket.handshake.headers.host),
             product: product,
             randomProductList: randomProductList
           });

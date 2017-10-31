@@ -1,5 +1,5 @@
 import {Core, Model} from 'iridium';
-import {IProduct} from '../../../shared/interface/product';
+import {IProduct} from '../../shared/interface/product';
 import {Product} from './product';
 
 export class HostDatabase extends Core {

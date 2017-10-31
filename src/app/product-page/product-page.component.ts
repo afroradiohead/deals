@@ -1,13 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Scheduler} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {IProduct} from '../../../shared/interface/product';
-import {Socketeer} from '../../../shared/socketer/index';
-import {SocketCommand} from '../../../shared/socketer/product-page';
+import {IProduct} from '../../shared/interface/product';
+import {Socketeer} from '../../shared/class/socketeer';
+import {SocketCommand} from './product-page.socket';
 import {Subject} from 'rxjs/Subject';
 import {Meta, Title} from '@angular/platform-browser';
 import {GoogleAnalyticsService} from '../shared/service/google-analytics.service';
 import {SocketService} from '../shared/service/socket.service';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-product-page',
@@ -15,6 +17,7 @@ import {SocketService} from '../shared/service/socket.service';
   styleUrls: ['./product-page.component.scss']
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
+  countdown$: Observable<{ hour: number; minute: number; second: number; }>;
   socketeer: Socketeer<SocketCommand>;
   randomProductList$: Observable<IProduct[]>;
   product$: Observable<IProduct>;
@@ -32,6 +35,31 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       .map(response => response.product);
     this.randomProductList$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.randomProductList);
+    // this.randomProductList$ = this.socketeer.from('INIT_FROMSERVER')
+    //   .map(response => response.refreshTimestamp);
+
+    this.countdown$ = this.socketeer.from('INIT_FROMSERVER')
+      .map(response => response.refreshTimestamp)
+      .combineLatest(Observable.interval(1000, Scheduler.animationFrame))
+      .map(data => {
+        const refreshTimestamp = data[0];
+        const duration = moment.duration(moment(refreshTimestamp).diff(moment()));
+        const time = moment(duration.asMilliseconds());
+
+        return {
+          hour: time.get('hour'),
+          minute: time.get('minute'),
+          second: time.get('second'),
+        };
+      });
+    // const start = 10;
+    // Observable
+    //   .interval(1000)
+    //   .map(i => start - i)
+    //   .take(start + 1)
+    //   .subscribe({
+    //     moment.duration(end.diff(startTime));
+    //   });
 
     Observable.from(this.route.params)
       .takeUntil(this.destroyable$)

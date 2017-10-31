@@ -11,6 +11,7 @@ interface IConfig {
   };
 }
 
+
 export interface IHostConfig {
   [host: string]: IConfig;
 }

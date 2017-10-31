@@ -1,6 +1,6 @@
-import {SocketCommand} from '../../../shared/socketer/home-page';
-import {Socketeer} from '../../../shared/socketer/index';
-import {HostDatabase} from '../iridium/index';
+import {SocketCommand} from './home-page.socket';
+import {Socketeer} from '../../shared/class/socketeer';
+import {HostDatabase} from "../../server/iridium/index";
 
 export class HomePageEndpoint {
   constructor(socket) {

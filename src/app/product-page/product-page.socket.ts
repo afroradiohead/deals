@@ -1,5 +1,5 @@
-import {IProduct} from '../interface/product';
-import {ISocketCommand} from './index';
+import {IProduct} from '../../shared/interface/product';
+import {ISocketCommand} from '../../shared/class/socketeer';
 
 export class SocketCommand implements ISocketCommand {
   namespace = 'product-page';
@@ -9,6 +9,7 @@ export class SocketCommand implements ISocketCommand {
       slug: string
     },
     INIT_FROMSERVER: {
+      refreshTimestamp: string
       product: IProduct,
       randomProductList: IProduct[],
     };

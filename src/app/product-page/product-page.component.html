@@ -13,6 +13,24 @@
     </div>
   </div>
 
+  <section class="countdown" *ngIf="(countdown$ | async) as countdown">
+    <h3>Refreshing in...</h3>
+    <div id="clockdiv">
+      <div>
+        <span class="hours">{{countdown.hour}}</span>
+        <div class="smalltext">Hours</div>
+      </div>
+      <div>
+        <span class="minutes">{{countdown.minute}}</span>
+        <div class="smalltext">Minutes</div>
+      </div>
+      <div>
+        <span class="seconds">{{countdown.second}}</span>
+        <div class="smalltext">Seconds</div>
+      </div>
+    </div>
+  </section>
+
   <div class="row" id="productMain">
     <div class="col-sm-6">
 

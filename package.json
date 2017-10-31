@@ -4,15 +4,14 @@
   "license": "MIT",
   "scripts": {
     "serve-1": "ng serve",
-    "serve-2": "./node_modules/.bin/tsc-watch -p ./server/tsconfig.json",
-    "serve-3": "./node_modules/.bin/nodemon ./_server.js",
+    "serve-2": "./node_modules/.bin/tsc-watch --project src/tsconfig.server.json --onSuccess \"node ./dist-server/main.server.js\"",
     "ng": "ng",
-    "start": "./node_modules/.bin/forever ./_server.js",
+    "start": "./node_modules/.bin/forever ./dist-server/src/main.server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --aot -prod && tsc -p ./server/tsconfig.json"
+    "postinstall": "ng build --aot -prod && tsc --project src/tsconfig.server.json"
   },
   "private": true,
   "dependencies": {
