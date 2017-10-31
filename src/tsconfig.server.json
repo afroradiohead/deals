@@ -2,11 +2,13 @@
   "extends": "../tsconfig.json",
   "compileOnSave": true,
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "../dist-server",
     "module": "commonjs",
     "target": "es6"
   },
   "include": [
-    "../shared", "./src"
+    "./main.server.ts",
+    "**/*.server.ts",
+    "server"
   ]
 }

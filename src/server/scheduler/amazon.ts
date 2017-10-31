@@ -1,12 +1,11 @@
 import {HostDatabase} from '../iridium/index';
 import * as _ from 'lodash';
 import * as schedule from 'node-schedule';
-import {IProduct} from '../../../shared/interface/product';
+import {IProduct} from '../../shared/interface/product';
 import * as Bluebird from 'bluebird';
+import * as moment from 'moment';
 import {HOST_CONFIG, IHostConfig} from '../host-config';
-
 const {OperationHelper} = require('apac');
-
 const slugify = function(text){
   return text.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
@@ -15,24 +14,46 @@ const slugify = function(text){
     .replace(/^-+/, '')             // Trim - from start of text
     .replace(/-+$/, '');            // Trim - from end of text
 };
+const TOTAL_HOURS = 24;
+const HOST_COUNT = _.keys(HOST_CONFIG).length;
+const HOST_PER_HOUR = Math.floor(TOTAL_HOURS / HOST_COUNT);
+
+const processedData = {
+  host: null,
+  moment: moment()
+};
+
+
 export class AmazonScheduler {
   mutablableHostConfig: IHostConfig;
   hostConfig: IHostConfig;
-  productHydrationIteration = 4;
+  productHydrationIteration = 0;
 
-  constructor(app) {
+  // @todo refactor (supposed to get back time the next update will happen)
+  static GetHydrationTimestamp(host: string): string {
+    const processedHostIndex = _.keys(HOST_CONFIG).indexOf(processedData.host);
+    const hostIndex = _.keys(HOST_CONFIG).indexOf(host);
+    let hours = HOST_PER_HOUR;
+    if (processedHostIndex >= 0) {
+      const processedIndexDiff = hostIndex - processedHostIndex;
+      hours = TOTAL_HOURS + (HOST_PER_HOUR * processedIndexDiff);
+    }
+    const durationSinceLastProcess = moment.duration(moment().diff(processedData.moment));
+    const duration = moment.duration(hours, 'hours');
+    const duration2 = duration.subtract(durationSinceLastProcess);
+
+    return moment().add(duration2).format();
+  }
+
+  constructor(app) { // schedulers should be a singleton
     this.mutablableHostConfig = _.cloneDeep(HOST_CONFIG);
     this.hostConfig = HOST_CONFIG;
-    const hostCount = _.keys(HOST_CONFIG).length;
-    const totalHours = 24;
-    const hostPerHour = Math.floor(totalHours / hostCount);
 
-    schedule.scheduleJob(`0 0 */${hostPerHour} * * *`, this._productHydrationJob.bind(this)); // @todo just use observables
+    schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, this._productHydrationJob.bind(this));
   }
 
   private _productHydrationJob() {
-    const hostCount = _.keys(HOST_CONFIG).length;
-    const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % hostCount];
+    const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
     const config = HOST_CONFIG[host];
     const opHelper = new OperationHelper({
       awsId:     'AKIAION2WEXXVJ6UPPNA',
@@ -41,6 +62,8 @@ export class AmazonScheduler {
     });
     const db = HostDatabase.Create();
 
+    processedData.host = host;
+    processedData.moment = moment();
 
     db.connect()
       .then(() => {

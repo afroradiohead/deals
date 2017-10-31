@@ -8,6 +8,9 @@
   },
   "exclude": [
     "test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "./main.server.ts",
+    "**/*.server.ts",
+    "server"
   ]
 }

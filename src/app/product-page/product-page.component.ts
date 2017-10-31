@@ -1,13 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Scheduler} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {IProduct} from '../../../shared/interface/product';
-import {Socketeer} from '../../../shared/socketer/index';
-import {SocketCommand} from '../../../shared/socketer/product-page';
+import {IProduct} from '../../shared/interface/product';
+import {Socketeer} from '../../shared/class/socketeer';
+import {SocketCommand} from './product-page.socket';
 import {Subject} from 'rxjs/Subject';
 import {Meta, Title} from '@angular/platform-browser';
 import {GoogleAnalyticsService} from '../shared/service/google-analytics.service';
 import {SocketService} from '../shared/service/socket.service';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-product-page',

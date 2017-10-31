@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IProduct} from '../../../../../shared/interface/product';
+import {IProduct} from '../../../../shared/interface/product';
 
 @Component({
   selector: 'app-product-card',
