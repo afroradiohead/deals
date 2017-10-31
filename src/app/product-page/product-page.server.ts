@@ -3,7 +3,6 @@ import {Socketeer} from '../../shared/class/socketeer';
 import {Observable} from 'rxjs/Observable';
 import {IProduct} from '../../shared/interface/product';
 import {HostDatabase} from '../../server/iridium/index';
-import {AmazonScheduler} from '../../server/scheduler/amazon';
 
 export class ProductPageServer {
   constructor(socket) {
@@ -30,7 +29,6 @@ export class ProductPageServer {
           const randomProductList = data[1] as IProduct[];
 
           socketeer.send('INIT_FROMSERVER', {
-            refreshTimestamp: AmazonScheduler.GetHydrationTimestamp(socket.handshake.headers.host),
             product: product,
             randomProductList: randomProductList
           });

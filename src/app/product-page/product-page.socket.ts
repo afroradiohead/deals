@@ -9,7 +9,6 @@ export class SocketCommand implements ISocketCommand {
       slug: string
     },
     INIT_FROMSERVER: {
-      refreshTimestamp: string
       product: IProduct,
       randomProductList: IProduct[],
     };

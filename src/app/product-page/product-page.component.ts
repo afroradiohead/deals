@@ -17,7 +17,6 @@ import * as moment from 'moment';
   styleUrls: ['./product-page.component.scss']
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
-  countdown$: Observable<{ hour: number; minute: number; second: number; }>;
   socketeer: Socketeer<SocketCommand>;
   randomProductList$: Observable<IProduct[]>;
   product$: Observable<IProduct>;
@@ -35,31 +34,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       .map(response => response.product);
     this.randomProductList$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.randomProductList);
-    // this.randomProductList$ = this.socketeer.from('INIT_FROMSERVER')
-    //   .map(response => response.refreshTimestamp);
-
-    this.countdown$ = this.socketeer.from('INIT_FROMSERVER')
-      .map(response => response.refreshTimestamp)
-      .combineLatest(Observable.interval(1000, Scheduler.animationFrame))
-      .map(data => {
-        const refreshTimestamp = data[0];
-        const duration = moment.duration(moment(refreshTimestamp).diff(moment()));
-        const time = moment(duration.asMilliseconds());
-
-        return {
-          hour: time.get('hour'),
-          minute: time.get('minute'),
-          second: time.get('second'),
-        };
-      });
-    // const start = 10;
-    // Observable
-    //   .interval(1000)
-    //   .map(i => start - i)
-    //   .take(start + 1)
-    //   .subscribe({
-    //     moment.duration(end.diff(startTime));
-    //   });
 
     Observable.from(this.route.params)
       .takeUntil(this.destroyable$)

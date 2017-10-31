@@ -24,7 +24,9 @@ export class AmazonScheduler {
   static GetHydrationTimestamp(host: string): string {
     // const index = _.keys(HOST_CONFIG).indexOf(host);
 
-    return moment().add(5, 'days').format();
+    console.log(host);
+
+    return moment().add(5, 'hours').format();
   }
 
   constructor(app) { // schedulers should be a singleton

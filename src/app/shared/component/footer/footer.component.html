@@ -1,10 +1,23 @@
-<div id="copyright">
-  <div class="container">
-    <div class="col-md-12">
-      <p class="pull-right">Template by <a href="https://bootstrapious.com/e-commerce-templates">Bootstrapious</a> & <a href="https://fity.cz">Fity</a>
-        <!-- Not removing these links is part of the license conditions of the template. Thanks for understanding :) If you want to use the template without the attribution links, you can do so after supporting further themes development at https://bootstrapious.com/donate  -->
-      </p>
+<section class="container-fluid" >
+  <div class="row countdown" *ngIf="(countdown$ | async) as countdown">
+    <div class="col-xs-12 text-center">
+      <h5>Refreshing prices in...</h5>
+
+
+      <div class="clock">
+        <div class="unit">
+          <span class="hours">{{countdown.hour}}</span>
+          <div class="smalltext">Hours</div>
+        </div>
+        <div class="unit">
+          <span class="minutes">{{countdown.minute}}</span>
+          <div class="smalltext">Minutes</div>
+        </div>
+        <div class="unit">
+          <span class="seconds">{{countdown.second}}</span>
+          <div class="smalltext">Seconds</div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
+</section>
