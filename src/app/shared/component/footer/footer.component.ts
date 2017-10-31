@@ -13,7 +13,7 @@ import {Scheduler} from 'rxjs/Rx';
 })
 export class FooterComponent implements OnInit {
   private socketeer: Socketeer<SocketCommand>;
-  private countdown$: Observable<{ hour: number; minute: number; second: number }>;
+  countdown$: Observable<{ hour: number; minute: number; second: number }>;
 
   constructor(socketService: SocketService) {
     this.socketeer = new Socketeer(SocketCommand, socketService.socket);
