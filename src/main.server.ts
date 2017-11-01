@@ -23,7 +23,7 @@ const initialRequest = function(req, res) {
 app.get('/', initialRequest)
   .get('/delay', (req, res) => {
     setTimeout(() => {
-      res.send(true);
+      res.send(`document.documentElement.classList.add('show');`);
       res.end();
     }, 3000);
   })
