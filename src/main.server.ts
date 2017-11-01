@@ -27,6 +27,9 @@ const initialRequest = function(req, res) {
   const html = fs.readFileSync(path.join(___distdirname, 'index.html'));
   // @todo append canonical url to head in html
 
+
+  res.set('Content-Type', 'text/html');
+
   if (requestedRendered) {
     try {
       request({
