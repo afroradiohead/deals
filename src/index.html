@@ -5,18 +5,20 @@
   <title>Deals</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    html {display: none}
-    html.show {display: block}
-  </style>
+
+
 </head>
 <body>
   <app-root></app-root>
-
-  <!--<div style="display:none">-->
-    <!--<iframe id="delay" src="/delay" frameborder="0" style="display:none"></iframe>-->
-  <!--</div>-->
-
 </body>
-  <script src="/delay"></script>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+
+  if (urlParams.has('rendered')) {
+    const node = document.createElement('script');
+    node.src = `/rendered-direct?url=${encodeURIComponent(window.location.href)}`;
+    node.type = 'text/javascript';
+    document.getElementsByTagName('head')[0].appendChild(node);
+  }
+</script>
 </html>
