@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "serve-1": "ng serve",
+    "serve-1": "ng serve --proxy-config proxy.config.json",
     "serve-2": "./node_modules/.bin/tsc-watch --project src/tsconfig.server.json --onSuccess \"node ./dist-server/main.server.js\"",
     "ng": "ng",
     "start": "./node_modules/.bin/forever ./dist-server/main.server.js",
