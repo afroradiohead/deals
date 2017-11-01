@@ -1,6 +1,7 @@
 // server.js
 const request = require( 'request' );
 const _ = require( 'lodash' );
+const compression = require('compression')
 const seoBotDetect = require('seo-bot-detect');
 const express = require('express');
 const path = require('path');
@@ -10,7 +11,7 @@ const httpServer = app.listen(process.env.PORT || 8080);
 const ___distdirname = `${__dirname}/../dist/`;
 
 app.set('httpServer', httpServer);
-
+app.use(compression());
 
 new server.AppServer(app);
 
