@@ -69,6 +69,8 @@ app.get('/', initialRequest)
   .get('/rendered-direct', (req, res) => {
     const redirectedUrl = RemoveParameterFromUrl(req.header('Referer'), 'rendered');
 
+    console.log(req.query);
+
     // if (!seoBotDetect(req)) {
     //     res.send(`window.location.href = "${redirectedUrl}";`);
     // }
