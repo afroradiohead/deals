@@ -46,9 +46,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       .takeUntil(this.destroyable$)
       .subscribe(product => {
         this.title.setTitle(product.title);
-        this.meta.addTags([
-          {name: 'description', content: product.description}
-        ]);
+        this.meta.updateTag({'description': product.description});
 
         this.gaService.triggerProductDetail({
           id: product._id,
