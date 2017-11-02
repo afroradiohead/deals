@@ -69,10 +69,10 @@ app.get('/', initialRequest)
   .get('/rendered-direct', (req, res) => {
     const redirectedUrl = RemoveParameterFromUrl(req.header('Referer'), 'rendered');
 
-    if (!seoBotDetect(req)) {
-        res.send(`window.location.href = "${redirectedUrl}";`);
-    }
-    res.end();
+    // if (!seoBotDetect(req)) {
+    //     res.send(`window.location.href = "${redirectedUrl}";`);
+    // }
+    // res.end();
   })
   .get('/robots.txt', (req, res) => {
     res.sendFile(path.join(___distdirname, 'assets/robots.txt'));
