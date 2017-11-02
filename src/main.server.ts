@@ -18,7 +18,6 @@ app.use(compression());
 new server.AppServer(app);
 
 const initialRequest = function(req, res) {
-  const requestedRendered = _.has(req.query, 'rendered');
   const $html = cheerio.load(fs.readFileSync(path.join(___distdirname, 'index.html')));
 
   res.set('Content-Type', 'text/html');
@@ -31,7 +30,7 @@ const initialRequest = function(req, res) {
         user: 'afroradiohead@gmail.com',
         pass: 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV'
       },
-      timeout: 2000,
+      timeout: 1000,
       json: {
         url: `${req.protocol}://${req.headers.host}${req.originalUrl}`
       },
@@ -43,8 +42,11 @@ const initialRequest = function(req, res) {
       if (cachedHtml) {
         const $cachedHtml = cheerio.load(cachedHtml);
         $html('app-root').html($cachedHtml('app-root').html());
-      }
+        $html('title').remove();
 
+        $html('head').append($cachedHtml('title'));
+        $html('head').append($cachedHtml('meta'));
+      }
 
       res.send($html.html());
       res.end();
