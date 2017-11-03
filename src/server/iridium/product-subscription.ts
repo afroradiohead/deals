@@ -2,7 +2,7 @@ import {Instance, Collection, Index, Property, ObjectID} from 'iridium';
 import {IProductSubscription} from '../../shared/interface/product-subscription';
 
 
-@Index({ email: 1,  productId: 1 }, { unique: true })
+@Index({ email: 1,  productId: 1, host: 1 }, { unique: true })
 @Collection('product-subscriptions')
 export class ProductSubscription extends Instance<IProductSubscription, ProductSubscription> implements IProductSubscription {
   @ObjectID _id: string;
@@ -11,6 +11,8 @@ export class ProductSubscription extends Instance<IProductSubscription, ProductS
   productId: string;
   @Property(String)
   email: string;
+  @Property(String)
+  host: string;
   @Property(Date)
   createdAt: Date = new Date();
   @Property(Date)

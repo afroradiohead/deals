@@ -24,6 +24,8 @@ const processedData = {
 };
 
 
+
+
 export class AmazonScheduler {
   mutablableHostConfig: IHostConfig;
   hostConfig: IHostConfig;
@@ -104,8 +106,45 @@ export class AmazonScheduler {
 
         console.log(`Hydration Complete for host: ${host}. X new products`); // @todo replace x; create a true logger
         this.productHydrationIteration++;
+
+        // @todo queue up sending
         return Bluebird.all(promiseList);
+      })
+      .then(() => db.close())
+      .then(() => this.sendSubscriptionEmails());
+  }
+
+  sendSubscriptionEmails() {
+    const db = HostDatabase.Create();
+
+    db.connect()
+      .then(() => {
+        return db.ProductSubscription.aggregate([
+          // {$match: {host: socket.handshake.headers.host, slug: {$ne: slug}}},
+          {$group: { _id: { host: { $host: '$host' }, email: { $email: '$email' } }}}
+        ]);
       })
       .then(() => db.close());
   }
 }
+
+
+const db = HostDatabase.Create();
+
+db.connect()
+  .then(() => {
+    return db.ProductSubscription.aggregate([
+      {$match: {host: 'localhost:8080'}},
+      {$group: {
+        _id: '$email',
+        productIdList : { $push: '$productId'}
+      }}
+    ]);
+  })
+  .then(subscriptionList => {
+
+    subscriptionList.forEach(subscription => {
+      // subscription.productIdList;
+    });
+  })
+  .then(() => db.close());

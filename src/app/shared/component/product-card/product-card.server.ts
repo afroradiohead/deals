@@ -13,10 +13,11 @@ export class ProductCardServer {
 
       db.connect().then(() => {
         return db.ProductSubscription.update(
-          { email: email, productId: productId },
+          { email: email, productId: productId, host: socket.handshake.headers.host },
           {
             email: email,
             productId: productId,
+            host: socket.handshake.headers.host,
             active: true
           },
           { upsert: true, multi: false }
