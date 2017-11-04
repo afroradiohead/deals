@@ -7,12 +7,19 @@ import * as moment from 'moment';
 import {HOST_CONFIG, IHostConfig} from '../host-config';
 const {OperationHelper} = require('apac');
 const MailGun = require('mailgun-es6');
+const template = require('./amazon/subscription-email-template.hbs');
+import * as Handlebars from "handlebars";
+
+console.log(template);
 
 const mailGun = new MailGun({
   privateApi: 'key-8c92e20dc97f78f2ebfa540ff8f31154',
   publicApi: 'pubkey-38cb1df01a99730425f758d5114d56a0',
   domainName: 'sandbox77cd65e7250d419daacb6d169b52cc86.mailgun.org'
 });
+
+
+// const template = ``;
 
 
 const slugify = function(text){
@@ -60,7 +67,24 @@ export class AmazonScheduler {
   }
 
   run() {
-    this.sendSubscriptionEmails('localhost:8080');
+    const compiledTemplate = Handlebars.compile(template);
+    const data = { "name": "Alan", "hometown": "Somewhere, TX",
+      "kids": [{"name": "Jimmy", "age": "12"}, {"name": "Sally", "age": "4"}]};
+    const result = compiledTemplate(data);
+
+    const host = "localhost:8080";
+    const email = 'tytuf@cars2.club';
+    const productIdList = [];
+    const productList = []; // grab productList from productIdList
+    return mailGun.sendEmail({
+      to: email,
+      from: HOST_CONFIG[host].newsletterEmailAddress,
+      subject: 'Here are the products you subscribed to',
+      html: result
+    })
+      .then(msg => console.log(msg)) // logs response data
+      .catch(err => console.log(err)); // logs any error
+    // this.sendSubscriptionEmails('localhost:8080');
     // schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, () => {
     //   const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
     //   this._productHydrationJob(host)
@@ -70,6 +94,7 @@ export class AmazonScheduler {
     //     });
     // });
   }
+
 
   private _productHydrationJob(host: string) {
     const config = HOST_CONFIG[host];

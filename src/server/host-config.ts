@@ -9,6 +9,7 @@ interface IConfig {
       MinPercentageOff: string;
     }
   };
+  newsletterEmailAddress: string;
 }
 
 
@@ -27,7 +28,8 @@ export const HOST_CONFIG: IHostConfig = {
         ResponseGroup: 'ItemAttributes,Offers,Images',
         MinPercentageOff: '30'
       }
-    }
+    },
+    newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com'
   },
   'www.cheap-nintendo-ds-games.com' : {
     title: 'Cheap Nintendo Ds Games',
@@ -39,7 +41,8 @@ export const HOST_CONFIG: IHostConfig = {
         ResponseGroup: 'ItemAttributes,Offers,Images',
         MinPercentageOff: '30'
       }
-    }
+    },
+    newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com'
   },
   'www.33-nintendo-ds-games.com' : {
     title: 'Cheap Nintendo Ds Games',
@@ -51,6 +54,7 @@ export const HOST_CONFIG: IHostConfig = {
         ResponseGroup: 'ItemAttributes,Offers,Images',
         MinPercentageOff: '30'
       }
-    }
+    },
+    newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com'
   }
 };
