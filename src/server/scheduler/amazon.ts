@@ -7,10 +7,9 @@ import * as moment from 'moment';
 import {HOST_CONFIG, IHostConfig} from '../host-config';
 const {OperationHelper} = require('apac');
 const MailGun = require('mailgun-es6');
-const template = require('./amazon/subscription-email-template.hbs');
-import * as Handlebars from "handlebars";
-
-console.log(template);
+const fs = require('fs');
+const path = require('path');
+import * as Handlebars from 'handlebars';
 
 const mailGun = new MailGun({
   privateApi: 'key-8c92e20dc97f78f2ebfa540ff8f31154',
@@ -67,12 +66,14 @@ export class AmazonScheduler {
   }
 
   run() {
+    const template = fs.readFileSync(path.join(__dirname, '/amazon/subscription-email-template.hbs'), 'utf8');
     const compiledTemplate = Handlebars.compile(template);
-    const data = { "name": "Alan", "hometown": "Somewhere, TX",
-      "kids": [{"name": "Jimmy", "age": "12"}, {"name": "Sally", "age": "4"}]};
+    const data = { 'name': 'Alan', 'hometown': 'Somewhere, TX',
+      'kids': [{'name': 'Jimmy', 'age': '12'}, {'name': 'Sally', 'age': '4'}]};
     const result = compiledTemplate(data);
 
-    const host = "localhost:8080";
+
+    const host = 'localhost:8080';
     const email = 'tytuf@cars2.club';
     const productIdList = [];
     const productList = []; // grab productList from productIdList

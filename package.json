@@ -12,7 +12,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --output-hashing=none --aot -prod && tsc --project src/tsconfig.server.json"
+    "postinstall": "ng build --output-hashing=none --aot -prod && tsc --project src/tsconfig.server.json && cpx ./src/**/*.hbs ./dist-server"
   },
   "private": true,
   "dependencies": {
