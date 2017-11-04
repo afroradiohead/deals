@@ -46,7 +46,7 @@
     "iridium": "^8.0.0-alpha.5",
     "lodash": "^4.17.4",
     "mailchimp-api-v3": "^1.7.1",
-    "mailgun.js": "^2.0.1",
+    "mailgun-es6": "^1.1.4",
     "moment": "^2.19.1",
     "ngx-socket-io": "^1.0.7",
     "node-schedule": "^1.2.5",
