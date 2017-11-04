@@ -32,15 +32,6 @@ const processedData = {
   moment: moment()
 };
 
-//
-// mailGun.sendEmail({
-//   to: ['afroradiohead@gmail.com'],
-//   from: 'from@email.com',
-//   subject: 'Email Subject',
-//   text: 'Email Text'
-// })
-//   .then(msg => console.log(msg)) // logs response data
-//   .catch(err => console.log(err)); // logs any error
 
 export class AmazonScheduler {
   mutablableHostConfig: IHostConfig;
@@ -66,12 +57,21 @@ export class AmazonScheduler {
   constructor(app) { // schedulers should be a singleton
     this.mutablableHostConfig = _.cloneDeep(HOST_CONFIG);
     this.hostConfig = HOST_CONFIG;
-
-    schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, this._productHydrationJob.bind(this));
   }
 
-  private _productHydrationJob() {
-    const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
+  run() {
+    this.sendSubscriptionEmails('localhost:8080');
+    // schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, () => {
+    //   const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
+    //   this._productHydrationJob(host)
+    //     .then(() => {
+    //       this.productHydrationIteration++;
+    //       return this.sendSubscriptionEmails(host);
+    //     });
+    // });
+  }
+
+  private _productHydrationJob(host: string) {
     const config = HOST_CONFIG[host];
     const opHelper = new OperationHelper({
       awsId:     'AKIAION2WEXXVJ6UPPNA',
@@ -83,7 +83,7 @@ export class AmazonScheduler {
     processedData.host = host;
     processedData.moment = moment();
 
-    db.connect()
+    return db.connect()
       .then(() => {
         return opHelper.execute('ItemSearch', config.amazon.itemSearch);
       })
@@ -126,41 +126,43 @@ export class AmazonScheduler {
         // @todo queue up sending
         return Bluebird.all(promiseList);
       })
-      .then(() => db.close())
-      .then(() => this.sendSubscriptionEmails());
+      .then(() => db.close());
   }
 
-  sendSubscriptionEmails() {
+  sendSubscriptionEmails(host: string) {
     const db = HostDatabase.Create();
 
-    db.connect()
+    console.log('bb');
+    return db.connect()
       .then(() => {
         return db.ProductSubscription.aggregate([
-          // {$match: {host: socket.handshake.headers.host, slug: {$ne: slug}}},
-          {$group: { _id: { host: { $host: '$host' }, email: { $email: '$email' } }}}
+          {$match: {host: host, active: true}},
+          {$group: {
+            _id: '$email',
+            productIdList : { $push: '$productId'}
+          }}
         ]);
+      })
+      .then(subscriptionList => {
+        const emailPromiseList = subscriptionList.map(subscription => {
+          const email = subscription['email'];
+          const productIdList = subscription['productIdList'];
+          const productList = []; // grab productList from productIdList
+          return mailGun.sendEmail({
+              to: ['afroradiohead@gmail.com'],
+              from: 'from@email.com',
+              subject: 'Email Subject',
+              text: productIdList.join(',')
+            })
+              .then(msg => console.log(msg)) // logs response data
+              .catch(err => console.log(err)); // logs any error
+        });
+
+        console.log('dsfsdf');
+
+        return Bluebird.all(emailPromiseList);
       })
       .then(() => db.close());
   }
 }
 
-
-const db = HostDatabase.Create();
-
-db.connect()
-  .then(() => {
-    return db.ProductSubscription.aggregate([
-      {$match: {host: 'localhost:8080'}},
-      {$group: {
-        _id: '$email',
-        productIdList : { $push: '$productId'}
-      }}
-    ]);
-  })
-  .then(subscriptionList => {
-
-    subscriptionList.forEach(subscription => {
-      // subscription.productIdList;
-    });
-  })
-  .then(() => db.close());

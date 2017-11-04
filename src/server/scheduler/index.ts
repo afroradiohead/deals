@@ -6,6 +6,8 @@ const KlassList = [
 
 export class Scheduler {
   constructor(app) {
-    KlassList.forEach(klass => new klass(app));
+    KlassList.forEach(klass => {
+      new klass(app).run();
+    });
   }
 }
