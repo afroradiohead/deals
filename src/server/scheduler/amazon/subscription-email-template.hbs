@@ -2825,31 +2825,26 @@
             </th>
               <th class="expander"></th></tr></table></th>
           </tr></tbody></table>
-          <table class="row"><tbody><tr>
-            <th class="small-12 large-4 columns first"><table><tr><th>
-              <center data-parsed="">
-                <img src="http://placehold.it/50x50" align="center" class="float-center">
-              </center>
-              <h5 class="text-center">Feature One</h5>
-              <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, quod quam unde earum.</p>
-            </th></tr></table></th>
-            <th class="small-12 large-4 columns"><table><tr><th>
-              <center data-parsed="">
-                <img src="http://placehold.it/50x50" align="center" class="float-center">
-              </center>
-              <h5 class="text-center">Feature Two</h5>
-              <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, quod quam unde earum.</p>
-            </th></tr></table></th>
-            <th class="small-12 large-4 columns last"><table><tr><th>
-              <center data-parsed="">
-                <img src="http://placehold.it/50x50" align="center" class="float-center">
-              </center>
-              <h5 class="text-center">Feature Three</h5>
-              <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, quod quam unde earum.</p>
-            </th></tr></table></th>
-          </tr></tbody></table>
 
-          <table class="spacer"><tbody><tr><td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td></tr></tbody></table>
+          {{#each productListList}}
+            <table class="row"><tbody><tr>
+
+              {{#each this}}
+                <th class="small-12 large-4 columns">
+                  {{#if this}}
+                    <table><tr><th>
+                      <center data-parsed="">
+                        <img src="http://placehold.it/50x50" align="center" class="float-center">
+                      </center>
+                      <h5 class="text-center">Feature Two</h5>
+                      <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, quod quam unde earum.</p>
+                    </th></tr></table>
+                  {{/if}}
+                </th>
+              {{/each}}
+            </tr></tbody></table>
+            <table class="spacer"><tbody><tr><td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td></tr></tbody></table>
+          {{/each}}
 
           <table class="row"><tbody><tr>
             <th class="small-12 large-12 columns first last"><table><tr><th>
@@ -2867,16 +2862,7 @@
             <th class="small-12 large-12 columns first last"><table><tr><th>
               <table class="spacer"><tbody><tr><td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td></tr></tbody></table>
               <p class="text-center">&copy; copyright nobody<br>
-                <a href="#">hello@nocopyright.com</a> | <a href="#">Manage Email Notifications</a> | <a href="#">Unsubscribe</a></p>
-              <center data-parsed="">
-                <table align="center" class="menu float-center"><tr><td><table><tr>
-                  <th class="menu-item float-center"><a href="undefined"><img src="http://placehold.it/25" alt=""></a></th>
-                  <th class="menu-item float-center"><a href="undefined"><img src="http://placehold.it/25" alt=""></a></th>
-                  <th class="menu-item float-center"><a href="undefined"><img src="http://placehold.it/25" alt=""></a></th>
-                  <th class="menu-item float-center"><a href="undefined"><img src="http://placehold.it/25" alt=""></a></th>
-                  <th class="menu-item float-center"><a href="undefined"><img src="http://placehold.it/25" alt=""></a></th>
-                </tr></table></td></tr></table>
-              </center>
+                <a href="#">Manage Email Notifications</a> | <a href="#">Unsubscribe</a></p>
             </th>
               <th class="expander"></th></tr></table></th>
           </tr></tbody></table>

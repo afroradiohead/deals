@@ -10,6 +10,7 @@ const MailGun = require('mailgun-es6');
 const fs = require('fs');
 const path = require('path');
 import * as Handlebars from 'handlebars';
+import {SubscriptionEmail} from "./amazon/subscription-email";
 
 const mailGun = new MailGun({
   privateApi: 'key-8c92e20dc97f78f2ebfa540ff8f31154',
@@ -17,8 +18,6 @@ const mailGun = new MailGun({
   domainName: 'sandbox77cd65e7250d419daacb6d169b52cc86.mailgun.org'
 });
 
-
-// const template = ``;
 
 
 const slugify = function(text){
@@ -66,22 +65,17 @@ export class AmazonScheduler {
   }
 
   run() {
-    const template = fs.readFileSync(path.join(__dirname, '/amazon/subscription-email-template.hbs'), 'utf8');
-    const compiledTemplate = Handlebars.compile(template);
-    const data = { 'name': 'Alan', 'hometown': 'Somewhere, TX',
-      'kids': [{'name': 'Jimmy', 'age': '12'}, {'name': 'Sally', 'age': '4'}]};
-    const result = compiledTemplate(data);
-
-
+    const productList = [];
+    const subscriptionEmail = new SubscriptionEmail({
+      productList: productList
+    });
     const host = 'localhost:8080';
     const email = 'tytuf@cars2.club';
-    const productIdList = [];
-    const productList = []; // grab productList from productIdList
     return mailGun.sendEmail({
       to: email,
       from: HOST_CONFIG[host].newsletterEmailAddress,
-      subject: 'Here are the products you subscribed to',
-      html: result
+      subject: subscriptionEmail.generateSubject(),
+      html: subscriptionEmail.generateHtml()
     })
       .then(msg => console.log(msg)) // logs response data
       .catch(err => console.log(err)); // logs any error
