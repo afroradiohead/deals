@@ -2,11 +2,12 @@ import * as Handlebars from 'handlebars';
 import {IProduct} from '../../../shared/interface/product';
 const fs = require('fs');
 const path = require('path');
-
+import * as _ from 'lodash';
 
 interface IConfig {
   productList: IProduct[];
 }
+
 
 export class SubscriptionEmail {
   constructor(private config: IConfig) {
@@ -21,22 +22,8 @@ export class SubscriptionEmail {
     const template = fs.readFileSync(path.join(__dirname, './subscription-email-template.hbs'), 'utf8');
     const compiledTemplate = Handlebars.compile(template);
 
-
-    // this.config.productList
-    const data = {
-      productListList: [
-        [{
-          name: 'one',
-        }, {
-          name: 'two',
-        }, {
-          name: 'threre',
-        }],
-        [{
-          name: '44444',
-        }, null, null]
-      ]
-    };
-    return compiledTemplate(data);
+    return compiledTemplate({
+      productListList: _.chunk(this.config.productList, 3)
+    });
   }
 }
