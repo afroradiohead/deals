@@ -7,9 +7,6 @@ import * as moment from 'moment';
 import {HOST_CONFIG, IHostConfig} from '../host-config';
 const {OperationHelper} = require('apac');
 const MailGun = require('mailgun-es6');
-const fs = require('fs');
-const path = require('path');
-import * as Handlebars from 'handlebars';
 import {SubscriptionEmail} from "./amazon/subscription-email";
 
 const mailGun = new MailGun({
@@ -65,21 +62,7 @@ export class AmazonScheduler {
   }
 
   run() {
-    const productList = [];
-    const subscriptionEmail = new SubscriptionEmail({
-      productList: productList
-    });
-    const host = 'localhost:8080';
-    const email = 'tytuf@cars2.club';
-    return mailGun.sendEmail({
-      to: email,
-      from: HOST_CONFIG[host].newsletterEmailAddress,
-      subject: subscriptionEmail.generateSubject(),
-      html: subscriptionEmail.generateHtml()
-    })
-      .then(msg => console.log(msg)) // logs response data
-      .catch(err => console.log(err)); // logs any error
-    // this.sendSubscriptionEmails('localhost:8080');
+    this.sendSubscriptionEmails('localhost:8080');
     // schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, () => {
     //   const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
     //   this._productHydrationJob(host)
@@ -152,37 +135,40 @@ export class AmazonScheduler {
   sendSubscriptionEmails(host: string) {
     const db = HostDatabase.Create();
 
-    console.log('bb');
     return db.connect()
       .then(() => {
-        return db.ProductSubscription.aggregate([
-          {$match: {host: host, active: true}},
-          {$group: {
-            _id: '$email',
-            productIdList : { $push: '$productId'}
-          }}
-        ]);
-      })
-      .then(subscriptionList => {
-        const emailPromiseList = subscriptionList.map(subscription => {
-          const email = subscription['email'];
-          const productIdList = subscription['productIdList'];
-          const productList = []; // grab productList from productIdList
-          return mailGun.sendEmail({
-              to: ['afroradiohead@gmail.com'],
-              from: 'from@email.com',
-              subject: 'Email Subject',
-              text: productIdList.join(',')
-            })
-              .then(msg => console.log(msg)) // logs response data
-              .catch(err => console.log(err)); // logs any error
+        return Bluebird.props({
+          groupedSubscriptionList: db.ProductSubscription.aggregate([
+            {$match: {host: host, active: true}},
+            {
+              $group: {
+                _id: '$email',
+                productIdList: {$push: '$productId'}
+              }
+            }
+          ]),
+          productList: db.Products.find({host: host}).toArray()
         });
-
-        console.log('dsfsdf');
-
-        return Bluebird.all(emailPromiseList);
       })
-      .then(() => db.close());
+      .then(result => {
+        return Bluebird.all(result.groupedSubscriptionList.map(groupedSubscription => {
+          const subscriptionEmail = new SubscriptionEmail({
+            productList: result.productList.filter(product => groupedSubscription['productIdList'].indexOf(product._id) >= 0 )
+          });
+
+          return mailGun.sendEmail({
+            // to: subscription['_id'],
+            to: 'tytuf@cars2.club',
+            from: HOST_CONFIG[host].newsletterEmailAddress,
+            subject: subscriptionEmail.generateSubject(),
+            html: subscriptionEmail.generateHtml()
+          })
+            .then(msg => console.log(msg)) // logs response data
+            .catch(err => console.log(err));
+        }));
+      })
+      .then(() => db.close())
+      .catch(err => console.log(err));
   }
 }
 

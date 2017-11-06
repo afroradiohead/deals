@@ -10,7 +10,7 @@ interface IConfig {
 
 export class SubscriptionEmail {
   constructor(private config: IConfig) {
-
+    // this.unsubscribeUrl = 'host/unsubscribe';
   }
 
   generateSubject() {
