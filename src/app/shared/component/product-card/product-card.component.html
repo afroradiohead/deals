@@ -12,7 +12,11 @@
   <a class="more-info" [routerLink]="['/product', product.slug]">More Info</a>
 </div>
 
-<button class="subscribe-button" (click)="onClick_subscribeButton($event)">Subscribe</button>
+<button class="subscribe-button" (click)="onClick_subscribeButton($event)">
+  <i class="fa fa-exclamation-circle" aria-hidden="true"></i><br />
+  <span>Notify me</span> <br />
+  <small>when price changes</small>
+</button>
 
 <div class="right-info-panel">
 

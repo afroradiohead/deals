@@ -62,15 +62,15 @@ export class AmazonScheduler {
   }
 
   run() {
-    this.sendSubscriptionEmails('localhost:8080');
-    // schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, () => {
-    //   const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
-    //   this._productHydrationJob(host)
-    //     .then(() => {
-    //       this.productHydrationIteration++;
-    //       return this.sendSubscriptionEmails(host);
-    //     });
-    // });
+    // this.sendSubscriptionEmails('localhost:8080');
+    schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, () => {
+      const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
+      this._productHydrationJob(host)
+        .then(() => {
+          // this.productHydrationIteration++;
+          // return this.sendSubscriptionEmails(host);
+        });
+    });
   }
 
 
@@ -152,19 +152,11 @@ export class AmazonScheduler {
       })
       .then(result => {
         return Bluebird.all(result.groupedSubscriptionList.map(groupedSubscription => {
-          const subscriptionEmail = new SubscriptionEmail({
+          return new SubscriptionEmail({
+            host: host,
+            emailTo: groupedSubscription['_id'],
             productList: result.productList.filter(product => groupedSubscription['productIdList'].indexOf(product._id) >= 0 )
-          });
-
-          return mailGun.sendEmail({
-            // to: subscription['_id'],
-            to: 'tytuf@cars2.club',
-            from: HOST_CONFIG[host].newsletterEmailAddress,
-            subject: subscriptionEmail.generateSubject(),
-            html: subscriptionEmail.generateHtml()
-          })
-            .then(msg => console.log(msg)) // logs response data
-            .catch(err => console.log(err));
+          }).p$sendEmail();
         }));
       })
       .then(() => db.close())
