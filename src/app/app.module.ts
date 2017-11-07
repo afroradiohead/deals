@@ -14,6 +14,7 @@ import {SocketService} from './shared/service/socket.service';
 import { ProductSubscriptionModalComponent } from './shared/component/product-subscription-modal/product-subscription-modal.component';
 import {MatDialogModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ProductSubscriptionModalService} from "./shared/component/product-subscription-modal/product-subscription-modal.service";
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -42,7 +43,7 @@ const routes: Routes = [
     MatDialogModule,
     BrowserAnimationsModule
   ],
-  providers: [SocketService, GoogleAnalyticsService],
+  providers: [SocketService, GoogleAnalyticsService, ProductSubscriptionModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

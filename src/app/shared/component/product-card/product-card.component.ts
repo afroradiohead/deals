@@ -4,6 +4,7 @@ import {GoogleAnalyticsService} from "../../service/google-analytics.service";
 import {SocketService} from "../../service/socket.service";
 import {Socketeer} from "../../../../shared/class/socketeer";
 import {SocketCommand} from "./product-card.socket";
+import {ProductSubscriptionModalService} from "../product-subscription-modal/product-subscription-modal.service";
 
 @Component({
   selector: 'app-product-card',
@@ -14,7 +15,9 @@ export class ProductCardComponent implements OnInit {
   socketeer: Socketeer<SocketCommand>;
   @Input() product: IProduct;
 
-  constructor(socketService: SocketService, private gaService: GoogleAnalyticsService) {
+  constructor(socketService: SocketService,
+              private gaService: GoogleAnalyticsService,
+              private productSubscriptionModal: ProductSubscriptionModalService) {
     this.socketeer = new Socketeer(SocketCommand, socketService.socket);
   }
 
@@ -25,7 +28,10 @@ export class ProductCardComponent implements OnInit {
   onClick_subscribeButton() {
     //popup subscribe modal
 
-    // this.modalService.show();
+
+    this.productSubscriptionModal.open$.next({
+      product: this.product
+    });
 
     this.socketeer.send('SUBSCRIBE_FROMCLIENT', {
       productId: this.product._id,

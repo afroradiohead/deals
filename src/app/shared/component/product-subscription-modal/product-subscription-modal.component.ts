@@ -1,5 +1,7 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog} from "@angular/material";
+import {ProductSubscriptionModalService} from "./product-subscription-modal.service";
+import {IProduct} from "../../../../shared/interface/product";
 
 @Component({
   selector: 'app-product-subscription-modal',
@@ -7,16 +9,17 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./product-subscription-modal.component.scss']
 })
 export class ProductSubscriptionModalComponent implements OnInit {
-  @ViewChild('test')
-  private defaultTabButtonsTpl: TemplateRef<any>;
+  @ViewChild('content')
+  private contentTemplate: TemplateRef<any>;
+  private product: IProduct;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private service: ProductSubscriptionModalService) { }
 
   ngOnInit() {
-
-    setTimeout(() => {
-      this.dialog.open(this.defaultTabButtonsTpl);
-    }, 5000);
+    this.service.open$.subscribe(e => {
+      this.product = e.product;
+      this.dialog.open(this.contentTemplate);
+    });
 
   }
 
