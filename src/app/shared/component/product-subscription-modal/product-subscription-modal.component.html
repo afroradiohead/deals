@@ -1,7 +1,7 @@
 <ng-template #content>
   <!--<img [src]="product.image" />-->
   <div>
-    <form action="#" method="post" name="sign up for beta form">
+    <form action="#" method="post" (submit)="onSubmit_form($event)">
       <div class="header">
         <p>Get notified when price changes</p>
       </div>
@@ -10,8 +10,12 @@
       </div>
       <div class="input">
         <img class="product-image" [src]="product.image" />
-        <input type="text" class="button" id="email" name="email" placeholder="NAME@EXAMPLE.COM">
+        <input [formControl]="emailFormControl" type="text" class="button" id="email" name="email" placeholder="NAME@EXAMPLE.COM">
         <input type="submit" class="button" id="submit" value="SIGN UP">
+      </div>
+      <div class="form-control-feedback"
+           *ngIf="emailFormControl.errors && (emailFormControl.dirty || emailFormControl.touched) && formSubmitted">
+        <p *ngIf="emailFormControl.errors.required || emailFormControl.errors.pattern">A proper email is required</p>
       </div>
     </form>
   </div>
