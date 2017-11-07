@@ -1,3 +1,18 @@
 <ng-template #content>
-  <img [src]="product.image" />
+  <!--<img [src]="product.image" />-->
+  <div>
+    <form action="#" method="post" name="sign up for beta form">
+      <div class="header">
+        <p>Get notified when price changes</p>
+      </div>
+      <div class="description">
+        <p>Put in the email address you want to be notified at when the $$$ of <b>{{product.title}}</b> changes!</p>
+      </div>
+      <div class="input">
+        <img class="product-image" [src]="product.image" />
+        <input type="text" class="button" id="email" name="email" placeholder="NAME@EXAMPLE.COM">
+        <input type="submit" class="button" id="submit" value="SIGN UP">
+      </div>
+    </form>
+  </div>
 </ng-template>
