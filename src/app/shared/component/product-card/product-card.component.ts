@@ -19,12 +19,13 @@ export class ProductCardComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
-
-
 
   onClick_subscribeButton() {
     //popup subscribe modal
+
+    // this.modalService.show();
 
     this.socketeer.send('SUBSCRIBE_FROMCLIENT', {
       productId: this.product._id,
