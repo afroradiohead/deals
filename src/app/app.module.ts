@@ -15,6 +15,7 @@ import { ProductSubscriptionModalComponent } from './shared/component/product-su
 import {MatDialogModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ProductSubscriptionModalService} from "./shared/component/product-subscription-modal/product-subscription-modal.service";
+import {ReactiveFormsModule} from "@angular/forms";
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -41,7 +42,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     BrowserModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [SocketService, GoogleAnalyticsService, ProductSubscriptionModalService],
   bootstrap: [AppComponent]
