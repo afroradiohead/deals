@@ -4,9 +4,11 @@ import {HomePageEndpoint} from '../../app/home-page/home-page.server';
 import {BuyPageEndpoint} from '../../app/buy-page/buy-page.server';
 import {FooterServer} from '../../app/shared/component/footer/footer.server';
 import {ProductCardServer} from '../../app/shared/component/product-card/product-card.server';
+import {Server} from "../../app/shared/component/product-subscription-modal/product-subscription-modal.server";
 
 const socketEndpointClassList = [
-  HomePageEndpoint, ProductPageServer, BuyPageEndpoint, FooterServer, ProductCardServer
+  HomePageEndpoint, ProductPageServer, BuyPageEndpoint, FooterServer, ProductCardServer,
+  Server
 ];
 
 export class SocketEndpoint {

@@ -26,17 +26,8 @@ export class ProductCardComponent implements OnInit {
   }
 
   onClick_subscribeButton() {
-    //popup subscribe modal
-
-
     this.productSubscriptionModal.open$.next({
       product: this.product
     });
-
-    this.socketeer.send('SUBSCRIBE_FROMCLIENT', {
-      productId: this.product._id,
-      email: 'afroradiohead@gmail.com'
-    });
-
   }
 }

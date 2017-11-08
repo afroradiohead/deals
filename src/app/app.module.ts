@@ -12,7 +12,7 @@ import {GoogleAnalyticsService} from './shared/service/google-analytics.service'
 import {ProductCardComponent} from './shared/component/product-card/product-card.component';
 import {SocketService} from './shared/service/socket.service';
 import { ProductSubscriptionModalComponent } from './shared/component/product-subscription-modal/product-subscription-modal.component';
-import {MatDialogModule} from "@angular/material";
+import {MatDialogModule, MatSnackBarModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ProductSubscriptionModalService} from "./shared/component/product-subscription-modal/product-subscription-modal.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -42,6 +42,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     BrowserModule,
     MatDialogModule,
+    MatSnackBarModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule

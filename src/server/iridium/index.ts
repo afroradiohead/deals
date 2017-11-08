@@ -17,6 +17,7 @@ export class HostDatabase extends Core {
 
   onConnected() {
     this.Products.ensureIndexes();
+    this.ProductSubscription.ensureIndexes();
     return super.onConnected();
   }
 }
