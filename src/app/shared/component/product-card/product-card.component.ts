@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IProduct} from '../../../../shared/interface/product';
-import {GoogleAnalyticsService} from "../../service/google-analytics.service";
-import {SocketService} from "../../service/socket.service";
-import {Socketeer} from "../../../../shared/class/socketeer";
-import {SocketCommand} from "./product-card.socket";
-import {ProductSubscriptionModalService} from "../product-subscription-modal/product-subscription-modal.service";
+import {GoogleAnalyticsService} from '../../service/google-analytics.service';
+import {SocketService} from '../../service/socket.service';
+import {Socketeer} from '../../../../shared/class/socketeer';
+import {SocketCommand} from './product-card.socket';
+import {ProductSubscriptionModalService} from '../product-subscription-modal/product-subscription-modal.service';
 
 @Component({
   selector: 'app-product-card',
@@ -25,7 +25,7 @@ export class ProductCardComponent implements OnInit {
 
   }
 
-  onClick_subscribeButton() {
+  onClick_subscribeButton(e) {
     this.productSubscriptionModal.open$.next({
       product: this.product
     });
