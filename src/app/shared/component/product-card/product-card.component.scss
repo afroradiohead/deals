@@ -9,19 +9,29 @@
   align-items: center;
   justify-content: center;
 
-  .sale-tag {
-    background: $rgba-complement-0;
-    //background: #8434d9 linear-gradient(to top, #8434d9, #450c63);
-    color: $rgba-complement-0;
+  .subscribe-button {
+    background: $rgba-secondary-1-0 linear-gradient(to top, $rgba-secondary-1-0, $rgba-secondary-1-4);
+    color: white;
     display: block;
     font-size: 12px;
-    padding: 22px 50px 3px 50px;
+    font-weight:bold;
+    padding: 28px 20px 0px 20px;
     position: absolute;
-    left: -47px;
+    left: -50px;
     text-align: center;
-    top: -10px;
+    top: -25px;
     transform: rotate(-45deg);
     z-index: 9;
+    border: none;
+    box-shadow: 0px 0px 5px black;
+
+    &:hover {
+      box-shadow: 0px 0px 30px black;
+    }
+
+    small {
+      font-weight:normal;
+    }
   }
 
   .product-image {
@@ -79,6 +89,10 @@
       position:relative;
       z-index:1;
       box-shadow: 0px 0px 30px white;
+
+      &:hover {
+        box-shadow: 0px 0px 5px black;
+      }
     }
   }
 }

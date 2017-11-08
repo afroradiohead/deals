@@ -6,6 +6,17 @@ import * as Bluebird from 'bluebird';
 import * as moment from 'moment';
 import {HOST_CONFIG, IHostConfig} from '../host-config';
 const {OperationHelper} = require('apac');
+const MailGun = require('mailgun-es6');
+import {SubscriptionEmail} from "./amazon/subscription-email";
+
+const mailGun = new MailGun({
+  privateApi: 'key-8c92e20dc97f78f2ebfa540ff8f31154',
+  publicApi: 'pubkey-38cb1df01a99730425f758d5114d56a0',
+  domainName: 'sandbox77cd65e7250d419daacb6d169b52cc86.mailgun.org'
+});
+
+
+
 const slugify = function(text){
   return text.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
@@ -48,12 +59,22 @@ export class AmazonScheduler {
   constructor(app) { // schedulers should be a singleton
     this.mutablableHostConfig = _.cloneDeep(HOST_CONFIG);
     this.hostConfig = HOST_CONFIG;
-
-    schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, this._productHydrationJob.bind(this));
   }
 
-  private _productHydrationJob() {
-    const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
+  run() {
+    // this.sendSubscriptionEmails('localhost:8080');
+    schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, () => {
+      const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
+      this._productHydrationJob(host)
+        .then(() => {
+          // this.productHydrationIteration++;
+          // return this.sendSubscriptionEmails(host);
+        });
+    });
+  }
+
+
+  private _productHydrationJob(host: string) {
     const config = HOST_CONFIG[host];
     const opHelper = new OperationHelper({
       awsId:     'AKIAION2WEXXVJ6UPPNA',
@@ -65,7 +86,7 @@ export class AmazonScheduler {
     processedData.host = host;
     processedData.moment = moment();
 
-    db.connect()
+    return db.connect()
       .then(() => {
         return opHelper.execute('ItemSearch', config.amazon.itemSearch);
       })
@@ -104,8 +125,42 @@ export class AmazonScheduler {
 
         console.log(`Hydration Complete for host: ${host}. X new products`); // @todo replace x; create a true logger
         this.productHydrationIteration++;
+
+        // @todo queue up sending
         return Bluebird.all(promiseList);
       })
       .then(() => db.close());
   }
+
+  sendSubscriptionEmails(host: string) {
+    const db = HostDatabase.Create();
+
+    return db.connect()
+      .then(() => {
+        return Bluebird.props({
+          groupedSubscriptionList: db.ProductSubscription.aggregate([
+            {$match: {host: host, active: true}},
+            {
+              $group: {
+                _id: '$email',
+                productIdList: {$push: '$productId'}
+              }
+            }
+          ]),
+          productList: db.Products.find({host: host}).toArray()
+        });
+      })
+      .then(result => {
+        return Bluebird.all(result.groupedSubscriptionList.map(groupedSubscription => {
+          return new SubscriptionEmail({
+            host: host,
+            emailTo: groupedSubscription['_id'],
+            productList: result.productList.filter(product => groupedSubscription['productIdList'].indexOf(product._id) >= 0 )
+          }).p$sendEmail();
+        }));
+      })
+      .then(() => db.close())
+      .catch(err => console.log(err));
+  }
 }
+
