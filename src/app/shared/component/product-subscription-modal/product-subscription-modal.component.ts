@@ -41,7 +41,6 @@ export class ProductSubscriptionModalComponent implements OnInit {
 
     this.socketeer.from('SUBSCRIBE_FROMSERVER')
       .subscribe(e => {
-        this.dialog.closeAll();
         this.snackbar.open(`Thanks. We'll notify you when the price changes`, 'Close', {
           verticalPosition: 'top',
           duration: 2000
@@ -52,7 +51,7 @@ export class ProductSubscriptionModalComponent implements OnInit {
   onSubmit_form(e) {
     this.formSubmitted = true;
     if (this.emailFormControl.valid) {
-
+      this.dialog.closeAll();
       this.socketeer.send('SUBSCRIBE_FROMCLIENT', {
         productId: this.product._id,
         email: this.emailFormControl.value
