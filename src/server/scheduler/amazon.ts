@@ -62,7 +62,6 @@ export class AmazonScheduler {
   }
 
   run() {
-    // this.sendSubscriptionEmails('localhost:8080');
     schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, () => {
       const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
       this._productHydrationJob(host)
@@ -92,12 +91,16 @@ export class AmazonScheduler {
       })
       .then(response => {
         const items = _.get(response, 'result.ItemSearchResponse.Items.Item', []);
+        // console.log(items);
         const promiseList: Promise<number>[] = _.map(items, item => {
           const title = _.get(item, 'ItemAttributes.Title', null);
           const upc = _.get(item, 'ItemAttributes.UPC', null);
+          const backupImage = _.get(item, 'ImageSets.ImageSet.0.LargeImage.URL', null);
+
+          // get the proper large image
           const product: IProduct = {
             asin: _.get(item, 'ASIN', null),
-            image: _.get(item, 'LargeImage.URL', null),
+            image: _.get(item, 'LargeImage.URL', backupImage),
             title: title,
             link: _.get(item, 'DetailPageURL', null),
             slug: slugify(`${title}-${upc}`),

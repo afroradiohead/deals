@@ -19,42 +19,42 @@ export interface IHostConfig {
 
 export const HOST_CONFIG: IHostConfig = {
   'localhost:8080' : {
-    title: 'Cheap Nintendo Ds Games',
-    description: 'Buy nintendo ds games at a cheaper price',
+    title: 'Digital Camera Lenses For Sale',
+    description: 'Buy camera lenses up to 90% off retail value',
     amazon: {
       itemSearch: {
-        SearchIndex: 'VideoGames',
-        Keywords: 'nintendo ds games',
+        SearchIndex: 'Electronics',
+        Keywords: 'digital camera lenses',
         ResponseGroup: 'ItemAttributes,Offers,Images',
-        MinPercentageOff: '30'
+        MinPercentageOff: '70'
       }
     },
     newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com'
   },
   'www.cheap-nintendo-ds-games.com' : {
     title: 'Cheap Nintendo Ds Games',
-    description: 'Buy nintendo ds games at a cheaper price',
+    description: 'Buy nintendo ds games up to 90% off retail value',
     amazon: {
       itemSearch: {
         SearchIndex: 'VideoGames',
         Keywords: 'nintendo ds games',
         ResponseGroup: 'ItemAttributes,Offers,Images',
-        MinPercentageOff: '30'
+        MinPercentageOff: '70'
       }
     },
     newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com'
   },
-  'www.33-nintendo-ds-games.com' : {
-    title: 'Cheap Nintendo Ds Games',
-    description: 'Buy nintendo ds games at a cheaper price',
+  'www.digitalcameralensesforsale.com' : {
+    title: 'Digital Camera Lenses For Sale',
+    description: 'Buy camera lenses up to 90% off retail value',
     amazon: {
       itemSearch: {
-        SearchIndex: 'VideoGames',
-        Keywords: 'nintendo ds games',
+        SearchIndex: 'Electronics',
+        Keywords: 'digital camera lenses',
         ResponseGroup: 'ItemAttributes,Offers,Images',
-        MinPercentageOff: '30'
+        MinPercentageOff: '70'
       }
     },
-    newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com'
+    newsletterEmailAddress: 'newsletter@digitalcameralensesforsale.com'
   }
 };
