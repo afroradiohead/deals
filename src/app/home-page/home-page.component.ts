@@ -6,6 +6,7 @@ import {Socketeer} from '../../shared/class/socketeer';
 import {GoogleAnalyticsService} from "../shared/service/google-analytics.service";
 import {Subject} from "rxjs/Subject";
 import {SocketService} from "../shared/service/socket.service";
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-home-page',
@@ -17,11 +18,22 @@ export class HomePageComponent implements OnInit, OnDestroy {
   productList$: Observable<IProduct[]>;
   destroyable$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(socketService: SocketService, private gaService: GoogleAnalyticsService) {
+  constructor(socketService: SocketService,
+              private gaService: GoogleAnalyticsService,
+              private meta: Meta,
+              private title: Title
+  ) {
     this.socketeer = new Socketeer(SocketCommand, socketService.socket);
 
     this.productList$ = this.socketeer.from('INIT_FROMSERVER')
       .map(response => response.productList);
+
+    this.socketeer.from('INIT_FROMSERVER')
+      .takeUntil(this.destroyable$)
+      .subscribe(result => {
+        this.title.setTitle(result.title);
+        this.meta.updateTag({'description': result.description});
+      });
 
     this.socketeer.send('INIT_FROMCLIENT', {});
   }
