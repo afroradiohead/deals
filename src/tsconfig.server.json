@@ -9,6 +9,7 @@
   "include": [
     "./main.server.ts",
     "**/*.server.ts",
+    "**/*.socket.ts",
     "app/**/server.ts",
     "server"
   ]

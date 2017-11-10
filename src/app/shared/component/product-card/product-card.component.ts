@@ -3,7 +3,7 @@ import {IProduct} from '../../../../shared/interface/product';
 import {GoogleAnalyticsService} from '../../service/google-analytics.service';
 import {SocketService} from '../../service/socket.service';
 import {Socketeer} from '../../../../shared/class/socketeer';
-import {SocketCommand} from './product-card.socket';
+import {SocketCommand} from './product-card.socket.command';
 import {ProductSubscriptionModalService} from '../product-subscription-modal/product-subscription-modal.service';
 
 @Component({

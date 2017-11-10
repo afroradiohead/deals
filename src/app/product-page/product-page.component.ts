@@ -3,7 +3,7 @@ import {Observable, Scheduler} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {IProduct} from '../../shared/interface/product';
 import {Socketeer} from '../../shared/class/socketeer';
-import {SocketCommand} from './product-page.socket';
+import {SocketCommand} from './product-page.socket.command';
 import {Subject} from 'rxjs/Subject';
 import {Meta, Title} from '@angular/platform-browser';
 import {GoogleAnalyticsService} from '../shared/service/google-analytics.service';

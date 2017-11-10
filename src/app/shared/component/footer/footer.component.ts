@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Socketeer} from '../../../../shared/class/socketeer';
-import {SocketCommand} from './footer.socket';
+import {SocketCommand} from './footer.socket.command';
 import {SocketService} from '../../service/socket.service';
 import {Observable} from 'rxjs/Observable';
 import * as moment from 'moment';

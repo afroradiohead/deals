@@ -1,14 +1,17 @@
-import {ISocketCommand} from '../../../../shared/class/socketeer';
+import {SocketCommand} from './footer.socket.command';
+import {Socketeer} from '../../../../shared/class/socketeer';
+import {AmazonScheduler} from '../../../../server/scheduler/amazon';
 
-export class SocketCommand implements ISocketCommand {
-  namespace = 'shared/component/footer';
 
-  events: {
-    INIT_FROMCLIENT: {
-      id?: string
-    },
-    INIT_FROMSERVER: {
-      refreshTimestamp: string
-    };
-  };
+export class FooterServer {
+  constructor(socket) {
+    const socketeer = new Socketeer(SocketCommand, socket);
+
+    socketeer.from('INIT_FROMCLIENT').subscribe(request => {
+
+      socketeer.send('INIT_FROMSERVER', {
+        refreshTimestamp: AmazonScheduler.GetHydrationTimestamp(socket.handshake.headers.host)
+      });
+    });
+  }
 }
