@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {IProduct} from '../../shared/interface/product';
 import {Socketeer} from '../../shared/class/socketeer';
 import {Subject} from 'rxjs/Subject';
-import {SocketCommand} from './buy-page.socket';
+import {SocketCommand} from './buy-page.socket.command';
 import {GoogleAnalyticsService} from '../shared/service/google-analytics.service';
 import * as _ from 'lodash';
 import {SocketService} from "../shared/service/socket.service";

@@ -2,11 +2,19 @@
 
 :host {
   display:block;
-  width: 100%;
+  position:fixed;
+  z-index: 100;
+  left: 0;
+  bottom: 0;
+  pointer-events: none;
+  padding-bottom: 5px;
+
+
+  .header {
+    text-shadow: 0px 0px 5px white;
+  }
 
   .countdown {
-    background-color: black;
-    color:white;
     height:100%;
     padding-top: 10px;
     padding-bottom: 10px;

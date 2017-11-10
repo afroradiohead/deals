@@ -10,6 +10,7 @@
     "test.ts",
     "**/*.spec.ts",
     "./main.server.ts",
+    "**/*.socket.ts",
     "**/*.server.ts",
     "server"
   ]

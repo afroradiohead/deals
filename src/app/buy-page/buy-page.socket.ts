@@ -1,15 +1,21 @@
-import {IProduct} from '../../shared/interface/product';
-import {ISocketCommand} from '../../shared/class/socketeer';
+import {SocketCommand} from './buy-page.socket.command';
+import {Socketeer} from '../../shared/class/socketeer';
+import {HostDatabase} from '../../server/iridium/index';
 
-export class SocketCommand implements ISocketCommand {
-  namespace = 'buy-page';
+export class BuyPageEndpoint {
+  constructor(socket) {
+    const socketeer = new Socketeer(SocketCommand, socket);
 
-  events: {
-    INIT_FROMCLIENT: {
-      id: string
-    },
-    INIT_FROMSERVER: {
-      product: IProduct
-    };
-  };
+    socketeer.from('INIT_FROMCLIENT').subscribe(request => {
+      const db = HostDatabase.Create();
+
+      db.connect().then(() => db.Products.findOne(request.id))
+        .then(product => {
+          socketeer.send('INIT_FROMSERVER', {
+            product: product.toJSON()
+          });
+        })
+        .then(() => db.close());
+    });
+  }
 }
