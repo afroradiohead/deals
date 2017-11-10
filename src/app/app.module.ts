@@ -16,6 +16,7 @@ import {MatDialogModule, MatSnackBarModule} from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ProductSubscriptionModalService} from "./shared/component/product-subscription-modal/product-subscription-modal.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {SocketeerService} from "./shared/service/socketeer.service";
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -47,7 +48,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [SocketService, GoogleAnalyticsService, ProductSubscriptionModalService],
+  providers: [SocketService, GoogleAnalyticsService, ProductSubscriptionModalService, SocketeerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
