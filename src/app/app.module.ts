@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ProductSubscriptionModalService} from "./shared/component/product-subscription-modal/product-subscription-modal.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SocketeerService} from "./shared/service/socketeer.service";
+import {AdsenseModule} from "ng2-adsense";
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -46,7 +47,8 @@ const routes: Routes = [
     MatSnackBarModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdsenseModule.forRoot()
   ],
   providers: [SocketService, GoogleAnalyticsService, ProductSubscriptionModalService, SocketeerService],
   bootstrap: [AppComponent]

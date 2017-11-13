@@ -9,6 +9,10 @@
   align-items: center;
   justify-content: center;
 
+  .not-on-sale {
+    filter: grayscale(100%);
+  }
+
   .subscribe-button {
     background: $rgba-secondary-1-0 linear-gradient(to top, $rgba-secondary-1-0, $rgba-secondary-1-4);
     color: white;
