@@ -17,41 +17,69 @@ app.use(compression());
 
 new server.AppServer(app);
 
+const detectBot = function(userAgent){
+  const bots = [
+    'googlebot',
+    'bingbot',
+    'yandexbot',
+    'slurp',
+    'baidu',
+    'duckduck',
+    'teoma',
+    'twitterbot',
+    'facebookexternalhit',
+    'linkedinbot',
+    'embedly',
+    'facebot',
+    'w3c_validator',
+    'whatsapp'
+  ];
+  const agent = userAgent.toLowerCase();
+  return bots.some((bot) => {
+    const botDetected = agent.indexOf(bot) > -1;
+    if (botDetected) {
+      console.log('Bot detected', bot, agent);
+    }
+    return botDetected;
+  });
+}
+
+
+
 const initialRequest = function(req, res) {
   const $html = cheerio.load(fs.readFileSync(path.join(___distdirname, 'index.html')));
 
   res.set('Content-Type', 'text/html');
 
-  try {
-    request({
-      method: 'POST',
-      url: 'https://snapsearch.io/api/v1/robot',
-      auth: {
-        user: 'afroradiohead@gmail.com',
-        pass: 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV'
-      },
-      timeout: 1000,
-      json: {
-        url: `${req.protocol}://${req.headers.host}${req.originalUrl}`
-      },
-      strictSSL: true,
-      gzip: true
-    }, ( error, response, body ) => {
-      const cachedHtml = _.get(body, 'content.html', null);
-
-      if (cachedHtml) {
-        const $cachedHtml = cheerio.load(cachedHtml);
-        $html('app-root').html($cachedHtml('app-root').html());
-        $html('title').remove();
-
-        $html('head').append($cachedHtml('title'));
-        $html('head').append($cachedHtml('meta'));
-      }
-
+  if (detectBot) {
+    try {
+      request({
+        method: 'POST',
+        url: 'https://snapsearch.io/api/v1/robot',
+        auth: {
+          user: 'afroradiohead@gmail.com',
+          pass: 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV'
+        },
+        timeout: 1000,
+        json: {
+          url: `${req.protocol}://${req.headers.host}${req.originalUrl}`
+        },
+        strictSSL: true,
+        gzip: true
+      }, ( error, response, body ) => {
+        const cachedHtml = _.get(body, 'content.html', null);
+        if (cachedHtml) {
+          res.send(cachedHtml);
+        } else {
+          res.send($html.html());
+        }
+        res.end();
+      });
+    } catch (ex) {
       res.send($html.html());
       res.end();
-    });
-  } catch (ex) {
+    }
+  } else {
     res.send($html.html());
     res.end();
   }
