@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {SocketService} from "./socket.service";
+import {Socketeer} from "./google-analytics.socketeer";
 
 const ga = window['ga'] = window['ga'] || function(){(ga.q = ga.q || []).push(arguments); }; ga.l = +new Date;
 
@@ -54,16 +56,25 @@ interface IECAction {
 @Injectable()
 export class GoogleAnalyticsService {
   private requiredEc = false;
+  private socketeer: Socketeer;
 
-  constructor() {
+  constructor(socketService: SocketService) {
+    this.socketeer = new Socketeer(socketService.socket);
     const node = document.createElement('script');
     node.src = 'https://www.google-analytics.com/analytics.js';
     node.type = 'text/javascript';
     document.getElementsByTagName('head')[0].appendChild(node);
 
-    ga('create', 'UA-108296420-2', 'auto');
-    ga('require', 'displayfeatures');
-    ga('send', 'pageview');
+    this.socketeer.fromServer('INIT')
+      .first()
+      .subscribe(response => {
+        ga('create', response.gaId, 'auto');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+        console.log(response.gaId);
+      });
+
+    this.socketeer.toClient('INIT', {});
   }
 
   triggerPageView() {

@@ -3,14 +3,15 @@ import {SocketService} from './socket.service';
 import {ISocketCommand, Socketeer} from '../../../shared/class/socketeer';
 
 @Injectable()
-export class SocketeerService {
+export class SocketeerService<T>{
 
   constructor(private socketService: SocketService) {
 
   }
 
-  create(SocketCommand) {
-    return new Socketeer(SocketCommand, this.socketService.socket);
+  create(socketCommandClass) {
+    console.log(socketCommandClass);
+    return new Socketeer(socketCommandClass, this.socketService.socket);
   }
 
 }
