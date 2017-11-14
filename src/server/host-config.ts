@@ -6,7 +6,6 @@ interface IConfig {
       SearchIndex: string;
       Keywords: string;
       ResponseGroup: string;
-      MinPercentageOff: string;
     }
   };
   newsletterEmailAddress: string;
@@ -25,8 +24,7 @@ export const HOST_CONFIG: IHostConfig = {
       itemSearch: {
         SearchIndex: 'Electronics',
         Keywords: 'digital camera lenses',
-        ResponseGroup: 'ItemAttributes,Offers,Images',
-        MinPercentageOff: '70'
+        ResponseGroup: 'ItemAttributes,Offers,Images'
       }
     },
     newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com'
@@ -38,8 +36,7 @@ export const HOST_CONFIG: IHostConfig = {
       itemSearch: {
         SearchIndex: 'VideoGames',
         Keywords: 'nintendo ds games',
-        ResponseGroup: 'ItemAttributes,Offers,Images',
-        MinPercentageOff: '70'
+        ResponseGroup: 'ItemAttributes,Offers,Images'
       }
     },
     newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com'
@@ -51,8 +48,7 @@ export const HOST_CONFIG: IHostConfig = {
       itemSearch: {
         SearchIndex: 'Electronics',
         Keywords: 'digital camera lenses',
-        ResponseGroup: 'ItemAttributes,Offers,Images',
-        MinPercentageOff: '70'
+        ResponseGroup: 'ItemAttributes,Offers,Images'
       }
     },
     newsletterEmailAddress: 'newsletter@digitalcameralensesforsale.com'

@@ -87,7 +87,11 @@ export class AmazonScheduler {
 
     return db.connect()
       .then(() => {
-        return opHelper.execute('ItemSearch', config.amazon.itemSearch);
+        return opHelper.execute('ItemSearch', Object.assign(
+          {},
+          config.amazon.itemSearch,
+          {MinPercentageOff: _.toString(Math.floor(Math.random() * 90) + 1)}
+          );
       })
       .then(response => {
         const items = _.get(response, 'result.ItemSearchResponse.Items.Item', []);
