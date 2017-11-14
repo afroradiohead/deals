@@ -24,9 +24,9 @@
 
     <div class="price">
     <span class="original" *ngIf="product.price.percentage > 0">
-      ${{product.price.original}}
+      ${{product.price.original | number:'1.2-2'}}
     </span>
-      ${{product.price.discount}}
+      ${{product.price.discount | number:'1.2-2'}}
     </div>
     <a class="buy-now" target="_blank" [routerLink]="['/buy', product._id]">
       <i class="fa fa-shopping-cart"></i>Order Today
@@ -34,4 +34,3 @@
   </div>
 
 </div>
-
