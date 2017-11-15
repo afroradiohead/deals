@@ -2,13 +2,12 @@
 
 :host {
   display:block;
-  position:fixed;
+  //position:fixed;
   z-index: 100;
-  left: 0;
-  bottom: 0;
+  //left: 0;
+  //bottom: 0;
   pointer-events: none;
   padding-bottom: 5px;
-
 
   .header {
     text-shadow: 0px 0px 5px white;

@@ -1,33 +1,46 @@
 <div class="navbar navbar-default yamm" role="navigation" id="navbar">
   <div class="container">
-    <div class="navbar-header">
-
-      <a class="navbar-brand home" routerLink="/">
-        {{(title$ | async)}}
-      </a>
-    </div>
-    <!--/.navbar-header -->
-
-
-    <!--/.nav-collapse -->
-
-
-    <div class="collapse clearfix" id="search">
-
-      <form class="navbar-form" role="search">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search">
-          <span class="input-group-btn">
-
-			<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-
-		    </span>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="navbar-header">
+          <h1>
+            <a routerLink="/">
+              {{(title$ | async)}}
+            </a>
+          </h1>
+          <h3>Best Place to get all your camera lens deals</h3>
         </div>
-      </form>
+      </div>
 
+      <div class="col-md-4 text-center">
+        <h4>Prices will update in</h4>
+        <div class="countdown" *ngIf="(countdown$ | async) as countdown">
+          <div class="clock ">
+            <div class="unit">
+              <span class="hours">{{countdown.hour}}</span>
+              <div class="smalltext">Hours</div>
+            </div>
+            <div class="unit">
+              <span class="minutes">{{countdown.minute}}</span>
+              <div class="smalltext">Minutes</div>
+            </div>
+            <div class="unit">
+              <span class="seconds">{{countdown.second}}</span>
+              <div class="smalltext">Seconds</div>
+            </div>
+          </div>
+        </div>
+        <form class="subscription-form">
+          <label>Want to get notified when prices update?</label>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Let us send you all updates through email">
+            <span class="input-group-btn">
+			        <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i></button>
+            </span>
+          </div>
+        </form>
+      </div>
     </div>
-    <!--/.nav-collapse -->
-
   </div>
-  <!-- /.container -->
 </div>
+

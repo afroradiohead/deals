@@ -13,8 +13,14 @@ import {SocketService} from "../../service/socket.service";
 export class NavbarComponent implements OnInit {
   private socketeer: Socketeer<SocketCommand>;
   title$: Observable<string>;
+  countdown$: Observable<{ hour: number; minute: number; second: number }>;
 
   constructor(socketService: SocketService) {
+    this.countdown$ = Observable.of({
+      hour: 4,
+      minute: 30,
+      second: 20
+    });
     this.socketeer = new Socketeer(SocketCommand, socketService.socket);
 
     this.title$ = this.socketeer.from('INIT_FROMSERVER')
