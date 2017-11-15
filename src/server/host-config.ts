@@ -9,6 +9,7 @@ interface IConfig {
     }
   };
   newsletterEmailAddress: string;
+  gaId: string;
 }
 
 
@@ -27,7 +28,8 @@ export const HOST_CONFIG: IHostConfig = {
         ResponseGroup: 'ItemAttributes,Offers,Images'
       }
     },
-    newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com'
+    newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com',
+    gaId: 'UA-108296420-1'
   },
   'www.cheap-nintendo-ds-games.com' : {
     title: 'Cheap Nintendo Ds Games',
@@ -39,7 +41,8 @@ export const HOST_CONFIG: IHostConfig = {
         ResponseGroup: 'ItemAttributes,Offers,Images'
       }
     },
-    newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com'
+    newsletterEmailAddress: 'newsletter@cheap-nintendo-ds-games.com',
+    gaId: 'UA-108296420-2'
   },
   'www.digitalcameralensesforsale.com' : {
     title: 'Digital Camera Lenses For Sale',
@@ -51,6 +54,7 @@ export const HOST_CONFIG: IHostConfig = {
         ResponseGroup: 'ItemAttributes,Offers,Images'
       }
     },
-    newsletterEmailAddress: 'newsletter@digitalcameralensesforsale.com'
+    newsletterEmailAddress: 'newsletter@digitalcameralensesforsale.com',
+    gaId: 'UA-108296420-3'
   }
 };

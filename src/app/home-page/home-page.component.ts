@@ -7,6 +7,7 @@ import {GoogleAnalyticsService} from '../shared/service/google-analytics.service
 import {Subject} from 'rxjs/Subject';
 import {SocketService} from '../shared/service/socket.service';
 import {Meta, Title} from '@angular/platform-browser';
+import {SocketeerService} from "../shared/service/socketeer.service";
 
 @Component({
   selector: 'app-home-page',

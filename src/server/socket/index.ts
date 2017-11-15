@@ -6,10 +6,11 @@ import {FooterServer} from '../../app/shared/component/footer/footer.socket';
 import {ProductCardServer} from '../../app/shared/component/product-card/product-card.socket';
 import {Server} from "../../app/shared/component/product-subscription-modal/product-subscription-modal.socket";
 import {NavbarSocket} from "../../app/shared/component/navbar/navbar.socket";
+import {GoogleAnalyticsSocket} from "../../app/shared/service/google-analytics.socket";
 
 const socketEndpointClassList = [
   HomePageEndpoint, ProductPageServer, BuyPageEndpoint, FooterServer, ProductCardServer,
-  Server, NavbarSocket
+  Server, NavbarSocket, GoogleAnalyticsSocket
 ];
 
 export class SocketEndpoint {

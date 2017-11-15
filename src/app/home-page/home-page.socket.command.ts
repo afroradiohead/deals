@@ -1,5 +1,5 @@
 import {IProduct} from '../../shared/interface/product';
-import {ISocketCommand} from '../../shared/class/socketeer';
+import {ASocketeer, ISocketCommand} from '../../shared/class/socketeer';
 
 export class SocketCommand extends ISocketCommand {
   namespace = 'home-page';
@@ -13,4 +13,22 @@ export class SocketCommand extends ISocketCommand {
       productList: IProduct[];
     };
   };
+}
+
+// @todo use this sockeeter
+export class Socketeer extends ASocketeer<{
+  CLIENT_EVENTS: {
+    INIT: {
+      time?: boolean;
+    }
+  },
+  SERVER_EVENTS: {
+    INIT: {
+      title: string;
+      description: string;
+      productList: IProduct[];
+    }
+  }
+}> {
+  namespace = 'home-page';
 }
