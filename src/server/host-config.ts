@@ -55,6 +55,6 @@ export const HOST_CONFIG: IHostConfig = {
       }
     },
     newsletterEmailAddress: 'newsletter@digitalcameralensesforsale.com',
-    gaId: 'UA-108296420-2'
+    gaId: 'UA-108296420-3'
   }
 };
