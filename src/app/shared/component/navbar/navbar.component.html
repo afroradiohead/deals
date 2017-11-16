@@ -2,14 +2,12 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <div class="navbar-header">
-          <h1>
-            <a routerLink="/">
-              {{(title$ | async)}}
-            </a>
-          </h1>
-          <h3>{{(description$ | async)}}</h3>
-        </div>
+        <h1>
+          <a routerLink="/">
+            {{(title$ | async)}}
+          </a>
+        </h1>
+        <h3>{{(description$ | async)}}</h3>
       </div>
 
       <div class="col-md-4 text-center">
@@ -30,10 +28,10 @@
             </div>
           </div>
         </div>
-        <form class="subscription-form">
+        <form class="subscription-form" (submit)="onSubmit_subscriptionForm($event)">
           <label>Want to get notified when prices update?</label>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Let us send you all updates through email">
+            <input type="text" class="form-control" [formControl]="emailFormControl" placeholder="Let us send you all updates through email">
             <span class="input-group-btn">
 			        <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i></button>
             </span>
@@ -44,3 +42,25 @@
   </div>
 </div>
 
+<!--<ng-template #content>-->
+  <!--&lt;!&ndash;<img [src]="product.image" />&ndash;&gt;-->
+  <!--<div>-->
+    <!--<form action="#" method="post" (submit)="onSubmit_form($event)">-->
+      <!--<div class="header">-->
+        <!--<p>Get notified when price changes</p>-->
+      <!--</div>-->
+      <!--<div class="description">-->
+        <!--<p>Put in the email address you want to be notified at when the $$$ of <b>{{product.title}}</b> changes!</p>-->
+      <!--</div>-->
+      <!--<div class="input">-->
+        <!--<img class="product-image" [src]="product.image" />-->
+        <!--<input [formControl]="emailFormControl" type="text" class="button" id="email" name="email" placeholder="NAME@EXAMPLE.COM">-->
+        <!--<input type="submit" class="button" id="submit" value="SIGN UP">-->
+      <!--</div>-->
+      <!--<div class="form-control-feedback"-->
+           <!--*ngIf="emailFormControl.errors && (emailFormControl.dirty || emailFormControl.touched) && formSubmitted">-->
+        <!--<p *ngIf="emailFormControl.errors.required || emailFormControl.errors.pattern">A proper email is required</p>-->
+      <!--</div>-->
+    <!--</form>-->
+  <!--</div>-->
+<!--</ng-template>-->

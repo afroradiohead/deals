@@ -71,7 +71,6 @@ export class GoogleAnalyticsService {
         ga('create', response.gaId, 'auto');
         ga('require', 'displayfeatures');
         ga('send', 'pageview');
-        console.log(response.gaId);
       });
 
     this.socketeer.toServer('INIT', {});

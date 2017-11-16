@@ -23,7 +23,6 @@ export class ProductSubscriptionModalComponent implements OnInit {
   formSubmitted = false;
   private socketeer: Socketeer<SocketCommand>;
 
-
   constructor(private dialog: MatDialog,
               private snackbar: MatSnackBar,
               private service: ProductSubscriptionModalService,
