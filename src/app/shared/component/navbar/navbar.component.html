@@ -29,12 +29,28 @@
           </div>
         </div>
         <form class="subscription-form" (submit)="onSubmit_subscriptionForm($event)">
-          <label>Want to get notified when prices update?</label>
-          <div class="input-group">
-            <input type="text" class="form-control" [formControl]="emailFormControl" placeholder="Let us send you all updates through email">
-            <span class="input-group-btn">
-			        <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i></button>
+          <div *ngIf="emailSubscriptionState === EMAIL_SUBSCRIPTION_STATE.NOT_SUBMITTED">
+            <label>Want to get notified when prices update?</label>
+            <div class="input-group" >
+              <input focus="true" type="text" class="form-control" [formControl]="emailFormControl" placeholder="Let us send you all updates through email">
+              <span class="input-group-btn">
+			        <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i>Update Me!</button>
             </span>
+            </div>
+          </div>
+
+          <div class="progress" *ngIf="emailSubscriptionState === EMAIL_SUBSCRIPTION_STATE.SUBMITTING">
+            <div class="progress-bar progress-bar-striped active" style="width: 100%"></div>
+          </div>
+
+          <div *ngIf="emailSubscriptionState === EMAIL_SUBSCRIPTION_STATE.SUBMITTED">
+            <label>Alright! We will update you when prices change!</label>
+            <div class="input-group" >
+              <input type="text" class="form-control" disabled [value]="emailFormControl.value" placeholder="Let us send you all updates through email">
+              <span class="input-group-btn">
+			        <button type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i>Change Email</button>
+            </span>
+            </div>
           </div>
         </form>
       </div>

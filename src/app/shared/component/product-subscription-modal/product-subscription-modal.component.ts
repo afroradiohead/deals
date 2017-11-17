@@ -13,8 +13,7 @@ import {SocketService} from '../../service/socket.service';
   styleUrls: ['./product-subscription-modal.component.scss']
 })
 export class ProductSubscriptionModalComponent implements OnInit {
-  @ViewChild('content')
-  private contentTemplate: TemplateRef<any>;
+  @ViewChild('content') contentTemplate: TemplateRef<any>;
   product: IProduct;
   emailFormControl = new FormControl('', [
     Validators.required,

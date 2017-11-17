@@ -1,11 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Observable, Scheduler} from 'rxjs';
 import {SocketService} from '../../service/socket.service';
 import {Socketeer} from './navbar.socketeer';
 import moment = require('moment');
 import {FormControl, Validators} from '@angular/forms';
-import {MatSnackBar} from "@angular/material";
+import {MatSnackBar} from '@angular/material';
 
+enum EMAIL_SUBSCRIPTION_STATE {
+  NOT_SUBMITTED,
+  SUBMITTING,
+  SUBMITTED
+}
+
+const EMAIL_LOCAL_STORAGE_TOKEN = 'navbar-email-subscription';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +20,8 @@ import {MatSnackBar} from "@angular/material";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  EMAIL_SUBSCRIPTION_STATE: typeof EMAIL_SUBSCRIPTION_STATE = EMAIL_SUBSCRIPTION_STATE;
+  emailSubscriptionState: EMAIL_SUBSCRIPTION_STATE = EMAIL_SUBSCRIPTION_STATE.NOT_SUBMITTED;
   title$: Observable<string>;
   description$: Observable<string>;
   countdown$: Observable<{ hour: number; minute: number; second: number }>;
@@ -22,6 +31,8 @@ export class NavbarComponent implements OnInit {
   ]);
   socketeer: Socketeer;
   formSubmitted: boolean;
+  @ViewChild('emailInput') emailInput: ElementRef;
+
 
   constructor(socketService: SocketService, private snackbar: MatSnackBar) {
     this.socketeer = new Socketeer(socketService.socket);
@@ -46,29 +57,41 @@ export class NavbarComponent implements OnInit {
         };
       });
 
+    if (localStorage.getItem(EMAIL_LOCAL_STORAGE_TOKEN)) {
+      this.emailSubscriptionState = this.EMAIL_SUBSCRIPTION_STATE.SUBMITTED;
+      this.emailFormControl.setValue(localStorage.getItem(EMAIL_LOCAL_STORAGE_TOKEN));
+    }
+
     this.socketeer.toServer('INIT', {});
   }
 
   ngOnInit() {
     this.socketeer.fromServer('SUBSCRIBE')
-      .first()
       .subscribe(data => {
-        this.snackbar.open(`Awesome! We'll notify you when the price changes.`, 'Close', {
-          verticalPosition: 'top',
-          duration: 2000
-        });
+        localStorage.setItem(EMAIL_LOCAL_STORAGE_TOKEN, this.emailFormControl.value);
+        this.emailSubscriptionState = this.EMAIL_SUBSCRIPTION_STATE.SUBMITTED;
       });
   }
 
   onSubmit_subscriptionForm(e) {
     this.formSubmitted = true;
 
-    if (this.emailFormControl.valid) {
-      console.log(this.emailFormControl.value);
-      this.socketeer.toServer('SUBSCRIBE', {
-        email: this.emailFormControl.value
-      });
+    switch (this.emailSubscriptionState) {
+      case this.EMAIL_SUBSCRIPTION_STATE.SUBMITTED:
+        this.emailSubscriptionState = this.EMAIL_SUBSCRIPTION_STATE.NOT_SUBMITTED;
+        this.emailFormControl.setValue('');
+        this.formSubmitted = false;
+        break;
+      case this.EMAIL_SUBSCRIPTION_STATE.NOT_SUBMITTED:
+        if (this.emailFormControl.valid) {
+          this.emailSubscriptionState = this.EMAIL_SUBSCRIPTION_STATE.SUBMITTING;
+          this.socketeer.toServer('SUBSCRIBE', {
+            email: this.emailFormControl.value
+          });
+        }
+        break;
     }
+
   }
 
 }
