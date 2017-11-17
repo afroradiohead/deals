@@ -67,11 +67,6 @@ export class GoogleAnalyticsService {
     this.socketeer.fromServer('INIT')
       .first()
       .subscribe(response => {
-        const node = document.createElement('script');
-        node.src = `https://www.google-analytics.com/analytics.js?id=${response.gaId}`;
-        node.type = 'text/javascript';
-        document.getElementsByTagName('head')[0].appendChild(node);
-        gtag('js', new Date());
         gtag('config', response.gaId);
         gtag('config', 'UA-108296420-2');
       });
