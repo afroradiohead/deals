@@ -1,0 +1,33 @@
+@import "../../../variables";
+
+.countdown {
+
+  .clock {
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 15px;
+
+    .unit{
+      padding: 10px;
+      border-radius: 3px;
+      background: $rgba-primary-3;
+      display: inline-block;
+
+      span{
+        padding: 15px;
+        border-radius: 3px;
+        background: $rgba-primary-4;
+        display: inline-block;
+      }
+    }
+
+    .smalltext{
+      padding-top: 5px;
+      font-size: 16px;
+    }
+  }
+
+}

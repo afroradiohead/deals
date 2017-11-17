@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-top',
@@ -6,8 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./top.component.scss']
 })
 export class TopComponent implements OnInit {
-
-  constructor() { }
+  countdown$: Observable<{ hour: number; minute: number; second: number }>;
+  constructor() {
+    this.countdown$ = Observable.of({
+      hour: 4,
+      minute: 30,
+      second: 20
+    });
+  }
 
   ngOnInit() {
   }

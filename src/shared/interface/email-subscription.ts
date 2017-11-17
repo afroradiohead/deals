@@ -1,6 +1,5 @@
-export interface IProductSubscription {
+export interface IEmailSubscription {
   _id?: string;
-  productId: string;
   email: string;
   host: string;
   createdAt?: Date;

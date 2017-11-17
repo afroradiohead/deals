@@ -6,7 +6,7 @@ export class GoogleAnalyticsSocket {
     const socketeer = new Socketeer(socket);
 
     socketeer.fromClient('INIT').subscribe(request => {
-      socketeer.toServer('INIT', {
+      socketeer.toClient('INIT', {
         gaId: HOST_CONFIG[socket.handshake.headers.host].gaId
       });
     });

@@ -37,18 +37,18 @@ export abstract class ASocketeer<T extends ICommand> {
 
   constructor(private socket: any) {}
 
-  toClient<K extends keyof T['CLIENT_EVENTS']>(key: K, value: T['CLIENT_EVENTS'][K]) {
+  toServer<K extends keyof T['CLIENT_EVENTS']>(key: K, value: T['CLIENT_EVENTS'][K]) {
     this.socket.emit(`${this.namespace}/CLIENT_EVENTS/${key}`, value);
-  }
-
-  toServer<K extends keyof T['SERVER_EVENTS']>(key: K, value: T['SERVER_EVENTS'][K]) {
-    this.socket.emit(`${this.namespace}/SERVER_EVENTS/${key}`, value);
   }
 
   fromClient<K extends keyof T['CLIENT_EVENTS']>(key: K): Observable<T['CLIENT_EVENTS'][K]> {
     return Observable.create(observer => {
       this.socket.on(`${this.namespace}/CLIENT_EVENTS/${key}`, (v) => observer.next(v));
     });
+  }
+
+  toClient<K extends keyof T['SERVER_EVENTS']>(key: K, value: T['SERVER_EVENTS'][K]) {
+    this.socket.emit(`${this.namespace}/SERVER_EVENTS/${key}`, value);
   }
 
   fromServer<K extends keyof T['SERVER_EVENTS']>(key: K): Observable<T['SERVER_EVENTS'][K]> {
