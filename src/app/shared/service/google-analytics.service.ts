@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import {SocketService} from "./socket.service";
-import {Socketeer} from "./google-analytics.socketeer";
-
-const ga = window['ga'] = window['ga'] || function(){(ga.q = ga.q || []).push(arguments); }; ga.l = +new Date;
+import {SocketService} from './socket.service';
+import {Socketeer} from './google-analytics.socketeer';
 
 window['dataLayer'] = window['dataLayer'] || [];
 function gtag(...data) {window['dataLayer'].push(data); }
@@ -66,7 +64,6 @@ export class GoogleAnalyticsService {
   constructor(socketService: SocketService) {
     this.socketeer = new Socketeer(socketService.socket);
 
-
     this.socketeer.fromServer('INIT')
       .first()
       .subscribe(response => {
@@ -82,10 +79,7 @@ export class GoogleAnalyticsService {
   }
 
   triggerPageView() {
-    gtag('send', {
-      hitType: 'pageview',
-      page: location.pathname
-    });
+    gtag('event', 'page_view');
   }
 
   triggerProductImpression(data: IECImpressionData) {
