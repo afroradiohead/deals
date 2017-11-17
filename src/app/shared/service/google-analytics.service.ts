@@ -5,7 +5,7 @@ import {Socketeer} from "./google-analytics.socketeer";
 const ga = window['ga'] = window['ga'] || function(){(ga.q = ga.q || []).push(arguments); }; ga.l = +new Date;
 
 window['dataLayer'] = window['dataLayer'] || [];
-function gtag() {window['dataLayer'].push(arguments); }
+function gtag(...data) {window['dataLayer'].push(data); }
 
 
 
