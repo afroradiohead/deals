@@ -82,7 +82,7 @@ export class GoogleAnalyticsService {
   }
 
   triggerPageView() {
-    ga('send', {
+    gtag('send', {
       hitType: 'pageview',
       page: location.pathname
     });
@@ -90,27 +90,27 @@ export class GoogleAnalyticsService {
 
   triggerProductImpression(data: IECImpressionData) {
     this.requireEc();
-    ga('ec:addImpression', data);
-    ga('send', 'event', 'ec', 'impression');
+    gtag('ec:addImpression', data);
+    gtag('send', 'event', 'ec', 'impression');
   }
 
   triggerProductDetail(data: IECProductData) {
     this.requireEc();
-    ga('ec:addProduct', data);
-    ga('ec:setAction', 'detail');
-    ga('send', 'event', 'ec', 'detail');
+    gtag('ec:addProduct', data);
+    gtag('ec:setAction', 'detail');
+    gtag('send', 'event', 'ec', 'detail');
   }
 
   triggerProductPurchase(data: IECProductData, action: IECAction) {
     this.requireEc();
-    ga('ec:addProduct', data);
-    ga('ec:setAction', 'purchase', action);
-    ga('send', 'event', 'ec', 'purchase');
+    gtag('ec:addProduct', data);
+    gtag('ec:setAction', 'purchase', action);
+    gtag('send', 'event', 'ec', 'purchase');
   }
 
   private requireEc() {
     if (!this.requiredEc) {
-      ga('require', 'ec');
+      gtag('require', 'ec');
       this.requiredEc = true;
     }
   }
