@@ -56,5 +56,31 @@ export const HOST_CONFIG: IHostConfig = {
     },
     newsletterEmailAddress: 'newsletter@digitalcameralensesforsale.com',
     gaId: 'UA-108296420-3'
+  },
+  'www.rainbowloomdeals.com' : {
+    title: 'Rainbow Loom Deals',
+    description: 'Buy rainbow loom products up to 90% off retail value',
+    amazon: {
+      itemSearch: {
+        SearchIndex: 'Toys',
+        Keywords: 'rainbow loom',
+        ResponseGroup: 'ItemAttributes,Offers,Images'
+      }
+    },
+    newsletterEmailAddress: 'newsletter@rainbowloomdeals.com',
+    gaId: 'UA-108296420-4'
+  },
+  'www.arcade-machines-for-sale.com' : {
+    title: 'Arcade Machines For Sale',
+    description: 'Buy arcade machines up to 90% off retail value',
+    amazon: {
+      itemSearch: {
+        SearchIndex: 'Toys',
+        Keywords: 'arcade machines',
+        ResponseGroup: 'ItemAttributes,Offers,Images'
+      }
+    },
+    newsletterEmailAddress: 'newsletter@arcade-machines-for-sale.com',
+    gaId: 'UA-108296420-5'
   }
 };
