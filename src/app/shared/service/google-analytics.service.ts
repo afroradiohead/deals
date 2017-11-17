@@ -78,7 +78,7 @@ export class GoogleAnalyticsService {
         gtag('config', response.gaId);
       });
 
-    this.socketeer.toClient('INIT', {});
+    this.socketeer.toServer('INIT', {});
   }
 
   triggerPageView() {
