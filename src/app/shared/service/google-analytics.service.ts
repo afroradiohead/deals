@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import {SocketService} from './socket.service';
 import {Socketeer} from './google-analytics.socketeer';
 
-window['dataLayer'] = window['dataLayer'] || [];
-function gtag(...data) {window['dataLayer'].push(data); }
 
-
+const gtag = window['gtag'] || function(...data){};
 
 /**
  *
@@ -60,6 +58,7 @@ interface IECAction {
 export class GoogleAnalyticsService {
   private requiredEc = false;
   private socketeer: Socketeer;
+  private gaId: string;
 
   constructor(socketService: SocketService) {
     this.socketeer = new Socketeer(socketService.socket);
@@ -67,15 +66,15 @@ export class GoogleAnalyticsService {
     this.socketeer.fromServer('INIT')
       .first()
       .subscribe(response => {
-        gtag('config', response.gaId);
-        gtag('config', 'UA-108296420-2');
+        this.gaId = response.gaId;
+        gtag('config', this.gaId, {'page_path': location.pathname});
       });
 
     this.socketeer.toServer('INIT', {});
   }
 
   triggerPageView() {
-    gtag('config', 'UA-108296420-2', {'page_path': location.pathname});
+    gtag('config', this.gaId, {'page_path': location.pathname});
   }
 
   triggerProductImpression(data: IECImpressionData) {
