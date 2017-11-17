@@ -73,13 +73,14 @@ export class GoogleAnalyticsService {
         document.getElementsByTagName('head')[0].appendChild(node);
         gtag('js', new Date());
         gtag('config', response.gaId);
+        gtag('config', 'UA-108296420-2');
       });
 
     this.socketeer.toServer('INIT', {});
   }
 
   triggerPageView() {
-    gtag('event', 'page_view');
+    gtag('config', 'UA-108296420-2', {'page_path': location.pathname});
   }
 
   triggerProductImpression(data: IECImpressionData) {
