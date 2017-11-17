@@ -4,6 +4,11 @@ import {Socketeer} from "./google-analytics.socketeer";
 
 const ga = window['ga'] = window['ga'] || function(){(ga.q = ga.q || []).push(arguments); }; ga.l = +new Date;
 
+window['dataLayer'] = window['dataLayer'] || [];
+function gtag() {dataLayer.push(arguments); }
+
+
+
 /**
  *
  click	A click on a product or product link for one or more products.
@@ -60,18 +65,17 @@ export class GoogleAnalyticsService {
 
   constructor(socketService: SocketService) {
     this.socketeer = new Socketeer(socketService.socket);
-    const node = document.createElement('script');
-    node.src = 'https://www.google-analytics.com/analytics.js';
-    node.type = 'text/javascript';
-    document.getElementsByTagName('head')[0].appendChild(node);
+
 
     this.socketeer.fromServer('INIT')
       .first()
       .subscribe(response => {
-        ga('create', response.gaId, 'auto');
-        ga('require', 'displayfeatures');
-        ga('send', 'pageview');
-        console.log(response.gaId);
+        const node = document.createElement('script');
+        node.src = `https://www.google-analytics.com/analytics.js?id=${response.gaId}`;
+        node.type = 'text/javascript';
+        document.getElementsByTagName('head')[0].appendChild(node);
+        gtag('js', new Date());
+        gtag('config', response.gaId);
       });
 
     this.socketeer.toClient('INIT', {});
