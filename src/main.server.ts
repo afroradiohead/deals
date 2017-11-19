@@ -8,6 +8,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const server = require('./server');
+import * as Handlebars from 'handlebars';
 const httpServer = app.listen(process.env.PORT || 8080);
 const ___distdirname = `${__dirname}/../dist/`;
 
@@ -87,7 +88,14 @@ const initialRequest = function(req, res) {
 
 app.get('/', initialRequest)
   .get('/robots.txt', (req, res) => {
-    res.sendFile(path.join(___distdirname, 'assets/robots.txt'));
+    const template = fs.readFileSync(path.join(__dirname, '/server/robots.txt.hbs'), 'utf8');
+    const compiledTemplate = Handlebars.compile(template);
+    const txt = compiledTemplate({
+      host: req.hostname
+    });
+    res.send(txt);
+    res.end();
+
   });
 
 app
