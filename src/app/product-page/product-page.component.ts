@@ -10,6 +10,14 @@ import {GoogleAnalyticsService} from '../shared/service/google-analytics.service
 import {SocketService} from '../shared/service/socket.service';
 import * as moment from 'moment';
 
+const createPageTitle = function(product: IProduct): string{
+  if (product.price.percentage > 0) {
+    return `${product.price.percentage}% off @ $${product.price.discount} - ${product.title}`;
+  }
+
+  return `$${product.price.original} - ${product.title}`;
+};
+
 
 @Component({
   selector: 'app-product-page',
@@ -45,7 +53,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     this.product$
       .takeUntil(this.destroyable$)
       .subscribe(product => {
-        this.title.setTitle(product.title);
+        this.title.setTitle(createPageTitle(product));
         this.meta.updateTag({'description': product.description});
 
         this.gaService.triggerProductDetail({
@@ -73,5 +81,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     this.destroyable$.next(true);
     this.destroyable$.complete();
   }
+
 }
 
