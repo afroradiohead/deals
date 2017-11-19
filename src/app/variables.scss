@@ -33,3 +33,26 @@ $rgba-complement-1: rgba(255,247,132,1);
 $rgba-complement-2: rgba(255,244, 85,1);
 $rgba-complement-3: rgba(255,238,  0,1);
 $rgba-complement-4: rgba(239,223,  0,1);
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};
+}
