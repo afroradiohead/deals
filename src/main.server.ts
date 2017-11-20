@@ -100,8 +100,8 @@ app.get('/', initialRequest)
 
 app
   .use(express.static(___distdirname))
+  .use(express.static(`${__dirname}/assets`))
   .get('*', initialRequest);
-
 
 
 

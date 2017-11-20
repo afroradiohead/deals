@@ -5,14 +5,15 @@
   "scripts": {
     "serve-1": "ng serve --proxy-config proxy.config.json",
     "serve-2": "./node_modules/.bin/tsc-watch --project src/tsconfig.server.json --onSuccess \"node ./dist-server/main.server.js\"",
-    "serve-hbs": "./node_modules/.bin/cpx ./src/**/*.hbs ./dist-server --watch",
+    "serve-hbs": "./node_modules/.bin/cpx src/**/*.hbs dist-server --watch",
+    "test-hbs": "./node_modules/.bin/cpx src/**/*.hbs dist-server",
     "ng": "ng",
     "start": "./node_modules/.bin/forever ./dist-server/main.server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --output-hashing=none --aot -prod && cpx ./src/**/*.hbs ./dist-server && tsc --project src/tsconfig.server.json"
+    "postinstall": "ng build --output-hashing=none --aot -prod && cpx src/**/*.hbs dist-server && tsc --project src/tsconfig.server.json"
   },
   "private": true,
   "dependencies": {
