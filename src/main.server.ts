@@ -93,6 +93,7 @@ app.get('/', initialRequest)
     const txt = compiledTemplate({
       host: req.hostname
     });
+    res.set('Content-Type', 'text/plain');
     res.send(txt);
     res.end();
 
