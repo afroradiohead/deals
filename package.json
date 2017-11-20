@@ -5,7 +5,7 @@
   "scripts": {
     "serve-1": "ng serve --proxy-config proxy.config.json",
     "serve-2": "./node_modules/.bin/tsc-watch --project src/tsconfig.server.json --onSuccess \"node ./dist-server/main.server.js\"",
-    "serve-hbs": "./node_modules/.bin/cpx src/**/*.hbs dist-server --watch",
+    "serve-hbs": "./node_modules/.bin/cpx ./src/server/**/*.hbs ./dist-server/server --watch",
     "test-hbs": "./node_modules/.bin/cpx ./src/server/**/*.hbs ./dist-server/server",
     "ng": "ng",
     "start": "./node_modules/.bin/forever ./dist-server/main.server.js",
@@ -56,6 +56,7 @@
     "lodash": "^4.17.4",
     "mailgun-es6": "^1.1.4",
     "moment": "^2.19.1",
+    "newrelic": "^2.4.0",
     "ng2-adsense": "^4.0.12",
     "ngx-socket-io": "^1.0.8",
     "node-schedule": "^1.2.5",

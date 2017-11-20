@@ -1,4 +1,5 @@
 // server.js
+require('newrelic');
 const request = require( 'request' );
 const _ = require( 'lodash' );
 const compression = require('compression');
