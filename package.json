@@ -6,14 +6,14 @@
     "serve-1": "ng serve --proxy-config proxy.config.json",
     "serve-2": "./node_modules/.bin/tsc-watch --project src/tsconfig.server.json --onSuccess \"node ./dist-server/main.server.js\"",
     "serve-hbs": "./node_modules/.bin/cpx src/**/*.hbs dist-server --watch",
-    "test-hbs": "./node_modules/.bin/cpx src/**/*.hbs dist-server",
+    "test-hbs": "./node_modules/.bin/copyfiles src/**/*.hbs dist-server",
     "ng": "ng",
     "start": "./node_modules/.bin/forever ./dist-server/main.server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --output-hashing=none --aot -prod && cpx src/**/*.hbs dist-server && tsc --project src/tsconfig.server.json"
+    "postinstall": "ng build --output-hashing=none --aot -prod && copyfiles src/**/*.hbs dist-server && tsc --project src/tsconfig.server.json"
   },
   "private": true,
   "dependencies": {
@@ -45,6 +45,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "cheerio": "^1.0.0-rc.2",
     "concurrently": "^3.5.0",
+    "copyfiles": "^1.2.0",
     "core-js": "^2.4.1",
     "cpx": "^1.5.0",
     "express": "^4.15.5",
