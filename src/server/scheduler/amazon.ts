@@ -8,6 +8,7 @@ import {HOST_CONFIG, IHostConfig} from '../host-config';
 const {OperationHelper} = require('apac');
 const MailGun = require('mailgun-es6');
 import {SubscriptionEmail} from "./amazon/subscription-email";
+import {logger} from "../logger";
 
 const mailGun = new MailGun({
   privateApi: 'key-8c92e20dc97f78f2ebfa540ff8f31154',
@@ -62,6 +63,7 @@ export class AmazonScheduler {
   }
 
   run() {
+    // this._productHydrationJob("localhost:8080")
     schedule.scheduleJob(`0 0 */${HOST_PER_HOUR} * * *`, () => {
       const host = _.keys(HOST_CONFIG)[this.productHydrationIteration % HOST_COUNT];
       this._productHydrationJob(host)
@@ -97,11 +99,23 @@ export class AmazonScheduler {
       })
       .then(response => {
         const items = _.get(response, 'result.ItemSearchResponse.Items.Item', []);
+
+        logger.log({
+          level: "info",
+          message: items
+        });
+
         // console.log(items);
         const promiseList: Promise<number>[] = _.map(items, item => {
           const title = _.get(item, 'ItemAttributes.Title', null);
           const upc = _.get(item, 'ItemAttributes.UPC', null);
           const backupImage = _.get(item, 'ImageSets.ImageSet.0.LargeImage.URL', null);
+          const brand = _.get(item, 'ItemAttributes.Brand', null);
+          const feature = _.get(item, 'ItemAttributes.Feature', null);
+          const lowestNewPrice = _.get(item, 'OfferSummary.LowestNewPrice.Amount', null);
+          const lowestUsedPrice = _.get(item, 'OfferSummary.LowestUsedPrice.Amount', null);
+          const totalNew = _.get(item, 'OfferSummary.TotalNew', null);
+          const totalOld = _.get(item, 'OfferSummary.TotalUsed', null);
 
           // get the proper large image
           const product: IProduct = {
