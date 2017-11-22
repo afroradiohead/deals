@@ -57,7 +57,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
         this.meta.updateTag({'description': product.description});
 
         console.log(product.price);
-
         this.gaService.triggerProductDetail({
           id: product._id,
           name: product.title,

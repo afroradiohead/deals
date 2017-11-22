@@ -22,9 +22,14 @@
       <div class="product" *ngIf="(product$ | async) as product">
         <img class="product-image" [src]="product.image" />
 
-        <span class="original-price" *ngIf="product.price.percentage > 0">
-          ${{product.price.original}}
-        </span>
+        <div class="original-price"
+             *ngIf="
+       ((product.price.new > 0) && product.price.original > product.price.new) ||
+       ((product.price.discount > 0) && product.price.original > product.price.discount) ||
+       ((product.price.used > 0) && product.price.original > product.price.used)
+       ">
+          ${{product.price.original | number:'1.2-2'}}
+        </div>
 
         <a class="buy-now text-center" target="_blank" [routerLink]="['/buy', product._id]">
           <span>
