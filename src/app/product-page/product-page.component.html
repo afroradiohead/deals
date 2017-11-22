@@ -33,11 +33,11 @@
 
         <a class="buy-now text-center" target="_blank" [routerLink]="['/buy', product._id]">
           <span>
-            <span>${{product.price.new || product.price.discount | number:'1.2-2'}}</span>
+            <span class="price">${{product.price.new || product.price.discount | number:'1.2-2'}}</span>
             <span><i class="fa fa-shopping-cart"></i> Buy New</span>
           </span>
           <span *ngIf="product.price.used > 0">
-            <span>${{product.price.used | number:'1.2-2'}}</span>
+            <span class="price used">${{product.price.used | number:'1.2-2'}}</span>
             <span><i class="fa fa-shopping-cart"></i> Buy Used</span>
           </span>
         </a>

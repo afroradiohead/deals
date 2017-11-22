@@ -98,23 +98,13 @@
     bottom:0;
 
     .price {
+      font-size: 16px;
+      color: $rgba-complement-0;
 
-      font-size: 30px;
-      text-align:center;
-      color: $rgba-complement-4;
-      text-shadow: 0px 0px 7px black;
-      font-weight: bold;
-
-      .original {
-        font-size: 40px;
-        text-align: center;
-        color: red;
-        z-index: 0;
-        text-decoration: line-through;
-        position: absolute;
-        right: 100%;
-        top: -10px;
-        transform: rotate(-30deg);
+      &.used {
+        font-size: 18px;
+        color: $rgba-tertiary-2-4;
+        font-weight: bold;
       }
     }
 
