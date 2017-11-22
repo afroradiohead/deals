@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Scheduler} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {IProduct} from '../../shared/interface/product';
+import {calculatePricePercentage, generatePageTitle, IProduct} from '../../shared/interface/product';
 import {Socketeer} from '../../shared/class/socketeer';
 import {SocketCommand} from './product-page.socket.command';
 import {Subject} from 'rxjs/Subject';
@@ -9,14 +9,6 @@ import {Meta, Title} from '@angular/platform-browser';
 import {GoogleAnalyticsService} from '../shared/service/google-analytics.service';
 import {SocketService} from '../shared/service/socket.service';
 import * as moment from 'moment';
-
-const createPageTitle = function(product: IProduct): string{
-  if (product.price.percentage > 0) {
-    return `${product.price.percentage}% off @ $${product.price.discount} - ${product.title}`;
-  }
-
-  return `$${product.price.original} - ${product.title}`;
-};
 
 
 @Component({
@@ -53,7 +45,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     this.product$
       .takeUntil(this.destroyable$)
       .subscribe(product => {
-        this.title.setTitle(createPageTitle(product));
+        this.title.setTitle(generatePageTitle(product));
         this.meta.updateTag({'description': product.description});
 
         console.log(product.price);

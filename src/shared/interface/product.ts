@@ -28,3 +28,18 @@ export interface IProduct {
   total: IProductTotal;
   displayDate?: Date;
 }
+
+export const calculatePricePercentage = function(product: IProduct): number{
+  const newPrice = product.price.used || product.price.new || product.price.discount;
+
+  return 100 - +(newPrice / product.price.original * 100).toFixed();
+};
+
+export const generatePageTitle = function(product: IProduct): string{
+  const percentage = calculatePricePercentage(product);
+  if (percentage > 0) {
+    return `${percentage}% off $${product.price.original} - ${product.title}`;
+  }
+
+  return `$${product.price.original} - ${product.title}`;
+};
