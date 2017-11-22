@@ -16,6 +16,7 @@ export class ProductPageServer {
       Observable.fromPromise(db.connect())
         .mergeMap(() => {
           const product$ = Observable.fromPromise(db.Products.findOne({
+            host: socket.handshake.headers.host,
             slug: slug
           }));
           const randomProductList$ = Observable.fromPromise(db.Products.aggregate([

@@ -1,5 +1,5 @@
 // server.js
-require('newrelic');
+require('dotenv').config();
 const request = require( 'request' );
 const _ = require( 'lodash' );
 const compression = require('compression');
@@ -97,7 +97,6 @@ app.get('/', initialRequest)
     res.set('Content-Type', 'text/plain');
     res.send(txt);
     res.end();
-
   });
 
 app

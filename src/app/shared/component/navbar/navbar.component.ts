@@ -1,10 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Observable, Scheduler} from 'rxjs';
-import {SocketService} from '../../service/socket.service';
 import {Socketeer} from './navbar.socketeer';
 import * as moment from 'moment';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
+import {SocketService} from '../../service/socket.service';
 
 enum EMAIL_SUBSCRIPTION_STATE {
   NOT_SUBMITTED,

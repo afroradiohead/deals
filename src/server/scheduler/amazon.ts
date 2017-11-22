@@ -7,7 +7,8 @@ import * as moment from 'moment';
 import {HOST_CONFIG, IHostConfig} from '../host-config';
 const {OperationHelper} = require('apac');
 const MailGun = require('mailgun-es6');
-import {SubscriptionEmail} from "./amazon/subscription-email";
+import {SubscriptionEmail} from './amazon/subscription-email';
+import {logger} from '../logger';
 
 const mailGun = new MailGun({
   privateApi: 'key-8c92e20dc97f78f2ebfa540ff8f31154',
@@ -68,6 +69,12 @@ export class AmazonScheduler {
         .then(() => {
           // this.productHydrationIteration++;
           // return this.sendSubscriptionEmails(host);
+        })
+        .catch(e => {
+          logger.log({
+            level: 'error',
+            message: e
+          });
         });
     });
   }
@@ -97,30 +104,41 @@ export class AmazonScheduler {
       })
       .then(response => {
         const items = _.get(response, 'result.ItemSearchResponse.Items.Item', []);
+
+
         // console.log(items);
         const promiseList: Promise<number>[] = _.map(items, item => {
           const title = _.get(item, 'ItemAttributes.Title', null);
           const upc = _.get(item, 'ItemAttributes.UPC', null);
           const backupImage = _.get(item, 'ImageSets.ImageSet.0.LargeImage.URL', null);
+          const brand = _.get(item, 'ItemAttributes.Brand', null);
+          const feature = _.get(item, 'ItemAttributes.Feature', null);
+          const lowestNewPrice = +_.get(item, 'OfferSummary.LowestNewPrice.Amount', 0) / 100;
+          const lowestUsedPrice = +_.get(item, 'OfferSummary.LowestUsedPrice.Amount', 0) / 100;
+
 
           // get the proper large image
           const product: IProduct = {
             asin: _.get(item, 'ASIN', null),
             image: _.get(item, 'LargeImage.URL', backupImage),
             title: title,
+            brand: brand,
+            feature: feature,
             link: _.get(item, 'DetailPageURL', null),
             slug: slugify(`${title}-${upc}`),
             description: _.get(item, 'ItemAttributes.Feature.0', null),
             manufacturer: _.get(item, 'ItemAttributes.Manufacturer', null),
             price: {
+              new: lowestNewPrice,
+              used: lowestUsedPrice,
               original: +_.get(item, 'ItemAttributes.ListPrice.Amount', 0) / 100,
               discount: +_.get(item, 'Offers.Offer.OfferListing.Price.Amount', 0) / 100,
               saved: +_.get(item, 'Offers.Offer.OfferListing.AmountSaved.Amount', 0) / 100,
               percentage: +_.get(item, 'Offers.Offer.OfferListing.PercentageSaved', 0),
             },
             total: {
-              new: +_.get(item, 'OfferSummary.TotalNew', null),
-              used: +_.get(item, 'OfferSummary.TotalUsed', null),
+              new: +_.get(item, 'OfferSummary.TotalNew', 0),
+              used: +_.get(item, 'OfferSummary.TotalUsed', 0),
             },
             host: host
           };
@@ -138,7 +156,13 @@ export class AmazonScheduler {
         // @todo queue up sending
         return Bluebird.all(promiseList);
       })
-      .then(() => db.close());
+      .then(() => db.close())
+      .catch(e => {
+        logger.log({
+          level: 'error',
+          message: e
+        });
+      });
   }
 
   sendSubscriptionEmails(host: string) {
@@ -169,7 +193,12 @@ export class AmazonScheduler {
         }));
       })
       .then(() => db.close())
-      .catch(err => console.log(err));
+      .catch(e => {
+        logger.log({
+          level: 'error',
+          message: e
+        });
+      });
   }
 }
 

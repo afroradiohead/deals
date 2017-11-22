@@ -22,24 +22,37 @@
       <div class="product" *ngIf="(product$ | async) as product">
         <img class="product-image" [src]="product.image" />
 
-        <span class="original-price" *ngIf="product.price.percentage > 0">
-          ${{product.price.original}}
-        </span>
+        <div class="original-price"
+             *ngIf="
+       ((product.price.new > 0) && product.price.original > product.price.new) ||
+       ((product.price.discount > 0) && product.price.original > product.price.discount) ||
+       ((product.price.used > 0) && product.price.original > product.price.used)
+       ">
+          ${{product.price.original | number:'1.2-2'}}
+        </div>
 
-        <a class="buy-now" target="_blank" [routerLink]="['/buy', product._id]">
-          <i class="fa fa-shopping-cart"></i>Order Now for ${{product.price.discount}}
+        <a class="buy-now text-center" target="_blank" [routerLink]="['/buy', product._id]">
+          <span>
+            <span>${{product.price.new || product.price.discount | number:'1.2-2'}}</span>
+            <span><i class="fa fa-shopping-cart"></i> Buy New</span>
+          </span>
+          <span *ngIf="product.price.used > 0">
+            <span>${{product.price.used | number:'1.2-2'}}</span>
+            <span><i class="fa fa-shopping-cart"></i> Buy Used</span>
+          </span>
         </a>
       </div>
     </div>
     <div class="col-sm-6 product-info" *ngIf="(product$ | async) as product">
       <h3 class="text-center">{{product.title}}</h3>
       <div class="description">
+        <h4>Description</h4>
         {{product.description}}
       </div>
-
-      <p class="text-center buttons">
-
-      </p>
+      <div class="description">
+        <h4>Features</h4>
+        {{product.feature}}
+      </div>
     </div>
   </div>
 
