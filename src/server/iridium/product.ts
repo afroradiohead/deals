@@ -16,15 +16,21 @@ export class Product extends Instance<IProduct, Product> implements IProduct {
   @Property(String)
   title: string;
   @Property(String)
+  brand: string;
+  @Property(String)
   link: string;
   @Property(String)
   slug: string;
   @Property(String)
   description: string;
   @Property(String)
+  feature: string;
+  @Property(String)
   manufacturer: string;
 
   @Property({
+    new: Number,
+    used: Number,
     original: Number,
     discount: Number,
     saved: Number,

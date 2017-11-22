@@ -1,13 +1,52 @@
 <!--<div class="sale-tag" *ngIf="product.price.percentage > 0">-->
 <!--$$$-->
 <!--</div>-->
+<!--<button class="subscribe-button" type="button" (click)="onClick_subscribeButton($event)">-->
+  <!--<i class="fa fa-exclamation-circle" aria-hidden="true"></i><br />-->
+  <!--<span>Notify me</span> <br />-->
+  <!--<small>when price changes</small>-->
+<!--</button>-->
+
+<!--<div [ngClass]="{'not-on-sale': product.price.percentage <= 0}">-->
+  <!--<img class="product-image" [src]="product.image" />-->
+
+
+
+  <!--<div class="left-info-panel">-->
+    <!--&lt;!&ndash;<div><i class="fa fa-eye"></i> 22</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div><i class="fa fa-hand-pointer-o"></i> 7</div>&ndash;&gt;-->
+    <!--<a class="more-info" [routerLink]="['/product', product.slug]">More Info</a>-->
+  <!--</div>-->
+
+
+  <!--<div class="right-info-panel">-->
+
+
+    <!--<div class="price">-->
+    <!--<span class="original" *ngIf="product.price.percentage > 0">-->
+      <!--${{product.price.original | number:'1.2-2'}}-->
+    <!--</span>-->
+      <!--${{product.price.discount | number:'1.2-2'}}-->
+    <!--</div>-->
+    <!--<a class="buy-now" target="_blank" [routerLink]="['/buy', product._id]">-->
+      <!--<div><i class="fa fa-shopping-cart"></i>Buy Now</div>-->
+    <!--</a>-->
+  <!--</div>-->
+
+<!--</div>-->
+
+
+
+
+<!--  Next design -->
+
 <button class="subscribe-button" type="button" (click)="onClick_subscribeButton($event)">
   <i class="fa fa-exclamation-circle" aria-hidden="true"></i><br />
   <span>Notify me</span> <br />
   <small>when price changes</small>
 </button>
 
-<div [ngClass]="{'not-on-sale': product.price.percentage <= 0}">
+<div>
   <img class="product-image" [src]="product.image" />
 
 
@@ -20,18 +59,17 @@
 
 
   <div class="right-info-panel">
-
-
-    <div class="price">
-    <span class="original" *ngIf="product.price.percentage > 0">
-      ${{product.price.original | number:'1.2-2'}}
-    </span>
-      ${{product.price.discount | number:'1.2-2'}}
-    </div>
-    <a class="buy-now" target="_blank" [routerLink]="['/buy', product._id]">
-      <div><i class="fa fa-shopping-cart"></i>Buy Now</div>
-      <div class="text-right" style="font-size:10px">New: ${{product.price.discount | number:'1.2-2'}} | Used: $9.04 </div>
+    <a class="buy-now text-center" target="_blank" [routerLink]="['/buy', product._id]">
+      <span>
+        <span>${{product.price.new || product.price.discount | number:'1.2-2'}}</span>
+        <span><i class="fa fa-shopping-cart"></i> Buy New</span>
+      </span>
+      <span *ngIf="product.price.used > 0">
+        <span>${{product.price.used | number:'1.2-2'}}</span>
+        <span><i class="fa fa-shopping-cart"></i> Buy Used</span>
+      </span>
     </a>
   </div>
 
 </div>
+

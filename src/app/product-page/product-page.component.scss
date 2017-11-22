@@ -1,5 +1,33 @@
 @import "../variables";
 
+@include keyframes(gloss) {
+  0% { left: -210%; }
+  60% { left: -30%; }
+}
+
+@mixin gloss-animation() {
+  overflow:hidden;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    transform: rotate(30deg);
+    top: -170%;
+
+    background: rgba(255, 255, 255, 0.13);
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 77%,
+        rgba(255, 255, 255, 0.5) 92%,
+        rgba(255, 255, 255, 0.0) 100%
+    );
+
+    @include animation('gloss 3s infinite');
+  }
+}
+
 .product {
   display:flex;
   width: 100%;
@@ -9,6 +37,7 @@
   align-items: center;
   justify-content: center;
 
+
   .buy-now{
     background: $rgba-primary-0 linear-gradient(to bottom, $rgba-primary-0, $rgba-primary-4);
     border-radius: 10px 10px 0 0;
@@ -17,12 +46,19 @@
     padding: 10px 20px 10px 20px;
     width: 100%;
     text-decoration: none;
-    display: block;
     z-index:1;
     box-shadow: 0px 0px 30px white;
     position:absolute;
     bottom: 0;
     text-align:center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+
+    @include gloss-animation;
   }
 
   .original-price{
