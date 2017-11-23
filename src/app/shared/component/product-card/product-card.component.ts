@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IProduct} from '../../../../shared/interface/product';
+import {calculatePricePercentage, IProduct} from '../../../../shared/interface/product';
 import {GoogleAnalyticsService} from '../../service/google-analytics.service';
 import {SocketService} from '../../service/socket.service';
 import {Socketeer} from '../../../../shared/class/socketeer';
@@ -14,6 +14,9 @@ import {ProductSubscriptionModalService} from '../product-subscription-modal/pro
 export class ProductCardComponent implements OnInit {
   socketeer: Socketeer<SocketCommand>;
   @Input() product: IProduct;
+  get percentage(){
+    return calculatePricePercentage(this.product);
+  }
 
   constructor(socketService: SocketService,
               private gaService: GoogleAnalyticsService,

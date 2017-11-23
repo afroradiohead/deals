@@ -17,18 +17,24 @@
   </div>
 
   <div class="row" id="productMain">
+    <div class="col-sm-6 product-info" *ngIf="(product$ | async) as product">
+      <h3 class="text-center">{{product.title}}</h3>
+      <div class="description">
+        <h4>Description</h4>
+        {{product.description}}
+      </div>
+      <div class="description">
+        <h4>Features</h4>
+        {{product.feature}}
+      </div>
+    </div>
     <div class="col-sm-6">
 
       <div class="product" *ngIf="(product$ | async) as product">
         <img class="product-image" [src]="product.image" />
 
-        <div class="original-price"
-             *ngIf="
-       ((product.price.new > 0) && product.price.original > product.price.new) ||
-       ((product.price.discount > 0) && product.price.original > product.price.discount) ||
-       ((product.price.used > 0) && product.price.original > product.price.used)
-       ">
-          ${{product.price.original | number:'1.2-2'}}
+        <div class="center-panel" *ngIf="renderPercentage(product) > 0">
+          <div class="percentage">{{renderPercentage(product)}}% off</div>
         </div>
 
         <a class="buy-now text-center" target="_blank" [routerLink]="['/buy', product._id]">
@@ -49,21 +55,10 @@
         </a>
       </div>
     </div>
-    <div class="col-sm-6 product-info" *ngIf="(product$ | async) as product">
-      <h3 class="text-center">{{product.title}}</h3>
-      <div class="description">
-        <h4>Description</h4>
-        {{product.description}}
-      </div>
-      <div class="description">
-        <h4>Features</h4>
-        {{product.feature}}
-      </div>
-    </div>
   </div>
 
   <div class="row same-height-row" style="margin-top:40px;">
-    <h4>More Products</h4>
+    <h4>Similar Products</h4>
     <div class="col-md-4 col-sm-6" *ngFor="let product of randomProductList$ | async">
       <app-product-card [product]="product" style="margin-bottom: 20px"></app-product-card>
     </div>

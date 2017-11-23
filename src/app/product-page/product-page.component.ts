@@ -22,6 +22,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   product$: Observable<IProduct>;
   destroyable$: Subject<boolean> = new Subject<boolean>();
 
+
   constructor(
     private route: ActivatedRoute,
     socketService: SocketService,
@@ -75,5 +76,9 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     this.destroyable$.complete();
   }
 
+
+  renderPercentage(product: IProduct) {
+    return calculatePricePercentage(product);
+  }
 }
 

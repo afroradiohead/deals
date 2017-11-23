@@ -8,13 +8,8 @@
 <div>
   <img class="product-image" [src]="product.image" />
 
-  <div class="original-price"
-       *ngIf="
-       ((product.price.new > 0) && product.price.original > product.price.new) ||
-       ((product.price.discount > 0) && product.price.original > product.price.discount) ||
-       ((product.price.used > 0) && product.price.original > product.price.used)
-       ">
-    ${{product.price.original | number:'1.2-2'}}
+  <div class="center-panel" *ngIf="percentage > 0">
+    <div class="percentage">{{percentage}}% off</div>
   </div>
 
 
@@ -26,8 +21,9 @@
 
 
   <div class="right-info-panel">
+    <div class="original-price" *ngIf="percentage > 0">${{product.price.original | number:'1.2-2'}}</div>
     <a class="buy-now text-center" target="_blank" [routerLink]="['/buy', product._id]">
-      <span>
+      <span *ngIf="product.price.used > 0 || product.price.discount > 0">
         <span class="price">${{product.price.new || product.price.discount | number:'1.2-2'}}</span>
         <span>
           <i class="fa fa-shopping-cart"></i>Buy New
