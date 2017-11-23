@@ -60,8 +60,8 @@ const cachedRequest = function(req, res) {
         method: 'POST',
         url: 'https://snapsearch.io/api/v1/robot',
         auth: {
-          user: 'afroradiohead@gmail.com',
-          pass: 'oSK8qca348m1RNC6f207ILt0Mz7pb4126MFHpR83thrTHkQamV'
+          user: 'afrocc22@gmail.com',
+          pass: '19kcG0Dz2mtRm1PknID5987leyj45H5iRTNaLj791RT3C9VSzg'
         },
         timeout: 1000,
         json: {
