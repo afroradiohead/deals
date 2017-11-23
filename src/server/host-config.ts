@@ -82,5 +82,31 @@ export const HOST_CONFIG: IHostConfig = {
     },
     newsletterEmailAddress: 'newsletter@arcade-machines-for-sale.com',
     gaId: 'UA-108296420-5'
+  },
+  'www.growing-tents-for-sale.com' : {
+    title: 'Growing Tents For Sale',
+    description: 'Buy growing tents up to 90% off retail value',
+    amazon: {
+      itemSearch: {
+        SearchIndex: 'LawnAndGarden',
+        Keywords: 'growing tent',
+        ResponseGroup: 'ItemAttributes,Offers,Images'
+      }
+    },
+    newsletterEmailAddress: 'newsletter@growing-tents-for-sale.com',
+    gaId: 'UA-108296420-6'
+  },
+  'www.growing-lamps-for-sale.com' : {
+    title: 'Growing Lamps For Sale',
+    description: 'Buy growing lamps up to 90% off retail value',
+    amazon: {
+      itemSearch: {
+        SearchIndex: 'LawnAndGarden',
+        Keywords: 'growing lamps',
+        ResponseGroup: 'ItemAttributes,Offers,Images'
+      }
+    },
+    newsletterEmailAddress: 'newsletter@growing-lamps-for-sale.com',
+    gaId: 'UA-108296420-7'
   }
 };
