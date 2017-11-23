@@ -13,6 +13,8 @@ import * as Handlebars from 'handlebars';
 const httpServer = app.listen(process.env.PORT || 8080);
 const ___distdirname = `${__dirname}/../dist/`;
 
+const cacheableRoutes = ['/', '/product/*'];
+
 app.set('httpServer', httpServer);
 app.use(compression());
 
@@ -44,13 +46,12 @@ const detectBot = function(userAgent){
     }
     return botDetected;
   });
-}
+};
 
 
-
-const initialRequest = function(req, res) {
+const cachedRequest = function(req, res) {
+  console.log('cached route hit', `${req.protocol}://${req.headers.host}${req.originalUrl}`);
   const $html = cheerio.load(fs.readFileSync(path.join(___distdirname, 'index.html')));
-
   res.set('Content-Type', 'text/html');
 
   if (detectBot) {
@@ -87,7 +88,7 @@ const initialRequest = function(req, res) {
   }
 };
 
-app.get('/', initialRequest)
+app.get(cacheableRoutes, cachedRequest)
   .get('/robots.txt', (req, res) => {
     const template = fs.readFileSync(path.join(__dirname, '/server/robots.txt.hbs'), 'utf8');
     const compiledTemplate = Handlebars.compile(template);
@@ -102,7 +103,13 @@ app.get('/', initialRequest)
 app
   .use(express.static(___distdirname))
   .use(express.static(`${__dirname}/assets`))
-  .get('*', initialRequest);
+  .get('*', function(req, res){
+    console.log('non-cached route hit', `${req.protocol}://${req.headers.host}${req.originalUrl}`);
+    const $html = cheerio.load(fs.readFileSync(path.join(___distdirname, 'index.html')));
+    res.set('Content-Type', 'text/html');
+    res.send($html.html());
+    res.end();
+  });
 
 
 
