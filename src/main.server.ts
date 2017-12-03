@@ -54,26 +54,29 @@ const cachedRequest = function(req, res) {
   const $html = cheerio.load(fs.readFileSync(path.join(___distdirname, 'index.html')));
   res.set('Content-Type', 'text/html');
 
+  const requestData = {
+    method: 'GET',
+    url: 'https://snapsearch.io/api/v1/robot',
+    auth: {
+      user: 'afrocc22@gmail.com',
+      pass: '19kcG0Dz2mtRm1PknID5987leyj45H5iRTNaLj791RT3C9VSzg'
+    },
+    timeout: 1000,
+    json: {
+      url: `${req.protocol}://${req.headers.host}${req.originalUrl}`
+    },
+    strictSSL: true,
+    gzip: true
+  };
+
   if (detectBot) {
     try {
-      request({
-        method: 'POST',
-        url: 'https://snapsearch.io/api/v1/robot',
-        auth: {
-          user: 'afrocc22@gmail.com',
-          pass: '19kcG0Dz2mtRm1PknID5987leyj45H5iRTNaLj791RT3C9VSzg'
-        },
-        timeout: 1000,
-        json: {
-          url: `${req.protocol}://${req.headers.host}${req.originalUrl}`
-        },
-        strictSSL: true,
-        gzip: true
-      }, ( error, response, body ) => {
+      request(requestData, ( error, response, body ) => {
         const cachedHtml = _.get(body, 'content.html', null);
         if (cachedHtml) {
           res.send(cachedHtml);
         } else {
+          request(_.extend(requestData, {method: 'POST'}));
           res.send($html.html());
         }
         res.end();
