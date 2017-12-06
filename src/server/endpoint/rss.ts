@@ -22,7 +22,7 @@ export class RssEndpoint {
     });
 
     db.connect()
-      .then(() => db.Products.find().toArray())
+      .then(() => db.Products.find({host: request.headers.host}).toArray())
       .then((productList) => {
         productList.forEach(product => { // @todo find where displayDate != null
           rss.item({
