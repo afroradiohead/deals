@@ -55,15 +55,16 @@ const cachedRequest = function(req, res) {
   res.set('Content-Type', 'text/html');
 
   const requestData = {
-    method: 'GET',
+    method: 'POST',
     url: 'https://snapsearch.io/api/v1/robot',
     auth: {
-      user: 'afrocc22@gmail.com',
-      pass: '19kcG0Dz2mtRm1PknID5987leyj45H5iRTNaLj791RT3C9VSzg'
+      user: 'Coestnew@dayrep.com',
+      pass: '23cD3kbVIATxEyZFOpJhr90A2daQt1FR49099mBg9sfg94bR44'
     },
     timeout: 1000,
     json: {
-      url: `${req.protocol}://${req.headers.host}${req.originalUrl}`
+      url: `${req.protocol}://${req.headers.host}${req.originalUrl}`,
+      cachetime: 24 * 4
     },
     strictSSL: true,
     gzip: true
@@ -76,7 +77,6 @@ const cachedRequest = function(req, res) {
         if (cachedHtml) {
           res.send(cachedHtml);
         } else {
-          request(_.extend(requestData, {method: 'POST'}));
           res.send($html.html());
         }
         res.end();
