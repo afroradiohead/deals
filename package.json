@@ -59,6 +59,7 @@
     "moment": "^2.19.1",
     "newrelic": "^2.4.0",
     "ng2-adsense": "^4.0.12",
+    "ngx-json-ld": "^0.1.7",
     "ngx-socket-io": "^1.0.8",
     "node-schedule": "^1.2.5",
     "pm2": "^2.7.1",

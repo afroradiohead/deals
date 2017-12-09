@@ -19,6 +19,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SocketeerService} from './shared/service/socketeer.service';
 import {AdsenseModule} from 'ng2-adsense';
 import {FocusModule} from "angular2-focus/src/focus.module";
+import { NgxJsonLdModule } from 'ngx-json-ld';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -50,7 +51,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     AdsenseModule.forRoot(),
-    FocusModule
+    FocusModule,
+    NgxJsonLdModule.forRoot()
   ],
   providers: [
     SocketService,
