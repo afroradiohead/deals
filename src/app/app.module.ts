@@ -18,8 +18,8 @@ import {ProductSubscriptionModalService} from './shared/component/product-subscr
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SocketeerService} from './shared/service/socketeer.service';
 import {AdsenseModule} from 'ng2-adsense';
-import {FocusModule} from 'angular2-focus/src/focus.module';
-import { NgxJsonLdModule } from 'ngx-json-ld';
+import {FocusModule} from "angular2-focus/src/focus.module";
+import { JsonldComponent } from './shared/component/jsonld/jsonld.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -40,7 +40,8 @@ const routes: Routes = [
     FooterComponent,
     TopComponent,
     ProductCardComponent,
-    ProductSubscriptionModalComponent
+    ProductSubscriptionModalComponent,
+    JsonldComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -51,8 +52,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     AdsenseModule.forRoot(),
-    FocusModule,
-    NgxJsonLdModule.forRoot()
+    FocusModule
   ],
   providers: [
     SocketService,
