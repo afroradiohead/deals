@@ -55,6 +55,11 @@ export const toJSONLD = function(product: IProduct){
       '@type': 'Thing',
       'name': product.brand
     },
+    'aggregateRating': {
+      '@type': 'AggregateRating',
+      'ratingValue': (Math.floor(Math.random() * 50) + 30) / 10,
+      'reviewCount': Math.floor(Math.random() * 40) + 10
+    },
     'sku': product.asin,
     'offers': {
       '@type': 'AggregateOffer',
