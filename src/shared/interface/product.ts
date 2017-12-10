@@ -38,10 +38,10 @@ export const calculatePricePercentage = function(product: IProduct): number{
 export const generatePageTitle = function(product: IProduct): string{
   const percentage = calculatePricePercentage(product);
   if (percentage > 0) {
-    return `${percentage}% off $${product.price.original} - ${product.title}`;
+    return `Limited Time Only: Up to ${percentage}% off ${product.title}`;
   }
 
-  return `$${product.price.original} - ${product.title}`;
+  return `Limited Time Only: $${product.price.new} for ${product.title}`;
 };
 
 export const toJSONLD = function(product: IProduct){
@@ -55,11 +55,13 @@ export const toJSONLD = function(product: IProduct){
       '@type': 'Thing',
       'name': product.brand
     },
+    'sku': product.asin,
     'offers': {
       '@type': 'AggregateOffer',
       'lowPrice': product.price.used,
       'highPrice': product.price.new,
-      'priceCurrency': 'USD'
+      'priceCurrency': 'USD',
+      'offerCount' : product.total.used + product.total.new
     }
   };
 };
