@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Scheduler} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {calculatePricePercentage, generatePageTitle, IProduct} from '../../shared/interface/product';
+import {calculatePricePercentage, generatePageTitle, IProduct, toJSONLD} from '../../shared/interface/product';
 import {Socketeer} from '../../shared/class/socketeer';
 import {SocketCommand} from './product-page.socket.command';
 import {Subject} from 'rxjs/Subject';
@@ -9,6 +9,7 @@ import {Meta, Title} from '@angular/platform-browser';
 import {GoogleAnalyticsService} from '../shared/service/google-analytics.service';
 import {SocketService} from '../shared/service/socket.service';
 import * as moment from 'moment';
+
 
 
 @Component({
@@ -21,7 +22,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   randomProductList$: Observable<IProduct[]>;
   product$: Observable<IProduct>;
   destroyable$: Subject<boolean> = new Subject<boolean>();
-
+  JSONLD = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -49,7 +50,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
         this.title.setTitle(generatePageTitle(product));
         this.meta.updateTag({'description': product.description});
 
-        console.log(product.price);
+        this.JSONLD = toJSONLD(product);
+
         this.gaService.triggerProductDetail({
           id: product._id,
           name: product.title,

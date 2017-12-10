@@ -43,3 +43,23 @@ export const generatePageTitle = function(product: IProduct): string{
 
   return `$${product.price.original} - ${product.title}`;
 };
+
+export const toJSONLD = function(product: IProduct){
+  return {
+    '@context': 'http://schema.org/',
+    '@type': 'Product',
+    'name': product.title,
+    'description': product.description,
+    'image': [product.image],
+    'brand': {
+      '@type': 'Thing',
+      'name': product.brand
+    },
+    'offers': {
+      '@type': 'AggregateOffer',
+      'lowPrice': product.price.used,
+      'highPrice': product.price.new,
+      'priceCurrency': 'USD'
+    }
+  };
+};
