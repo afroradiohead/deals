@@ -38,7 +38,7 @@ export const calculatePricePercentage = function(product: IProduct): number{
 export const generatePageTitle = function(product: IProduct): string{
   const percentage = calculatePricePercentage(product);
   if (percentage > 0) {
-    return `Limited Time Only: Up to ${percentage}% off ${product.title}`;
+    return `Limited Time Only: ${percentage}% off ${product.title}`;
   }
 
   return `Limited Time Only: $${product.price.new} for ${product.title}`;
