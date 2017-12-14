@@ -49,6 +49,9 @@ const cachedRequest = function(req, res) {
       if (cachedHtml) {
         const $cachedHtml = cheerio.load(cachedHtml);
         $html('app-root').html($cachedHtml('app-root').html());
+        $html('title').remove();
+        $html('head').append($cachedHtml('title'));
+        $html('head').append($cachedHtml('meta'));
       }
 
       res.send($html.html());
