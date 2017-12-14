@@ -36,7 +36,7 @@ const cachedRequest = function(req, res) {
     timeout: 1000,
     json: {
       url: `${req.protocol}://${req.headers.host}${req.originalUrl}`,
-      cachetime: 24
+      cachetime: 24 * 2
     },
     strictSSL: true,
     gzip: true
