@@ -21,34 +21,6 @@ app.use(compression());
 
 new server.AppServer(app);
 
-const detectBot = function(userAgent){
-  const bots = [
-    'googlebot',
-    'bingbot',
-    'yandexbot',
-    'slurp',
-    'baidu',
-    'duckduck',
-    'teoma',
-    'twitterbot',
-    'facebookexternalhit',
-    'linkedinbot',
-    'embedly',
-    'facebot',
-    'w3c_validator',
-    'whatsapp'
-  ];
-  const agent = userAgent.toLowerCase();
-  return bots.some((bot) => {
-    const botDetected = agent.indexOf(bot) > -1;
-    if (botDetected) {
-      console.log('Bot detected', bot, agent);
-    }
-    return botDetected;
-  });
-};
-
-
 const cachedRequest = function(req, res) {
   console.log('cached route hit', `${req.protocol}://${req.headers.host}${req.originalUrl}`);
   const $html = cheerio.load(fs.readFileSync(path.join(___distdirname, 'index.html')));
@@ -70,22 +42,19 @@ const cachedRequest = function(req, res) {
     gzip: true
   };
 
-  if (detectBot) {
-    try {
-      request(requestData, ( error, response, body ) => {
-        const cachedHtml = _.get(body, 'content.html', null);
-        if (cachedHtml) {
-          res.send(cachedHtml);
-        } else {
-          res.send($html.html());
-        }
-        res.end();
-      });
-    } catch (ex) {
+  try {
+    request(requestData, ( error, response, body ) => {
+      const cachedHtml = _.get(body, 'content.html', null);
+
+      if (cachedHtml) {
+        const $cachedHtml = cheerio.load(cachedHtml);
+        $html('app-root').html($cachedHtml('app-root').html());
+      }
+
       res.send($html.html());
       res.end();
-    }
-  } else {
+    });
+  } catch (ex) {
     res.send($html.html());
     res.end();
   }
