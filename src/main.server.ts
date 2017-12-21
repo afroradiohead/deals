@@ -53,6 +53,7 @@ const cachedRequest = function(req, res) {
   console.log('cached route hit', `${req.protocol}://${req.headers.host}${req.originalUrl}`);
   const $html = cheerio.load(fs.readFileSync(path.join(___distdirname, 'index.html')));
   res.set('Content-Type', 'text/html');
+  res.set('Cache-Control', 'no-cache');
 
   const requestData = {
     method: 'POST',
