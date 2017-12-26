@@ -59,13 +59,13 @@ const cachedRequest = function(req, res) {
     method: 'POST',
     url: 'https://snapsearch.io/api/v1/robot',
     auth: {
-      user: 'ziker@hitbts.com',
-      pass: '6k3UdasbD4WoqqQB136Zr6nK9bl4J29QbEZN937NB71usEpWb5'
+      user: 'Saity1937@jourrapide.com',
+      pass: 'hKPquG35r0c23rivUBW9l04t6c5A2uTzrzgCFPmON8Y2P222J7'
     },
     timeout: 1000,
     json: {
       url: `${req.protocol}://${req.headers.host}${req.originalUrl}`,
-      cachetime: 24 * 3
+      cachetime: 24 * 2
     },
     strictSSL: true,
     gzip: true
