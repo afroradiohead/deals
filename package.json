@@ -9,11 +9,11 @@
     "test-hbs": "./node_modules/.bin/cpx ./src/server/**/*.hbs ./dist-server/server",
     "ng": "ng",
     "start": "./node_modules/.bin/forever ./dist-server/main.server.js",
-    "build": "ng build",
+    "build": "ng build --output-hashing=all",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --aot -prod && cpx ./src/server/**/*.hbs ./dist-server/server && tsc --project src/tsconfig.server.json"
+    "postinstall": "ng build --output-hashing=all --aot -prod && cpx ./src/server/**/*.hbs ./dist-server/server && tsc --project src/tsconfig.server.json"
   },
   "private": true,
   "dependencies": {
