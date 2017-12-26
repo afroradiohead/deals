@@ -102,10 +102,15 @@ app.get(cacheableRoutes, cachedRequest)
     res.end();
   });
 
+
+const bundlePaths = ['/styles.bundle.css', '/inline.bundle.js', '/polyfills.bundle.js', '/vendor.bundle.js'];
 app
   .use(express.static(___distdirname))
-  .use(express.static(`${__dirname}/assets`))
-  .get('*', function(req, res){
+  .use(express.static(`${___distdirname}/assets`))
+  .get('*', function(req, res, next){
+    if (bundlePaths.includes(req.url)) {
+      return next();
+    }
     console.log('non-cached route hit', `${req.protocol}://${req.headers.host}${req.originalUrl}`);
     res.set('Content-Type', 'text/html');
     res.sendFile(path.join(___distdirname, 'index.html'));
