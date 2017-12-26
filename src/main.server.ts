@@ -83,12 +83,10 @@ const cachedRequest = function(req, res) {
         res.end();
       });
     } catch (ex) {
-      res.send($html.html());
-      res.end();
+      res.sendFile(path.join(___distdirname, 'index.html'));
     }
   } else {
-    res.send($html.html());
-    res.end();
+    res.sendFile(path.join(___distdirname, 'index.html'));
   }
 };
 
@@ -109,10 +107,8 @@ app
   .use(express.static(`${__dirname}/assets`))
   .get('*', function(req, res){
     console.log('non-cached route hit', `${req.protocol}://${req.headers.host}${req.originalUrl}`);
-    const $html = cheerio.load(fs.readFileSync(path.join(___distdirname, 'index.html')));
     res.set('Content-Type', 'text/html');
-    res.send($html.html());
-    res.end();
+    res.sendFile(path.join(___distdirname, 'index.html'));
   });
 
 
