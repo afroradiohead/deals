@@ -71,7 +71,7 @@ const cachedRequest = function(req, res) {
     gzip: true
   };
 
-  if (detectBot) {
+  if (detectBot(req.get('User-Agent'))) {
     try {
       request(requestData, ( error, response, body ) => {
         const cachedHtml = _.get(body, 'content.html', null);
